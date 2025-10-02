@@ -1,0 +1,61 @@
+# Visual Studio and .NET related files
+.vs/
+bin/
+obj/
+*.user
+*.suo
+*.sln.docstates
+*.sln.ide
+*.bak
+*.resharper
+
+# Package files
+*.nupkg
+*.snk
+packages/
+
+# Build artifacts
+**/*.apk
+**/*.aab
+**/*.ipa
+**/*.appx
+**/*.appxbundle
+**/*.msix
+**/*.msixbundle
+**/*.exe
+**/*.dll
+**/*.pdb
+
+# Logs and temporary files
+*.log
+*.tmp
+*.cache
+*.swp
+*.bak
+
+# Rider IDE files
+.idea/
+
+# macOS specific files
+.DS_Store
+
+# Windows specific files
+Thumbs.db
+
+# Android specific files
+build/
+local.properties
+.gradle/
+
+# iOS specific files
+DerivedData/
+
+# NuGet specific files
+.nuget/packages/
+.nuget/solution/
+
+# Test results
+TestResults/
+
+# User-specific settings (e.g., in launchSettings.json, but keep the file)
+launchSettings.json.user
