@@ -15,6 +15,10 @@ namespace MauiFrontend
                 {
                     fonts.AddFont("OpenSans-Regular.ttf", "OpenSansRegular");
                     fonts.AddFont("OpenSans-Semibold.ttf", "OpenSansSemibold");
+                    fonts.AddFont("Poppins-Regular.ttf", "PoppinsRegular");
+                    fonts.AddFont("Poppins-Thin.ttf", "PoppinsThin");
+                    fonts.AddFont("Poppins-Bold.ttf", "PoppinsBold");
+                    fonts.AddFont("Poppins-ExtraBold.ttf", "PoppinsExtraBold");
                 });
 
 #if DEBUG
