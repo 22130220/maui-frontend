@@ -1,4 +1,7 @@
-﻿namespace MauiFrontend
+﻿using MauiFrontend.ViewModels;
+using MauiFrontend.Views;
+
+namespace MauiFrontend
 {
     public partial class MainPage : ContentPage
     {
@@ -7,6 +10,10 @@
         public MainPage()
         {
             InitializeComponent();
+            Task.Run(async () =>
+            {
+                await Shell.Current.GoToAsync(nameof(LoginPage));
+            });
         }
 
         private void OnCounterClicked(object? sender, EventArgs e)

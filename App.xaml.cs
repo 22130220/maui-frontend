@@ -15,10 +15,7 @@ namespace MauiFrontend
             var window = new Window(new AppShell());
 
             // Khi app khởi động, điều hướng tùy logic
-            Task.Run(async () =>
-            {
-                await Shell.Current.GoToAsync(nameof(LoginPage));
-            });
+        
 
             return window;
 

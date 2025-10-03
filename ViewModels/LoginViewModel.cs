@@ -1,5 +1,7 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
+using MauiFrontend.Models;
+using MauiFrontend.Services;
 using System.Windows.Input;
 
 namespace MauiFrontend.ViewModels
@@ -12,6 +14,9 @@ namespace MauiFrontend.ViewModels
         private bool _isLandscape;
         private bool _isDisableLandScape;
 
+        private UserService _userService;
+        private ProductService _productService;
+
         public string Email { get => _email; set => SetProperty(ref _email, value); }
         public string Password { get => _password; set => SetProperty(ref _password, value); }
         public bool IsLoading { get => _isLoading; set => SetProperty(ref _isLoading, value); }
@@ -19,14 +24,22 @@ namespace MauiFrontend.ViewModels
         public bool IsDisableLandScape { get => _isDisableLandScape; set => SetProperty(ref _isDisableLandScape, value); }
         public ICommand LoginCommand { get; private set; }
 
-        public LoginViewModel() 
+        public LoginViewModel(UserService userService, ProductService productService) 
         {
             LoginCommand = new AsyncRelayCommand(Login);
+            _userService = userService;
+            _productService = productService;
         }
 
         private async Task Login()
         {
             await Shell.Current.DisplayAlert("Ok", $"Login xem thế nào" + Email + Password, "Thử đi");
+            await GetModel();
+        }
+
+        public async Task GetModel()
+        {
+            var result = await _productService.GetListAsync("products/get-list");
         }
 
     }

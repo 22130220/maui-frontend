@@ -5,10 +5,10 @@ namespace MauiFrontend.Views;
 public partial class LoginPage : ContentPage
 {
     private string _lastState = "";
-    public LoginPage()
+    public LoginPage(LoginViewModel loginViewModel)
     {
         InitializeComponent();
-        BindingContext = new LoginViewModel();
+        BindingContext = loginViewModel;
     }
 
     protected override void OnSizeAllocated(double width, double height)
