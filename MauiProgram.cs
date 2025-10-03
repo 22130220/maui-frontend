@@ -1,4 +1,5 @@
 ﻿using CommunityToolkit.Maui;
+using MauiFrontend.ViewModels;
 using Microsoft.Extensions.Logging;
 
 namespace MauiFrontend
@@ -20,7 +21,6 @@ namespace MauiFrontend
                     fonts.AddFont("Poppins-Bold.ttf", "PoppinsBold");
                     fonts.AddFont("Poppins-ExtraBold.ttf", "PoppinsExtraBold");
                 });
-
 #if DEBUG
     		builder.Logging.AddDebug();
 #endif
