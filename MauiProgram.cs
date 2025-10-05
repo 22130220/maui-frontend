@@ -1,12 +1,17 @@
 ﻿using CommunityToolkit.Maui;
 using MauiFrontend.Http;
-using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.Logging;
-using System.Reflection;
-using Microsoft.Extensions.DependencyInjection;
 using MauiFrontend.Services;
 using MauiFrontend.ViewModels;
 using MauiFrontend.Views;
+using MauiIcons.Core;
+using MauiIcons.Material;
+using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Logging;
+using System.Reflection;
+using Microsoft.Maui.Handlers;
+using Microsoft.Maui.Platform;
+
 
 namespace MauiFrontend
 {
@@ -18,6 +23,13 @@ namespace MauiFrontend
             builder
                 .UseMauiApp<App>()
                 .UseMauiCommunityToolkit()
+                .UseMauiIconsCore(x =>
+                {
+                    x.SetDefaultIconSize(30.0);
+                    x.SetDefaultFontOverride(true);
+                    x.SetDefaultIconAutoScaling(true);
+                })
+                .UseMaterialMauiIcons()
                 .ConfigureFonts(fonts =>
                 {
                     fonts.AddFont("OpenSans-Regular.ttf", "OpenSansRegular");
@@ -48,15 +60,24 @@ namespace MauiFrontend
 
             // ViewModels
             builder.Services.AddTransient<LoginViewModel>();
+            builder.Services.AddTransient<HomePageViewModel>();
+            builder.Services.AddTransient<AccountPageViewModel>();
 
             // Page
             builder.Services.AddTransient<LoginPage>();
-            builder.Services.AddTransient<MainPage>();
+            builder.Services.AddTransient<HomePage>();
+            builder.Services.AddTransient<AccountPage>();
 
 
 
 #if DEBUG
             builder.Logging.AddDebug();
+#endif
+#if ANDROID
+    Microsoft.Maui.Handlers.EntryHandler.Mapper.AppendToMapping("BorderlessEntry", (handler, view) =>
+    {
+        handler.PlatformView.BackgroundTintList = Android.Content.Res.ColorStateList.ValueOf(Colors.Transparent.ToPlatform());
+    });
 #endif
 
             return builder.Build();

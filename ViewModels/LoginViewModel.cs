@@ -34,7 +34,11 @@ namespace MauiFrontend.ViewModels
 
         private async Task Login()
         {
-            await Shell.Current.DisplayAlert("Ok", $"Login xem thế nào" + Email + Password, "Thử đi");
+            bool ok = await Shell.Current.DisplayAlert("Ok", $"Login xem thế nào" + Email + Password, "Vào vào", "Không vào");
+            if (ok)
+            {
+                await Shell.Current.GoToAsync($"///HomePage");
+            }
         }
 
     }

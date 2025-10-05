@@ -4,26 +4,28 @@
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
     xmlns:views="clr-namespace:MauiFrontend.Views"
-    xmlns:local="clr-namespace:MauiFrontend"
+    xmlns:mi="http://www.aathifmahir.com/dotnet/2022/maui/icons"
+    xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
     Title="MauiFrontend"
     Shell.NavBarIsVisible="False">
-
     <TabBar>
         <ShellContent
-            Title="Home"
-            Icon="home.png"
-            ContentTemplate="{DataTemplate local:MainPage}" />
-
-        <!-- 
-        <ShellContent
-            Title="Login"
-            Icon="search.png"
-            ContentTemplate="{DataTemplate views:LoginPage}" />
+            Title="Trang chủ"
+            Icon="{mi:Material Icon=Home, IconColor=Black}"
+            Route="HomePage"
+            ContentTemplate="{DataTemplate views:HomePage}" />
     
+        <ShellContent
+            Title="Tài khoản"
+           Icon="{mi:Material Icon=AccountBox, IconColor=Black}"
+            Route="AccountPage"
+            ContentTemplate="{DataTemplate views:AccountPage}" />
+        <!-- 
         <ShellContent
             Title="Profile"
             Icon="user.png"
             ContentTemplate="{DataTemplate views:ProfilePage}" />
         -->
     </TabBar>
+    <ShellContent Route="LoginPage" ContentTemplate="{DataTemplate views:LoginPage}" />
 </Shell>
