@@ -1,5 +1,6 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
+using MauiFrontend.Constants;
 using MauiFrontend.Models;
 using MauiFrontend.Services;
 using System.Windows.Input;
@@ -34,12 +35,6 @@ namespace MauiFrontend.ViewModels
         private async Task Login()
         {
             await Shell.Current.DisplayAlert("Ok", $"Login xem thế nào" + Email + Password, "Thử đi");
-            await GetModel();
-        }
-
-        public async Task GetModel()
-        {
-            var result = await _productService.GetListAsync("products/get-list");
         }
 
     }
