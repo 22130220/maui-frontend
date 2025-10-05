@@ -6,7 +6,10 @@ using System.Threading.Tasks;
 
 namespace MauiFrontend.Models
 {
-    internal class Model
+    public class UserModel
     {
+        public int Id {  get; set; }
+        public required string Name { get; set; }
+        public required string Email { get; set; }
     }
 }
