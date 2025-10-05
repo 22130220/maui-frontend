@@ -9,7 +9,7 @@
     <Grid x:Name="MainGrid"
             RowDefinitions="Auto, Auto, *"
             Padding="20,0,20,0"
-            RowSpacing="20">
+            RowSpacing="10">
         <!--<FlexLayout Grid.Row="0" Padding="0,20,0,20" JustifyContent="SpaceBetween">
          <VerticalStackLayout>
              <Label>
@@ -45,7 +45,7 @@
         </Grid>
 
         <Border Grid.Row="1"
-                Margin="0,10,0,0"
+                Margin="0,0,0,0"
                 StrokeShape="RoundRectangle 10"
                 Padding="0,2,0,2">
             <Grid ColumnDefinitions="Auto, *"

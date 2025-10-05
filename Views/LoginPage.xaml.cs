@@ -29,4 +29,11 @@ public partial class LoginPage : ContentPage
             }
         }
     }
+
+    protected async override void OnAppearing()
+    {
+        base.OnAppearing();
+        this.Opacity = 0;
+        await this.FadeTo(1, 300);
+    }
 }
