@@ -34,15 +34,23 @@ namespace MauiFrontend
                 {
                     fonts.AddFont("OpenSans-Regular.ttf", "OpenSansRegular");
                     fonts.AddFont("OpenSans-Semibold.ttf", "OpenSansSemibold");
-                    fonts.AddFont("Poppins-Regular.ttf", "PoppinsRegular");
-                    fonts.AddFont("Poppins-Thin.ttf", "PoppinsThin");
-                    fonts.AddFont("Poppins-Bold.ttf", "PoppinsBold");
-                    fonts.AddFont("Poppins-ExtraBold.ttf", "PoppinsExtraBold");
+                    fonts.AddFont("Roboto-ExtraBold.ttf", "RobotoExtraBold");
+                    fonts.AddFont("Roboto-Bold.ttf", "RobotoBold");
+                    fonts.AddFont("Roboto-Thin.ttf", "RobotoThin");
+                    fonts.AddFont("Roboto-Medium.ttf", "RobotoMedium");
+                    fonts.AddFont("Roboto-Regular.ttf", "RobotoRegular");
+                    fonts.AddFont("Roboto-Light.ttf", "RobotoLight");
+
                 });
 
             builder.AddAppSettings();
-
-            string baseApi = builder.Configuration.GetValue<string>("ApiBaseUrl");
+            string baseApi = "";
+#if WINDOWS
+            baseApi = builder.Configuration.GetValue<string>("ApiBaseUrl");
+#endif
+#if ANDROID
+            baseApi = builder.Configuration.GetValue<string>("ApiBaseUrlAndroid");
+#endif
 
             baseApi ??= "localhost:8080";
 

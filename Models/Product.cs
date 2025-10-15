@@ -10,10 +10,10 @@ namespace MauiFrontend.Models
     public class Product
     {
         [JsonPropertyName("productID")]
-        public string ProductID { get; set; } = string.Empty;
+        public string? ProductID { get; set; }
 
         [JsonPropertyName("name")]
-        public string Name { get; set; } = string.Empty;
+        public string? Name { get; set; }
 
         [JsonPropertyName("price")]
         public decimal Price { get; set; }
@@ -21,25 +21,16 @@ namespace MauiFrontend.Models
         [JsonPropertyName("discountDefault")]
         public int DiscountDefault { get; set; }
 
-        [JsonPropertyName("description")]
-        public string Description { get; set; } = string.Empty;
+        [JsonPropertyName("thumbnail")]
+        public string? Thumbnail { get; set; }
 
         [JsonPropertyName("categoryID")]
-        public Category Category { get; set; } = new Category();
+        public string? CategoryID { get; set; }
 
-        [JsonPropertyName("quanlityStock")]
+        [JsonPropertyName("quantityStock")]
         public int QuantityStock { get; set; }
 
-        [JsonPropertyName("quanlitySell")]
+        [JsonPropertyName("quantitySell")]
         public int QuantitySell { get; set; }
-
-        [JsonPropertyName("thumbnail")]
-        public string Thumbnail { get; set; } = string.Empty;
-
-        [JsonPropertyName("createAt")]
-        public string? CreateAt { get; set; }
-
-        [JsonPropertyName("minStockLevel")]
-        public int MinStockLevel { get; set; }
     }
 }

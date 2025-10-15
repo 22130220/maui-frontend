@@ -13,8 +13,12 @@ namespace MauiFrontend.ViewModels
         private bool _isBusy = false;
         private ProductService _productService;
         private ObservableCollection<Product> _productList;
+        private int page = 1;
+        private int size = 20;
 
         public bool IsBusy { get => _isBusy; set => SetProperty(ref _isBusy, value); }
+        public int Page { get => page; set => SetProperty(ref  page, value); }
+        public int Size { get => size; set => SetProperty(ref size, value); }
         public IAsyncRelayCommand LoadProductsCommand { get; }
         public IAsyncRelayCommand ToLoginPageCommand { get; }
         public ObservableCollection<Product> ProductList { get => _productList; set => SetProperty(ref _productList, value); }
@@ -35,15 +39,16 @@ namespace MauiFrontend.ViewModels
             //App.GlobalViewModel.IsGlobalLoading = true;
             //App.GlobalViewModel.LoadingMessage = "Đang tải sản phẩm";
 
-            var productList = await _productService.GetListAsync(APICONSTANT.PRODUCT.GET_LIST);
+            var productResp = await _productService.GetSingleNoSeperatorAsync<ApiResponse<DataPaging<Product>>>(APICONSTANT.PRODUCT.GET_LIST, $"?page={Page}&size={Size}");
             ProductList.Clear();
-            if (productList != null)
+            if (productResp != null)
             {
                 await Task.Delay(100);
 
                 await MainThread.InvokeOnMainThreadAsync(() =>
                 {
-                    ProductList = new ObservableCollection<Product>(productList);
+                    var productList = productResp.Data?.Content;
+                    ProductList = new ObservableCollection<Product>(productList ?? []);
 
                 });
             }

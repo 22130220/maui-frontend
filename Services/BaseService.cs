@@ -1,9 +1,10 @@
 ﻿using MauiFrontend.Http;
+using MauiFrontend.Models;
 using System.Text.Json;
 
 namespace MauiFrontend.Services
 {
-    public class BaseService<T>
+    public class BaseService
     {
         private readonly Https _https;
 
@@ -12,9 +13,9 @@ namespace MauiFrontend.Services
             _https = https;
         }
 
-        public async Task<T?> GetSingleAsync(string url, string param)
+        public async Task<T?> GetSingleAsync<T>(string url, string param = "")
         {
-            var realUrl = $"{LastSeparator(url)}{param}";
+            var realUrl = $"{BaseService.LastSeparator(url)}{param}";
             try
             {
                 var result = await _https.GetAsync<T>(realUrl);
@@ -37,7 +38,7 @@ namespace MauiFrontend.Services
         }
     
 
-        public async Task<List<T>> GetListAsync(string url, string param = "")
+        public async Task<List<T>> GetListAsync<T>(string url, string param = "")
         {
             var realUrl = $"{url}{param}";
             try
@@ -61,7 +62,7 @@ namespace MauiFrontend.Services
             return default;
         }
 
-        public async Task<T?> GetSingleNoSeperatorAsync(string url, string param)
+        public async Task<T?> GetSingleNoSeperatorAsync<T>(string url, string param = "")
         {
             var realUrl = $"{url}{param}";
             try
@@ -85,8 +86,30 @@ namespace MauiFrontend.Services
             return default;
         }
 
+        public async Task<TResponse?> PostAsync<TRequest, TResponse>(string url, TRequest data)
+        {
+            try
+            {
+                var result = await _https.PostAsync<TRequest, TResponse>(url, data);
+                return result;
+            }
+            catch (HttpRequestException ex)
+            {
+                //TODO: Lỗi mạng, server
+            }
+            catch (JsonException ex)
+            {
+                //TODO: Lỗi deserialize
+            }
+            catch (Exception ex)
+            {
+                //TODO: Lỗi khác
+            }
 
-        private string LastSeparator(string url)
+            return default;
+        }
+
+        private static string LastSeparator(string url)
         {
             if (!url.EndsWith('/'))
             {

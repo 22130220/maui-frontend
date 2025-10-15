@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace MauiFrontend.Services
 {
-    public class ProductService : BaseService<Product>
+    public class ProductService : BaseService
     {
         public ProductService(Https https) : base(https)
         {

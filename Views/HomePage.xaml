@@ -26,7 +26,7 @@
                     VerticalOptions="Center">
                 <Label Text="Hello ní hảo ma"
                         FontSize="30"
-                        FontFamily="OpenSansSemibold"
+                        FontFamily="RobotoBold"
                         TextColor="DarkBlue"></Label>
             </VerticalStackLayout>
             <VerticalStackLayout Grid.Column="1"
@@ -64,7 +64,7 @@
             <VerticalStackLayout Spacing="15">
                 <Button Text="Sản phẩm nổi bật hahaha >"
                         FontSize="15"
-                        FontFamily="PoppinsRegular"
+                        FontFamily="RobotoRegular"
                         HorizontalOptions="Start"
                         BackgroundColor="Transparent"
                         BorderColor="{StaticResource Primary}"

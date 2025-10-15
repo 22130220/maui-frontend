@@ -9,10 +9,14 @@ namespace MauiFrontend.Models
 {
     public class ApiResponse<T>
     {
-        [JsonPropertyName("status")]
-        public required string Status { get; set; }
+        [JsonPropertyName("code")]
+        public int? Code { get; set; }
         [JsonPropertyName("data")]
         public T? Data { get; set; }
+        [JsonPropertyName("message")]
+        public string? Message { get; set; }
+        [JsonPropertyName("timestamp")]
+        public string? TimeStamp { get; set; }
 
     }
 }
