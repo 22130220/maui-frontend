@@ -1,0 +1,151 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:mi="http://www.aathifmahir.com/dotnet/2022/maui/icons"
+             xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
+             xmlns:local="clr-namespace:MauiFrontend"
+             x:Class="MauiFrontend.Views.HomePage"
+             Title="HomePage">
+    <Grid x:Name="MainGrid"
+            RowDefinitions="Auto, Auto, *"
+            Padding="20,0,20,0"
+            RowSpacing="10">
+        <!--<FlexLayout Grid.Row="0" Padding="0,20,0,20" JustifyContent="SpaceBetween">
+         <VerticalStackLayout>
+             <Label>
+                 
+             </Label>
+         </VerticalStackLayout>
+         
+     </FlexLayout>-->
+
+        <Grid Grid.Row="0"
+                ColumnDefinitions="75*, 25*"
+                Margin="10">
+            <VerticalStackLayout Grid.Column="0"
+                    VerticalOptions="Center">
+                <Label Text="Hello ní hảo ma"
+                        FontSize="30"
+                        FontFamily="RobotoBold"
+                        TextColor="DarkBlue"></Label>
+            </VerticalStackLayout>
+            <VerticalStackLayout Grid.Column="1"
+                    VerticalOptions="Center"
+                    HorizontalOptions="End">
+                <ImageButton Source="{mi:Material Icon=AccountCircle, IconColor={StaticResource Primary}, IconSize=50}"
+                             Command="{Binding ToLoginPageCommand}"
+                             HeightRequest="50"
+                             WidthRequest="50"
+                             CornerRadius="25"
+                             Padding="0"
+                             Aspect="AspectFill"
+                             HorizontalOptions="End"
+                             VerticalOptions="Center"/>
+            </VerticalStackLayout>
+        </Grid>
+
+        <Border Grid.Row="1"
+                Margin="0,0,0,0"
+                StrokeShape="RoundRectangle 10"
+                Padding="0,2,0,2">
+            <Grid ColumnDefinitions="Auto, *"
+                    Padding="10,0,5,0">
+                <mi:MauiIcon Grid.Column="0"
+                        Icon="{mi:Material Icon=Search, IconColor=Black}"/>
+                <Entry Grid.Column="1"
+                        VerticalOptions="Center"
+                        Margin="5,0,0,0"
+                        TextColor="Black"
+                        Placeholder="Nhập tên sản phẩm để tìm kiếm"/>
+            </Grid>
+
+        </Border>
+        <ScrollView Grid.Row="2">
+            <VerticalStackLayout Spacing="15">
+                <Button Text="Sản phẩm nổi bật hahaha >"
+                        FontSize="15"
+                        FontFamily="RobotoRegular"
+                        HorizontalOptions="Start"
+                        BackgroundColor="Transparent"
+                        BorderColor="{StaticResource Primary}"
+                        BorderWidth="1"
+                        TextColor="Black"
+                        HeightRequest="30"
+                        Command="{Binding LoadProductsCommand}"/>
+                <ActivityIndicator IsRunning="{Binding IsBusy}"
+                                   IsVisible="{Binding IsBusy}"
+                                   HorizontalOptions="Center"
+                                   VerticalOptions="Center"/>
+                <CollectionView ItemsSource="{Binding ProductList}">
+                    <CollectionView.ItemsLayout>
+                        <GridItemsLayout Orientation="Vertical"
+                                Span="3"
+                                HorizontalItemSpacing="2"
+                                VerticalItemSpacing="2"/>
+                    </CollectionView.ItemsLayout>
+
+                    <CollectionView.ItemTemplate>
+                        <DataTemplate>
+                            <Border Margin="0,10,0,0"
+                                    StrokeShape="RoundRectangle 10"
+                                    Padding="0,2,0,2">
+                                <VerticalStackLayout>
+                                    <Image Source="{Binding Thumbnail}"
+                                           Aspect="AspectFill"
+                                           HeightRequest="120"
+                                           WidthRequest="120"
+                                           HorizontalOptions="Center"/>
+
+                                    <Label Text="{Binding Name}"
+                                           FontSize="16"
+                                           HorizontalOptions="Center"/>
+
+                                    <Label Text="{Binding Price, StringFormat='Giá: {0:C}'}"
+                                           FontSize="14"
+                                           TextColor="DarkRed"
+                                           HorizontalOptions="Center"/>
+                                </VerticalStackLayout>
+                            </Border>
+                        </DataTemplate>
+                    </CollectionView.ItemTemplate>
+                </CollectionView>
+
+            </VerticalStackLayout>
+        </ScrollView>
+        <!-- TODO: Global loading, sửa sau, đang rối -->
+        <!--<AbsoluteLayout>
+            -->
+        <!-- Nội dung chính -->
+        <!--
+            <ScrollView AbsoluteLayout.LayoutBounds="0,0,1,1"
+                AbsoluteLayout.LayoutFlags="All">
+                -->
+        <!-- Content ở đây -->
+        <!--
+            </ScrollView>
+
+            -->
+        <!-- Overlay loading -->
+        <!--
+            <Grid BackgroundColor="Transparent"
+          IsVisible="{Binding Source={x:Static local:App.GlobalViewModel}, Path=IsGlobalLoading}"
+          AbsoluteLayout.LayoutBounds="0,0,1,1"
+          AbsoluteLayout.LayoutFlags="All">
+                <Frame Padding="20"
+               CornerRadius="10"
+               BackgroundColor="White"
+               VerticalOptions="Center"
+               HorizontalOptions="Center"
+               HasShadow="True">
+                    <StackLayout Spacing="10" HorizontalOptions="Center" VerticalOptions="Center">
+                        <ActivityIndicator IsRunning="True"/>
+                        <Label Text="{Binding Source={x:Static local:App.GlobalViewModel}, Path=LoadingMessage}"
+                       FontSize="14"
+                       HorizontalOptions="Center"/>
+                    </StackLayout>
+                </Frame>
+            </Grid>
+        </AbsoluteLayout>-->
+    </Grid>
+
+</ContentPage>

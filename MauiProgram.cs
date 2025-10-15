@@ -1,0 +1,110 @@
+﻿using CommunityToolkit.Maui;
+using MauiFrontend.Http;
+using MauiFrontend.Services;
+using MauiFrontend.ViewModels;
+using MauiFrontend.Views;
+using MauiIcons.Core;
+using MauiIcons.Material;
+using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Logging;
+using System.Reflection;
+using Microsoft.Maui.Handlers;
+using Microsoft.Maui.Platform;
+
+
+namespace MauiFrontend
+{
+    public static class MauiProgram
+    {
+        public static MauiApp CreateMauiApp()
+        {
+            var builder = MauiApp.CreateBuilder();
+            builder
+                .UseMauiApp<App>()
+                .UseMauiCommunityToolkit()
+                .UseMauiIconsCore(x =>
+                {
+                    x.SetDefaultIconSize(30.0);
+                    x.SetDefaultFontOverride(true);
+                    x.SetDefaultIconAutoScaling(true);
+                })
+                .UseMaterialMauiIcons()
+                .ConfigureFonts(fonts =>
+                {
+                    fonts.AddFont("OpenSans-Regular.ttf", "OpenSansRegular");
+                    fonts.AddFont("OpenSans-Semibold.ttf", "OpenSansSemibold");
+                    fonts.AddFont("Roboto-ExtraBold.ttf", "RobotoExtraBold");
+                    fonts.AddFont("Roboto-Bold.ttf", "RobotoBold");
+                    fonts.AddFont("Roboto-Thin.ttf", "RobotoThin");
+                    fonts.AddFont("Roboto-Medium.ttf", "RobotoMedium");
+                    fonts.AddFont("Roboto-Regular.ttf", "RobotoRegular");
+                    fonts.AddFont("Roboto-Light.ttf", "RobotoLight");
+
+                });
+
+            builder.AddAppSettings();
+            string baseApi = "";
+#if WINDOWS
+            baseApi = builder.Configuration.GetValue<string>("ApiBaseUrl");
+#endif
+#if ANDROID
+            baseApi = builder.Configuration.GetValue<string>("ApiBaseUrlAndroid");
+#endif
+
+            baseApi ??= "localhost:8080";
+
+            builder
+                .Services
+                .AddHttpClient<Https>(x =>
+                {
+                    x.BaseAddress = new Uri(baseApi);
+                });
+
+            // Dependency injection
+            // Services
+            builder.Services.AddTransient<UserService>();
+            builder.Services.AddTransient<ProductService>();
+
+            // ViewModels
+            builder.Services.AddTransient<LoginViewModel>();
+            builder.Services.AddTransient<HomePageViewModel>();
+            builder.Services.AddTransient<AccountPageViewModel>();
+
+            // Page
+            builder.Services.AddTransient<LoginPage>();
+            builder.Services.AddTransient<HomePage>();
+            builder.Services.AddTransient<AccountPage>();
+
+
+
+#if DEBUG
+            builder.Logging.AddDebug();
+#endif
+#if ANDROID
+    Microsoft.Maui.Handlers.EntryHandler.Mapper.AppendToMapping("BorderlessEntry", (handler, view) =>
+    {
+        handler.PlatformView.BackgroundTintList = Android.Content.Res.ColorStateList.ValueOf(Colors.Transparent.ToPlatform());
+    });
+#endif
+
+            return builder.Build();
+        }
+
+        private static void AddAppSettings(this MauiAppBuilder builder)
+        {
+            using Stream stream = Assembly
+                .GetExecutingAssembly()
+                .GetManifestResourceStream("MauiFrontend.appsettings.json");
+
+            if (stream != null)
+            {
+                IConfigurationRoot config = new ConfigurationBuilder()
+                    .AddJsonStream(stream)
+                    .Build();
+
+                builder.Configuration.AddConfiguration(config);
+            }
+        }
+    }
+}

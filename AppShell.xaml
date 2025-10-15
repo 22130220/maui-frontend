@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<Shell
+    x:Class="MauiFrontend.AppShell"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:views="clr-namespace:MauiFrontend.Views"
+    xmlns:mi="http://www.aathifmahir.com/dotnet/2022/maui/icons"
+    xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
+    Title="MauiFrontend"
+    Shell.NavBarIsVisible="False">
+    <TabBar>
+        <ShellContent
+            Title="Trang chủ"
+            Icon="{mi:Material Icon=Home, IconColor=Black}"
+            Route="HomePage"
+            ContentTemplate="{DataTemplate views:HomePage}" />
+    
+        <ShellContent
+            Title="Tài khoản"
+           Icon="{mi:Material Icon=AccountBox, IconColor=Black}"
+            Route="AccountPage"
+            ContentTemplate="{DataTemplate views:AccountPage}" />
+        <!-- 
+        <ShellContent
+            Title="Profile"
+            Icon="user.png"
+            ContentTemplate="{DataTemplate views:ProfilePage}" />
+        -->
+    </TabBar>
+    <ShellContent Route="LoginPage" ContentTemplate="{DataTemplate views:LoginPage}" />
+</Shell>
