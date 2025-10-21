@@ -8,24 +8,45 @@
     xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
     Title="MauiFrontend"
     Shell.NavBarIsVisible="False">
+
+    <!-- =============== -->
+    <!-- Thanh TabBar chính -->
+    <!-- =============== -->
     <TabBar>
+        <!-- Trang chủ -->
         <ShellContent
             Title="Trang chủ"
             Icon="{mi:Material Icon=Home, IconColor=Black}"
             Route="HomePage"
             ContentTemplate="{DataTemplate views:HomePage}" />
-    
+
+        <!-- Danh mục -->
+        <ShellContent
+            Title="Danh mục"
+            Icon="{mi:Material Icon=Category, IconColor=Black}"
+            Route="CategoryPage"
+            ContentTemplate="{DataTemplate views:CategoryPage}" />
+
+        <!-- Giỏ hàng -->
+        <ShellContent
+            Title="Giỏ hàng"
+            Icon="{mi:Material Icon=ShoppingCart, IconColor=Black}"
+            Route="CartPage"
+            ContentTemplate="{DataTemplate views:CartPage}" />
+
+        <!-- Tài khoản -->
         <ShellContent
             Title="Tài khoản"
-           Icon="{mi:Material Icon=AccountBox, IconColor=Black}"
+            Icon="{mi:Material Icon=AccountCircle, IconColor=Black}"
             Route="AccountPage"
             ContentTemplate="{DataTemplate views:AccountPage}" />
-        <!-- 
-        <ShellContent
-            Title="Profile"
-            Icon="user.png"
-            ContentTemplate="{DataTemplate views:ProfilePage}" />
-        -->
     </TabBar>
-    <ShellContent Route="LoginPage" ContentTemplate="{DataTemplate views:LoginPage}" />
+
+    <!-- =============== -->
+    <!-- Các trang KHÔNG hiển thị trên navbar -->
+    <!-- =============== -->
+    <ShellContent
+        Route="LoginPage"
+        ContentTemplate="{DataTemplate views:LoginPage}"
+        Shell.PresentationMode="ModalAnimated" />
 </Shell>
