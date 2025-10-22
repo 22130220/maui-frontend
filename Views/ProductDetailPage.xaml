@@ -1,0 +1,245 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:mi="http://www.aathifmahir.com/dotnet/2022/maui/icons"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="MauiFrontend.Views.ProductDetailPage"
+             Title="Chi tiết sản phẩm"
+             BackgroundColor="White">
+
+    <Grid RowDefinitions="Auto,*,Auto">
+
+        <!-- Nội dung cuộn -->
+        <ScrollView Grid.Row="1">
+            <VerticalStackLayout Spacing="14">
+                <Image Source="{Binding Product.Thumbnail}"
+                   Aspect="AspectFill"
+                   HeightRequest="280"
+                   Margin="-20,-20,-20,0"
+                   HorizontalOptions="Fill"
+                   VerticalOptions="Fill" />
+
+                <!-- Khối thông tin sản phẩm bo tròn -->
+                <Border 
+                    BackgroundColor="White"
+                    Margin="0,-36,0,0"
+                    Padding="20,16,20,20"
+                    >
+
+                    <Border.StrokeShape>
+                        <RoundRectangle CornerRadius="24,24,0,0"/>
+                    </Border.StrokeShape>
+
+                    <VerticalStackLayout Spacing="8">
+
+                        <!-- Tên sản phẩm -->
+                        <Label Text="{Binding Product.Name}"
+               FontSize="20"
+               FontAttributes="Bold"
+               TextColor="#222" />
+
+                        <!-- Giá + cụm số lượng -->
+                        <Grid ColumnDefinitions="Auto,*,Auto,Auto,Auto" Margin="0,4,0,0">
+
+                            <!-- Giá -->
+                            <Label Text="{Binding Product.Price, StringFormat='${0:N0}'}"
+                   FontSize="18"
+                   FontAttributes="Bold"
+                   TextColor="#e67e22"
+                   Grid.Column="0"
+                   VerticalOptions="Center"/>
+
+                            <!-- Nút giảm -->
+                            <Border Grid.Column="2"
+                    BackgroundColor="#fff7f0"
+                    Stroke="#e67e22"
+                    StrokeThickness="1"
+                    WidthRequest="36"
+                    HeightRequest="36"
+                    HorizontalOptions="End"
+                    VerticalOptions="Center">
+                                <Border.StrokeShape>
+                                    <RoundRectangle CornerRadius="10"/>
+                                </Border.StrokeShape>
+                                <Label Text="−"
+                       FontSize="18"
+                       FontAttributes="Bold"
+                       TextColor="#e67e22"
+                       HorizontalOptions="Center"
+                       VerticalOptions="Center"/>
+                            </Border>
+
+                            <!-- Số lượng -->
+                            <Label Text="1"
+                   Grid.Column="3"
+                   FontSize="16"
+                   TextColor="#222"
+                   HorizontalOptions="Center"
+                   VerticalOptions="Center"
+                   Margin="8,0"/>
+
+                            <!-- Nút tăng -->
+                            <Border Grid.Column="4"
+                    BackgroundColor="#fff7f0"
+                    Stroke="#e67e22"
+                    StrokeThickness="1"
+                    WidthRequest="36"
+                    HeightRequest="36"
+                    HorizontalOptions="End"
+                    VerticalOptions="Center">
+                                <Border.StrokeShape>
+                                    <RoundRectangle CornerRadius="10"/>
+                                </Border.StrokeShape>
+                                <Label Text="+"
+                       FontSize="18"
+                       FontAttributes="Bold"
+                       TextColor="#e67e22"
+                       HorizontalOptions="Center"
+                       VerticalOptions="Center"/>
+                            </Border>
+                        </Grid>
+
+
+                        <!-- CỤM ĐÁNH GIÁ -->
+                        <Border BackgroundColor="#FAFAFA"
+                Padding="12,8"
+                Margin="0,16,0,0"
+                StrokeThickness="0"
+                StrokeShape="RoundRectangle 16">
+
+                            <Grid ColumnDefinitions="Auto,Auto,*,Auto"
+              ColumnSpacing="10"
+              VerticalOptions="Center">
+
+
+                                <!-- Điểm đánh giá -->
+                                <Label Grid.Column="1"
+               Text="4.6"
+               FontSize="14"
+               FontAttributes="Bold"
+               TextColor="#222"
+               VerticalOptions="Center" />
+
+                                <!-- Số lượng review -->
+                                <Label Grid.Column="2"
+               Text="98 Reviews >"
+               FontSize="13"
+               TextColor="#999"
+               VerticalOptions="Center" />
+                            </Grid>
+                        </Border>
+
+
+                        <!-- TABVIEW -->
+                        <VerticalStackLayout Spacing="12" Padding="0,10">
+
+                            <!-- Header: 3 nút tab -->
+                            <HorizontalStackLayout Spacing="10" HorizontalOptions="Center">
+
+                                <Button Text="Description"
+                x:Name="DescriptionBtn"
+                Clicked="OnDescriptionClicked"
+                CornerRadius="8"
+                WidthRequest="110"
+                FontSize="13"
+                TextColor="White"
+                BackgroundColor="#F9A825"
+                />
+
+                                <Button Text="Materials"
+                x:Name="MaterialsBtn"
+                Clicked="OnMaterialsClicked"
+                CornerRadius="8"
+                WidthRequest="110"
+                FontSize="13"
+                TextColor="#555"
+                BackgroundColor="#FFF2D1"
+                BorderColor="#F9A825"
+                BorderWidth="1"
+                />
+
+                                <Button Text="Reviews"
+                x:Name="ReviewsBtn"
+                Clicked="OnReviewsClicked"
+                CornerRadius="8"
+                WidthRequest="110"
+                FontSize="13"
+                TextColor="#555"
+                BackgroundColor="#FFF2D1"
+                BorderColor="#F9A825"
+                BorderWidth="1"
+                />
+                            </HorizontalStackLayout>
+
+                            <!-- Nội dung Description -->
+                            <ContentView x:Name="DescriptionContent" IsVisible="True">
+                                <ScrollView Padding="10,10,10,0">
+                                    <Label Text="{Binding Product.Description}"
+                   FontSize="14"
+                   TextColor="#444"
+                   LineHeight="1.4"
+                   LineBreakMode="WordWrap" />
+                                </ScrollView>
+                            </ContentView>
+
+                            <!-- Nội dung Materials -->
+                            <ContentView x:Name="MaterialsContent" IsVisible="False">
+                                <ScrollView Padding="10,10,10,0">
+                                    <Label Text="{Binding Product.SpecificationsText}"
+                   FontSize="14"
+                   TextColor="#444"
+                   LineHeight="1.4"
+                   LineBreakMode="WordWrap" />
+                                </ScrollView>
+                            </ContentView>
+
+                            <!-- Nội dung Reviews -->
+                            <ContentView x:Name="ReviewsContent" IsVisible="False">
+                                <ScrollView Padding="10,10,10,0">
+                                    <VerticalStackLayout Spacing="10">
+                                        <Label Text="{Binding ReviewsCount, StringFormat='{0} reviews'}"
+                       FontSize="14"
+                       FontAttributes="Bold"
+                       TextColor="#333" />
+
+                                        <CollectionView ItemsSource="{Binding Reviews}"
+                                SelectionMode="None">
+                                            <CollectionView.ItemTemplate>
+                                                <DataTemplate>
+                                                    <Border Stroke="#EEE" StrokeThickness="1" Padding="10" Margin="0,4" StrokeShape="RoundRectangle 10">
+                                                        <VerticalStackLayout Spacing="4">
+                                                            <Label Text="{Binding Author}"
+                                           FontAttributes="Bold"
+                                           FontSize="14"
+                                           TextColor="#222"/>
+                                                            <Label Text="{Binding Text}"
+                                           FontSize="13"
+                                           TextColor="#555"
+                                           LineBreakMode="WordWrap"/>
+                                                        </VerticalStackLayout>
+                                                    </Border>
+                                                </DataTemplate>
+                                            </CollectionView.ItemTemplate>
+                                        </CollectionView>
+                                    </VerticalStackLayout>
+                                </ScrollView>
+                            </ContentView>
+
+                        </VerticalStackLayout>
+                    </VerticalStackLayout>
+                </Border>
+            </VerticalStackLayout>
+        </ScrollView>
+
+        <!-- Nút Add to Bag cố định -->
+        <Border Grid.Row="2"
+            Padding="16,12"
+            BackgroundColor="White">
+            <Button Text="Add to cart"
+                BackgroundColor="#111"
+                TextColor="White"
+                CornerRadius="16"
+                FontSize="16"
+                HeightRequest="50"/>
+        </Border>
+    </Grid>
+</ContentPage>

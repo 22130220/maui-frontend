@@ -70,11 +70,13 @@ namespace MauiFrontend
             builder.Services.AddTransient<LoginViewModel>();
             builder.Services.AddTransient<HomePageViewModel>();
             builder.Services.AddTransient<AccountPageViewModel>();
+            builder.Services.AddTransient<ProductDetailViewModel>();
 
             // Page
             builder.Services.AddTransient<LoginPage>();
             builder.Services.AddTransient<HomePage>();
             builder.Services.AddTransient<AccountPage>();
+            builder.Services.AddTransient<ProductDetailPage>();
 
 
 

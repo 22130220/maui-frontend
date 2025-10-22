@@ -3,6 +3,7 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:mi="http://www.aathifmahir.com/dotnet/2022/maui/icons"
              xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
+             xmlns:vm="clr-namespace:MauiFrontend.ViewModels"
              x:Class="MauiFrontend.Views.HomePage"
              Title="HomePage"
              BackgroundColor="#FFFDFB">
@@ -177,6 +178,11 @@
         Stroke="#F3F3F3"
         Margin="6"
         Padding="5">
+                                <Border.GestureRecognizers>
+                                <TapGestureRecognizer 
+                Command="{Binding Source={RelativeSource AncestorType={x:Type vm:HomePageViewModel}}, Path=GoToDetailCommand}"
+                CommandParameter="{Binding ProductID}" />
+                                </Border.GestureRecognizers>
 
 
                                 <Grid RowDefinitions="Auto,Auto,Auto">

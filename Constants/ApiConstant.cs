@@ -12,6 +12,7 @@ namespace MauiFrontend.Constants
         {
             public const string GET_LIST = "products/get-list";
             public const string CREATE = "product/";
+            public const string DETAIL = "products/detail/";
         }
     }
 }
