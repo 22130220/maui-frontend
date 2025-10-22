@@ -1,84 +1,194 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
+using CommunityToolkit.Mvvm.Input;
+using MauiFrontend.Constants;
 using MauiFrontend.Models;
 using MauiFrontend.Services;
-using System.Collections.ObjectModel;
-using MauiFrontend.Constants;
-using System.Windows.Input;
-using CommunityToolkit.Mvvm.Input;
 using MauiFrontend.Views;
+using System.Collections.ObjectModel;
 
 namespace MauiFrontend.ViewModels
 {
     public partial class HomePageViewModel : ObservableObject
     {
-        private bool _isBusy = false;
-        private ProductService _productService;
+        private readonly ProductService _productService;
+
+        private bool _isBusy;
         private ObservableCollection<Product> _productList;
-        private int page = 1;
-        private int size = 20;
+        private ObservableCollection<Product> _searchSuggestions;
+        private bool _isSuggestionsVisible;
+        private string _searchText = string.Empty;
+        private int _page = 1;
+        private int _size = 20;
 
-        public bool IsBusy { get => _isBusy; set => SetProperty(ref _isBusy, value); }
-        public int Page { get => page; set => SetProperty(ref page, value); }
-        public int Size { get => size; set => SetProperty(ref size, value); }
+        // ======= PROPERTIES =======
+        public bool IsBusy
+        {
+            get => _isBusy;
+            set => SetProperty(ref _isBusy, value);
+        }
 
-        public IAsyncRelayCommand<string> GoToDetailCommand { get; }
+        public int Page
+        {
+            get => _page;
+            set => SetProperty(ref _page, value);
+        }
+
+        public int Size
+        {
+            get => _size;
+            set => SetProperty(ref _size, value);
+        }
+
+        public ObservableCollection<Product> ProductList
+        {
+            get => _productList;
+            set => SetProperty(ref _productList, value);
+        }
+
+        public ObservableCollection<Product> SearchSuggestions
+        {
+            get => _searchSuggestions;
+            set => SetProperty(ref _searchSuggestions, value);
+        }
+
+        public bool IsSuggestionsVisible
+        {
+            get => _isSuggestionsVisible;
+            set => SetProperty(ref _isSuggestionsVisible, value);
+        }
+
+        public string SearchText
+        {
+            get => _searchText;
+            set
+            {
+                if (SetProperty(ref _searchText, value))
+                    _ = OnSearchTextChangedAsync(value);
+            }
+        }
+
+        // ======= COMMANDS =======
         public IAsyncRelayCommand LoadProductsCommand { get; }
+        public IAsyncRelayCommand<string> GoToDetailCommand { get; }
         public IAsyncRelayCommand ToLoginPageCommand { get; }
-        public ObservableCollection<Product> ProductList { get => _productList; set => SetProperty(ref _productList, value); }
+        public IAsyncRelayCommand<Product> SuggestionTappedCommand { get; }
 
+        public IRelayCommand HideSuggestionsCommand { get; }
 
-
+        // ======= CONSTRUCTOR =======
         public HomePageViewModel(ProductService productService)
         {
-            this._productService = productService;
-            LoadProductsCommand = new AsyncRelayCommand(GetProductListAsync);
-            ToLoginPageCommand = new AsyncRelayCommand(ToLoginPageAsync);
-            _productList = new ObservableCollection<Product>();
-            GoToDetailCommand = new AsyncRelayCommand<string>(GoToDetailAsync);
+            _productService = productService;
 
+            _productList = new ObservableCollection<Product>();
+            _searchSuggestions = new ObservableCollection<Product>();
+
+            LoadProductsCommand = new AsyncRelayCommand(GetProductListAsync);
+            GoToDetailCommand = new AsyncRelayCommand<string>(GoToDetailAsync);
+            ToLoginPageCommand = new AsyncRelayCommand(ToLoginPageAsync);
+            SuggestionTappedCommand = new AsyncRelayCommand<Product>(OnSuggestionTappedAsync);
+
+            HideSuggestionsCommand = new RelayCommand(() => IsSuggestionsVisible = false);
         }
 
+        // ======= LOAD PRODUCT LIST =======
         private async Task GetProductListAsync()
         {
-            IsBusy = true;
-            //App.GlobalViewModel.IsGlobalLoading = true;
-            //App.GlobalViewModel.LoadingMessage = "Đang tải sản phẩm";
-
-            var productResp = await _productService.GetSingleNoSeperatorAsync<ApiResponse<DataPaging<Product>>>(APICONSTANT.PRODUCT.GET_LIST, $"?page={Page}&size={Size}");
-            ProductList.Clear();
-            if (productResp != null)
+            try
             {
-                await Task.Delay(100);
+                IsBusy = true;
+                var productResp = await _productService
+                    .GetSingleNoSeperatorAsync<ApiResponse<DataPaging<Product>>>(
+                        APICONSTANT.PRODUCT.GET_LIST, $"?page={Page}&size={Size}");
 
-                await MainThread.InvokeOnMainThreadAsync(() =>
+                ProductList.Clear();
+                if (productResp?.Data?.Content != null)
                 {
-                    var productList = productResp.Data?.Content;
-                    ProductList = new ObservableCollection<Product>(productList ?? []);
-
-                });
+                    await MainThread.InvokeOnMainThreadAsync(() =>
+                    {
+                        ProductList = new ObservableCollection<Product>(productResp.Data.Content);
+                    });
+                }
             }
-
-            IsBusy = false;
-            //App.GlobalViewModel.IsGlobalLoading = false;
-            //App.GlobalViewModel.LoadingMessage = "Đang tải sản phẩm";
-        }
-
-        private async Task ToLoginPageAsync()
-        {
-            await Shell.Current.GoToAsync($"///LoginPage");
-        }
-
-        private async Task GoToDetailAsync(string productId)
-        {
-            if (string.IsNullOrEmpty(productId))
+            finally
             {
+                IsBusy = false;
+            }
+        }
+
+        // ======= SEARCH FUNCTION =======
+        private async Task OnSearchTextChangedAsync(string keyword)
+        {
+            if (string.IsNullOrWhiteSpace(keyword))
+            {
+                IsSuggestionsVisible = false;
+                SearchSuggestions.Clear();
                 return;
             }
 
+            // Gọi API search
+            var resp = await _productService.SearchProductsAsync(keyword, 8);
+
+            // ✅ Ghi log ra console (để kiểm tra dữ liệu trả về)
+            if (resp != null)
+            {
+                Console.WriteLine($"[Search] Keyword: {keyword}");
+                Console.WriteLine($"[Search] Code: {resp.Code}");
+                Console.WriteLine($"[Search] Message: {resp.Message}");
+                Console.WriteLine($"[Search] Data count: {resp.Data?.Count ?? 0}");
+
+                if (resp.Data != null)
+                {
+                    foreach (var item in resp.Data)
+                    {
+                        Console.WriteLine($" - {item.ProductID} | {item.Name} | {item.Price} | {item.Thumbnail}");
+                    }
+                }
+            }
+            else
+            {
+                Console.WriteLine($"[Search] Response null for keyword '{keyword}'");
+            }
+
+            // Cập nhật UI
+            if (resp?.Data != null && resp.Data.Any())
+            {
+                SearchSuggestions = new ObservableCollection<Product>(resp.Data);
+                IsSuggestionsVisible = true;
+            }
+            else
+            {
+                IsSuggestionsVisible = false;
+                SearchSuggestions.Clear();
+            }
+        }
+
+
+        // ======= CLICK ITEM GỢI Ý =======
+        private async Task OnSuggestionTappedAsync(Product product)
+        {
+            if (product == null) return;
+            Console.WriteLine($"[Tap] Product tapped: {product.ProductID} - {product.Name}");
+            IsSuggestionsVisible = false;
+            await GoToDetailAsync(product.ProductID);
+        }
+
+        // ======= DETAIL NAVIGATION =======
+        private async Task GoToDetailAsync(string productId)
+        {
+            if (string.IsNullOrEmpty(productId))
+                return;
+
             await Shell.Current.GoToAsync(nameof(ProductDetailPage), true, new Dictionary<string, object>
-    {
-        { "ProductID", productId }
-    });
+            {
+                { "ProductID", productId }
+            });
+        }
+
+        // ======= LOGIN PAGE =======
+        private async Task ToLoginPageAsync()
+        {
+            await Shell.Current.GoToAsync($"///LoginPage");
         }
     }
 }

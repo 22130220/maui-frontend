@@ -30,4 +30,21 @@ public partial class HomePage : ContentPage
             await vm.LoadProductsCommand.ExecuteAsync(null);
         }
     }
+
+    private async void OnSearchCompleted(object sender, EventArgs e)
+    {
+        if (BindingContext is not HomePageViewModel vm)
+            return;
+
+        vm.IsSuggestionsVisible = false;
+        var keyword = vm.SearchText?.Trim();
+        if (string.IsNullOrWhiteSpace(keyword))
+            return;
+
+        Console.WriteLine($"[Enter] Navigating to SearchResultsPage with keyword: {keyword}");
+        await Shell.Current.GoToAsync(nameof(SearchResultsPage), true, new Dictionary<string, object>
+    {
+        { "Keyword", keyword }
+    });
+    }
 }
