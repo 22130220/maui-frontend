@@ -23,11 +23,6 @@ namespace MauiFrontend.Services
             {
                 var url = $"{APICONSTANT.PRODUCT.DETAIL}{id}";
                 var result = await GetSingleAsync<ApiResponse<ProductDetail>>(url);
-
-                Console.WriteLine($"[HTTP] GET {url}");
-                Console.WriteLine($"[HTTP] Response JSON: {JsonSerializer.Serialize(result)}");
-                Console.WriteLine($"[HTTP] Response Result: {JsonSerializer.Serialize(result?.Data)}");
-
                 return result?.Data;
             }
             catch (Exception ex)
@@ -35,6 +30,19 @@ namespace MauiFrontend.Services
                 System.Diagnostics.Debug.WriteLine($"[ERROR] GetByIdAsync: {ex.Message}");
                 return null;
             }
+        }
+
+        public async Task<ApiResponse<List<Product>>> SearchProductsAsync(string keyword, int? size = null)
+        {
+            if (string.IsNullOrWhiteSpace(keyword))
+                return new ApiResponse<List<Product>> { Code = 200, Data = new List<Product>() };
+
+            string url = $"{APICONSTANT.PRODUCT.SEARCH}?keyword={Uri.EscapeDataString(keyword)}";
+            if (size != null)
+                url += $"&size={size}";
+
+            var result = await GetSingleNoSeperatorAsync<ApiResponse<List<Product>>>(url);
+            return result!;
         }
     }
 }
