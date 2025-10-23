@@ -25,10 +25,10 @@ public partial class HomePage : ContentPage
         //// viết logic xử lý điều kiện ở đây
         //await Shell.Current.GoToAsync(nameof(LoginPage));
 
-        if (BindingContext is HomePageViewModel vm)
-        {
-            await vm.LoadProductsCommand.ExecuteAsync(null);
-        }
+        //if (BindingContext is HomePageViewModel vm)
+        //{
+        //    await vm.LoadProductsCommand.ExecuteAsync(null);
+        //}
     }
 
     private async void OnSearchCompleted(object sender, EventArgs e)

@@ -10,12 +10,16 @@
 
     <!-- DÙNG GRID để chồng lớp overlay -->
     <Grid>
-
         <!-- LỚP 1: TOÀN BỘ NỘI DUNG CHÍNH -->
-        <ScrollView>
-            <VerticalStackLayout Padding="14" Spacing="20">
-
-                <!-- HEADER -->
+        <CollectionView Grid.Row="1"
+                ItemsSource="{Binding ProductList}"
+                ItemsLayout="VerticalGrid, 2"
+                SelectionMode="None"
+                RemainingItemsThreshold="2"
+                RemainingItemsThresholdReachedCommand="{Binding LoadProductsCommand}">
+            <CollectionView.Header>
+                <VerticalStackLayout Padding="14" Spacing="20">
+                    <!-- HEADER -->
                 <Grid ColumnDefinitions="*,Auto">
                     <VerticalStackLayout>
                         <Label Text="Explore What"
@@ -152,31 +156,30 @@
 
                 <!-- POPULAR SECTION -->
                 <Grid RowDefinitions="Auto,Auto">
-                    <Grid Grid.Row="0" ColumnDefinitions="*,Auto" Margin="0,5,0,10">
-                        <Label Text="Popular"
+                        <Grid Grid.Row="0" ColumnDefinitions="*,Auto" Margin="0,5,0,10">
+                            <Label Text="Popular"
                                FontSize="18"
                                FontAttributes="Bold"
                                TextColor="#111"/>
-                        <HorizontalStackLayout
+                            <HorizontalStackLayout
                             Grid.Column="1"
                             Spacing="4"
                             HorizontalOptions="End"
                             VerticalOptions="Center">
-                            <Label Text="See all"
+                                <Label Text="See all"
                                    FontSize="14"
                                    TextColor="#F4A30B"
                                    VerticalOptions="Center"/>
-                            <mi:MauiIcon
+                                <mi:MauiIcon
                                 Icon="{mi:Material Icon=ArrowRightAlt, IconColor=#F4A30B, IconSize=16}"
                                 VerticalOptions="Center"/>
-                        </HorizontalStackLayout>
+                            </HorizontalStackLayout>
+                        </Grid>
                     </Grid>
 
-                    <CollectionView Grid.Row="1"
-                                    ItemsSource="{Binding ProductList}"
-                                    ItemsLayout="VerticalGrid, 2"
-                                    SelectionMode="None">
-                        <CollectionView.ItemTemplate>
+                </VerticalStackLayout>
+            </CollectionView.Header>
+            <CollectionView.ItemTemplate>
                             <DataTemplate>
                                 <Border
                                     BackgroundColor="#FFFDF9"
@@ -253,11 +256,14 @@
                                 </Border>
                             </DataTemplate>
                         </CollectionView.ItemTemplate>
-                    </CollectionView>
-                </Grid>
-
-            </VerticalStackLayout>
-        </ScrollView>
+                    
+          
+        <CollectionView.Footer>
+            <StackLayout Padding="10" HorizontalOptions="Center">
+                <ActivityIndicator IsRunning="{Binding IsBusy}" IsVisible="{Binding IsBusy}" />
+            </StackLayout>
+        </CollectionView.Footer>
+        </CollectionView>
 
         <!-- LỚP 2: GỢI Ý TÌM KIẾM (OVERLAY) -->
         <AbsoluteLayout
