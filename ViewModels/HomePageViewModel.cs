@@ -13,12 +13,12 @@ namespace MauiFrontend.ViewModels
         private readonly ProductService _productService;
 
         private bool _isBusy;
-        private ObservableCollection<Product> _productList;
         private ObservableCollection<Product> _searchSuggestions;
         private bool _isSuggestionsVisible;
         private string _searchText = string.Empty;
         private int _page = 1;
-        private int _size = 20;
+        private int _size = 10;
+        private int _totalPages = 0;
 
         // ======= PROPERTIES =======
         public bool IsBusy
@@ -39,11 +39,7 @@ namespace MauiFrontend.ViewModels
             set => SetProperty(ref _size, value);
         }
 
-        public ObservableCollection<Product> ProductList
-        {
-            get => _productList;
-            set => SetProperty(ref _productList, value);
-        }
+        public ObservableCollection<Product> ProductList { get; set; }
 
         public ObservableCollection<Product> SearchSuggestions
         {
@@ -80,7 +76,7 @@ namespace MauiFrontend.ViewModels
         {
             _productService = productService;
 
-            _productList = new ObservableCollection<Product>();
+            ProductList = new ObservableCollection<Product>();
             _searchSuggestions = new ObservableCollection<Product>();
 
             LoadProductsCommand = new AsyncRelayCommand(GetProductListAsync);
@@ -94,19 +90,22 @@ namespace MauiFrontend.ViewModels
         // ======= LOAD PRODUCT LIST =======
         private async Task GetProductListAsync()
         {
+            if (IsBusy) return;
+            if (_totalPages == Page) return;
             try
             {
                 IsBusy = true;
                 var productResp = await _productService
                     .GetSingleNoSeperatorAsync<ApiResponse<DataPaging<Product>>>(
-                        APICONSTANT.PRODUCT.GET_LIST, $"?page={Page}&size={Size}");
+                        APICONSTANT.PRODUCT.GET_LIST, $"?page={Page++}&size={Size}");
 
-                ProductList.Clear();
-                if (productResp?.Data?.Content != null)
+                if (productResp?.Data != null)
                 {
-                    await MainThread.InvokeOnMainThreadAsync(() =>
+                    await Task.Run(() =>
                     {
-                        ProductList = new ObservableCollection<Product>(productResp.Data.Content);
+                        _totalPages = productResp?.Data.TotalPages ?? 0;
+                        foreach (var p in productResp?.Data?.Content ?? [])
+                            ProductList.Add(p);
                     });
                 }
             }
