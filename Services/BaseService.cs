@@ -6,7 +6,7 @@ namespace MauiFrontend.Services
 {
     public class BaseService
     {
-        private readonly Https _https;
+        protected readonly Https _https;
 
         public BaseService(Https https)
         {

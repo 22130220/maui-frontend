@@ -6,7 +6,7 @@ namespace MauiFrontend.Http
 {
     public class Https
     {
-        private readonly HttpClient _httpClient;
+        protected readonly HttpClient _httpClient;
 
         public Https(HttpClient httpClient)
         {

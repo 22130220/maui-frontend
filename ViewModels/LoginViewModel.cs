@@ -3,6 +3,7 @@ using CommunityToolkit.Mvvm.Input;
 using MauiFrontend.Constants;
 using MauiFrontend.Models;
 using MauiFrontend.Services;
+using MauiFrontend.Views;
 using System.Windows.Input;
 
 namespace MauiFrontend.ViewModels
@@ -23,13 +24,17 @@ namespace MauiFrontend.ViewModels
         public bool IsLoading { get => _isLoading; set => SetProperty(ref _isLoading, value); }
         public bool IsLandscape { get => _isLandscape; set => SetProperty(ref _isLandscape, value); }
         public bool IsDisableLandScape { get => _isDisableLandScape; set => SetProperty(ref _isDisableLandScape, value); }
-        public ICommand LoginCommand { get; private set; }
 
-        public LoginViewModel(UserService userService, ProductService productService) 
+        public ICommand LoginCommand { get; private set; }
+        public ICommand ForgotPasswordCommand { get; private set; }
+
+        public LoginViewModel(UserService userService, ProductService productService)
         {
-            LoginCommand = new AsyncRelayCommand(Login);
             _userService = userService;
             _productService = productService;
+
+            LoginCommand = new AsyncRelayCommand(Login);
+            ForgotPasswordCommand = new AsyncRelayCommand(ForgotPassword);
         }
 
         private async Task Login()
@@ -41,5 +46,9 @@ namespace MauiFrontend.ViewModels
             }
         }
 
+        private async Task ForgotPassword()
+        {
+            await Shell.Current.GoToAsync(nameof(ForgotPasswordPage));
+        }
     }
 }
