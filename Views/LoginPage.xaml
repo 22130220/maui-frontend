@@ -103,7 +103,7 @@
                                  FontSize="12"
                                  TextColor="#3498DB"
                                  HorizontalOptions="End"
-                                 Margin="0,5,0,0">      
+                                 Margin="0,5,0,0">  
                             <Label.GestureRecognizers>
                                 <TapGestureRecognizer Command="{Binding ForgotPasswordCommand}" />
                             </Label.GestureRecognizers>
