@@ -73,7 +73,7 @@ namespace MauiFrontend
             builder.Services.AddTransient<AccountPageViewModel>();
             builder.Services.AddTransient<ProductDetailViewModel>();
             builder.Services.AddTransient<SearchResultsViewModel>();
-            builder.Services.AddTransient<CartPageViewModel>();
+            builder.Services.AddTransient<ForgotPasswordViewModel>();
 
             // Page
             builder.Services.AddTransient<LoginPage>();
@@ -81,7 +81,7 @@ namespace MauiFrontend
             builder.Services.AddTransient<AccountPage>();
             builder.Services.AddTransient<ProductDetailPage>();
             builder.Services.AddTransient<SearchResultsPage>();
-            builder.Services.AddTransient<CartPage>();
+            builder.Services.AddTransient<ForgotPasswordPage>();
 
 
 

@@ -9,6 +9,7 @@ namespace MauiFrontend
             InitializeComponent();
             Routing.RegisterRoute(nameof(ProductDetailPage), typeof(ProductDetailPage));
             Routing.RegisterRoute(nameof(SearchResultsPage), typeof(SearchResultsPage));
+            Routing.RegisterRoute(nameof(ForgotPasswordPage), typeof(ForgotPasswordPage));
         }
     }
 }

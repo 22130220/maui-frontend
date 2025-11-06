@@ -98,16 +98,17 @@
                         </Border>
 
                         <!-- Quên mật khẩu -->
-                        <Label 
-                            Text="Quên mật khẩu?"
-                            FontSize="12"
-                            TextColor="#3498DB"
-                            HorizontalOptions="End"
-                            Margin="0,5,0,0">
+                        <Label
+                                 Text="Quên mật khẩu?"
+                                 FontSize="12"
+                                 TextColor="#3498DB"
+                                 HorizontalOptions="End"
+                                 Margin="0,5,0,0">      
                             <Label.GestureRecognizers>
-                                <TapGestureRecognizer />
+                                <TapGestureRecognizer Command="{Binding ForgotPasswordCommand}" />
                             </Label.GestureRecognizers>
                         </Label>
+
                     </VerticalStackLayout>
                 </Border>
 
@@ -252,16 +253,17 @@
                             </Border>
 
                             <!-- Quên mật khẩu -->
-                            <Label 
-                                Text="Quên mật khẩu?"
-                                FontSize="12"
-                                TextColor="#3498DB"
-                                HorizontalOptions="End"
-                                Margin="0,5,0,0">
+                            <Label
+                                     Text="Quên mật khẩu?"
+                                     FontSize="12"
+                                     TextColor="#3498DB"
+                                     HorizontalOptions="End"
+                                     Margin="0,5,0,0">      
                                 <Label.GestureRecognizers>
-                                    <TapGestureRecognizer />
+                                    <TapGestureRecognizer Command="{Binding ForgotPasswordCommand}" />
                                 </Label.GestureRecognizers>
                             </Label>
+
                         </VerticalStackLayout>
                     </Border>
 
