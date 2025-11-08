@@ -12,167 +12,166 @@
     <Grid>
         <!-- LỚP 1: TOÀN BỘ NỘI DUNG CHÍNH -->
         <CollectionView Grid.Row="1"
-                ItemsSource="{Binding ProductList}"
-                ItemsLayout="VerticalGrid, 2"
-                SelectionMode="None"
-                RemainingItemsThreshold="2"
-                RemainingItemsThresholdReachedCommand="{Binding LoadProductsCommand}">
+                        ItemsSource="{Binding ProductList}"
+                        ItemsLayout="VerticalGrid, 2"
+                        SelectionMode="None"
+                        RemainingItemsThreshold="2"
+                        RemainingItemsThresholdReachedCommand="{Binding LoadProductsCommand}">
             <CollectionView.Header>
-                <VerticalStackLayout Padding="14" Spacing="20">
+                <VerticalStackLayout Padding="14"
+                                     Spacing="20">
                     <!-- HEADER -->
-                <Grid ColumnDefinitions="*,Auto">
-                    <VerticalStackLayout>
-                        <Label Text="Explore What"
-                               FontSize="26"
-                               FontAttributes="Bold"
-                               TextColor="#111"/>
-                        <Label Text="Your Home Needs"
-                               FontSize="26"
-                               FontAttributes="Bold"
-                               TextColor="#111"/>
-                    </VerticalStackLayout>
-                </Grid>
-
-                <!-- SEARCH BAR -->
-                <!-- SEARCH BAR -->
-                <Border
-                    x:Name="SearchBar"
-                    StrokeShape="RoundRectangle 12"
-                    StrokeThickness="0"
-                    BackgroundColor="#F5F5F5"
-                    Padding="12,6"
-                    Margin="0,8,0,8">
-
-                    <Grid ColumnDefinitions="Auto,*"
-                          ColumnSpacing="8"
-                          VerticalOptions="Center">
-
-                        <!-- Icon tìm kiếm -->
-                        <mi:MauiIcon
-                            Grid.Column="0"
-                            Icon="{mi:Material Icon=Search, IconColor=#888, IconSize=20}"
-                            VerticalOptions="Center"
-                            HorizontalOptions="Center"/>
-
-                        <!-- Ô nhập từ khóa -->
-                        <Entry
-                            Grid.Column="1"
-                            Text="{Binding SearchText, Mode=TwoWay}"
-                            Placeholder="Nhập tên sản phẩm để tìm kiếm"
-                            FontSize="14"
-                            PlaceholderColor="#999999"
-                            TextColor="#222222"
-                            BackgroundColor="Transparent"
-                            VerticalOptions="Center"
-                            HeightRequest="32"
-                            Margin="0"
-                            Completed="OnSearchCompleted" />
-                    </Grid>
-                </Border>
-
-
-                <!-- CATEGORIES -->
-                <Grid RowDefinitions="Auto,Auto">
-                    <Grid Grid.Row="0" ColumnDefinitions="*,Auto" Margin="0,5,0,10">
-                        <Label Text="Categories"
-                               FontSize="18"
-                               FontAttributes="Bold"
-                               TextColor="#111"/>
-                        <HorizontalStackLayout
-                            Grid.Column="1"
-                            Spacing="4"
-                            HorizontalOptions="End"
-                            VerticalOptions="Center">
-                            <Label
-                                Text="See all"
-                                FontSize="14"
-                                TextColor="#F4A30B"
-                                VerticalOptions="Center"/>
-                            <mi:MauiIcon
-                                Icon="{mi:Material Icon=ArrowRightAlt, IconColor=#F4A30B, IconSize=20}"
-                                VerticalOptions="Center"/>
-                            <HorizontalStackLayout.GestureRecognizers>
-                                <TapGestureRecognizer Command="{Binding GoToCategoryPageCommand}" />
-                            </HorizontalStackLayout.GestureRecognizers>
-                        </HorizontalStackLayout>
-                    </Grid>
-
-                    <CollectionView Grid.Row="1"
-                                    ItemsLayout="HorizontalList"
-                                    HeightRequest="100"
-                                    ItemsSource="{Binding CategoryList}">
-                        <CollectionView.ItemTemplate>
-                            <DataTemplate>
-                                <VerticalStackLayout WidthRequest="100"
-                                                     HorizontalOptions="Center"
-                                                     Spacing="5">
-                                    <Frame CornerRadius="20"
-                                           HeightRequest="60"
-                                           WidthRequest="60"
-                                           BackgroundColor="#FAFAFA"
-                                           HorizontalOptions="Center"
-                                           HasShadow="False">
-                                        <Image Source="{Binding Icon}" Aspect="AspectFit" />
-                                    </Frame>
-                                    <Label Text="{Binding Name}"
-                                           FontSize="14"
-                                           HorizontalOptions="Center"
-                                           TextColor="#111"/>
-                                </VerticalStackLayout>
-                            </DataTemplate>
-                        </CollectionView.ItemTemplate>
-                    </CollectionView>
-                </Grid>
-
-                <!-- PROMO BANNER -->
-                <Frame BackgroundColor="#EAF1FF"
-                       CornerRadius="16"
-                       Padding="15"
-                       HasShadow="False">
-                    <Grid ColumnDefinitions="*,Auto" VerticalOptions="Center">
-                        <VerticalStackLayout VerticalOptions="Center">
-                            <Label Text="High quality sofa"
-                                   FontSize="16"
-                                   TextColor="#111"
-                                   FontAttributes="Bold"/>
-                            <Label Text="started"
-                                   FontSize="16"
-                                   TextColor="#111"
-                                   FontAttributes="Bold"/>
-                            <Label Text="70% off"
+                    <Grid ColumnDefinitions="*,Auto">
+                        <VerticalStackLayout>
+                            <Label Text="Explore What"
                                    FontSize="26"
-                                   TextColor="#1E88E5"
-                                   FontAttributes="Bold"/>
-                            <Label Text="See all items →"
-                                   FontSize="14"
-                                   TextColor="#F4A30B"/>
+                                   FontAttributes="Bold"
+                                   TextColor="#111" />
+                            <Label Text="Your Home Needs"
+                                   FontSize="26"
+                                   FontAttributes="Bold"
+                                   TextColor="#111" />
                         </VerticalStackLayout>
-                        <Image Source="sofa_banner.png"
-                               HeightRequest="120"
-                               Aspect="AspectFit"
-                               Grid.Column="1"/>
                     </Grid>
-                </Frame>
 
-                <!-- POPULAR SECTION -->
-                <Grid RowDefinitions="Auto,Auto">
-                        <Grid Grid.Row="0" ColumnDefinitions="*,Auto" Margin="0,5,0,10">
-                            <Label Text="Popular"
-                               FontSize="18"
-                               FontAttributes="Bold"
-                               TextColor="#111"/>
-                            <HorizontalStackLayout
-                            Grid.Column="1"
-                            Spacing="4"
-                            HorizontalOptions="End"
-                            VerticalOptions="Center">
-                                <Label Text="See all"
+                    <!-- SEARCH BAR -->
+                    <!-- SEARCH BAR -->
+                    <Border x:Name="SearchBar"
+                            StrokeShape="RoundRectangle 12"
+                            StrokeThickness="0"
+                            BackgroundColor="#F5F5F5"
+                            Padding="12,6"
+                            Margin="0,8,0,8">
+
+                        <Grid ColumnDefinitions="Auto,*"
+                              ColumnSpacing="8"
+                              VerticalOptions="Center">
+
+                            <!-- Icon tìm kiếm -->
+                            <mi:MauiIcon Grid.Column="0"
+                                         Icon="{mi:Material Icon=Search, IconColor=#888, IconSize=20}"
+                                         VerticalOptions="Center"
+                                         HorizontalOptions="Center" />
+
+                            <!-- Ô nhập từ khóa -->
+                            <Entry Grid.Column="1"
+                                   Text="{Binding SearchText, Mode=TwoWay}"
+                                   Placeholder="Nhập tên sản phẩm để tìm kiếm"
                                    FontSize="14"
-                                   TextColor="#F4A30B"
-                                   VerticalOptions="Center"/>
-                                <mi:MauiIcon
-                                Icon="{mi:Material Icon=ArrowRightAlt, IconColor=#F4A30B, IconSize=16}"
-                                VerticalOptions="Center"/>
+                                   PlaceholderColor="#999999"
+                                   TextColor="#222222"
+                                   BackgroundColor="Transparent"
+                                   VerticalOptions="Center"
+                                   HeightRequest="32"
+                                   Margin="0"
+                                   Completed="OnSearchCompleted" />
+                        </Grid>
+                    </Border>
+
+
+                    <!-- CATEGORIES -->
+                    <Grid RowDefinitions="Auto,Auto">
+                        <Grid Grid.Row="0"
+                              ColumnDefinitions="*,Auto"
+                              Margin="0,5,0,10">
+                            <Label Text="Categories"
+                                   FontSize="18"
+                                   FontAttributes="Bold"
+                                   TextColor="#111" />
+                            <HorizontalStackLayout Grid.Column="1"
+                                                   Spacing="4"
+                                                   HorizontalOptions="End"
+                                                   VerticalOptions="Center">
+                                <Label Text="See all"
+                                       FontSize="14"
+                                       TextColor="#F4A30B"
+                                       VerticalOptions="Center" />
+                                <mi:MauiIcon Icon="{mi:Material Icon=ArrowRightAlt, IconColor=#F4A30B, IconSize=20}"
+                                             VerticalOptions="Center" />
+                                <HorizontalStackLayout.GestureRecognizers>
+                                    <TapGestureRecognizer Command="{Binding GoToCategoryPageCommand}" />
+                                </HorizontalStackLayout.GestureRecognizers>
+                            </HorizontalStackLayout>
+                        </Grid>
+
+                        <CollectionView Grid.Row="1"
+                                        ItemsLayout="HorizontalList"
+                                        HeightRequest="100"
+                                        ItemsSource="{Binding CategoryList}">
+                            <CollectionView.ItemTemplate>
+                                <DataTemplate>
+                                    <VerticalStackLayout WidthRequest="100"
+                                                         HorizontalOptions="Center"
+                                                         Spacing="5">
+                                        <Frame CornerRadius="20"
+                                               HeightRequest="60"
+                                               WidthRequest="60"
+                                               BackgroundColor="#FAFAFA"
+                                               HorizontalOptions="Center"
+                                               HasShadow="False">
+                                            <Image Source="{Binding Icon}"
+                                                   Aspect="AspectFit" />
+                                        </Frame>
+                                        <Label Text="{Binding Name}"
+                                               FontSize="14"
+                                               HorizontalOptions="Center"
+                                               TextColor="#111" />
+                                    </VerticalStackLayout>
+                                </DataTemplate>
+                            </CollectionView.ItemTemplate>
+                        </CollectionView>
+                    </Grid>
+
+                    <!-- PROMO BANNER -->
+                    <Frame BackgroundColor="#EAF1FF"
+                           CornerRadius="16"
+                           Padding="15"
+                           HasShadow="False">
+                        <Grid ColumnDefinitions="*,Auto"
+                              VerticalOptions="Center">
+                            <VerticalStackLayout VerticalOptions="Center">
+                                <Label Text="High quality sofa"
+                                       FontSize="16"
+                                       TextColor="#111"
+                                       FontAttributes="Bold" />
+                                <Label Text="started"
+                                       FontSize="16"
+                                       TextColor="#111"
+                                       FontAttributes="Bold" />
+                                <Label Text="70% off"
+                                       FontSize="26"
+                                       TextColor="#1E88E5"
+                                       FontAttributes="Bold" />
+                                <Label Text="See all items →"
+                                       FontSize="14"
+                                       TextColor="#F4A30B" />
+                            </VerticalStackLayout>
+                            <Image Source="sofa_banner.png"
+                                   HeightRequest="120"
+                                   Aspect="AspectFit"
+                                   Grid.Column="1" />
+                        </Grid>
+                    </Frame>
+
+                    <!-- POPULAR SECTION -->
+                    <Grid RowDefinitions="Auto,Auto">
+                        <Grid Grid.Row="0"
+                              ColumnDefinitions="*,Auto"
+                              Margin="0,5,0,10">
+                            <Label Text="Popular"
+                                   FontSize="18"
+                                   FontAttributes="Bold"
+                                   TextColor="#111" />
+                            <HorizontalStackLayout Grid.Column="1"
+                                                   Spacing="4"
+                                                   HorizontalOptions="End"
+                                                   VerticalOptions="Center">
+                                <Label Text="See all"
+                                       FontSize="14"
+                                       TextColor="#F4A30B"
+                                       VerticalOptions="Center" />
+                                <mi:MauiIcon Icon="{mi:Material Icon=ArrowRightAlt, IconColor=#F4A30B, IconSize=16}"
+                                             VerticalOptions="Center" />
                             </HorizontalStackLayout>
                         </Grid>
                     </Grid>
@@ -180,142 +179,144 @@
                 </VerticalStackLayout>
             </CollectionView.Header>
             <CollectionView.ItemTemplate>
-                            <DataTemplate>
-                                <Border
-                                    BackgroundColor="#FFFDF9"
-                                    StrokeShape="RoundRectangle 15"
-                                    StrokeThickness="1"
-                                    Stroke="#F3F3F3"
-                                    Margin="6"
-                                    Padding="5">
-                                    <Border.GestureRecognizers>
-                                        <TapGestureRecognizer 
-                                            Command="{Binding Source={RelativeSource AncestorType={x:Type vm:HomePageViewModel}}, Path=GoToDetailCommand}"
-                                            CommandParameter="{Binding ProductID}" />
-                                    </Border.GestureRecognizers>
+                <DataTemplate>
+                    <Border BackgroundColor="#FFFDF9"
+                            StrokeShape="RoundRectangle 15"
+                            StrokeThickness="1"
+                            Stroke="#F3F3F3"
+                            Margin="6"
+                            Padding="5">
+                        <Border.GestureRecognizers>
+                            <TapGestureRecognizer Command="{Binding Source={RelativeSource AncestorType={x:Type vm:HomePageViewModel}}, Path=GoToDetailCommand}"
+                                                  CommandParameter="{Binding ProductID}" />
+                        </Border.GestureRecognizers>
 
-                                    <Grid RowDefinitions="Auto,Auto,Auto">
+                        <Grid RowDefinitions="Auto,Auto,Auto">
 
-                                        <!-- Ảnh -->
-                                        <Border Grid.Row="0"
-                                                StrokeShape="RoundRectangle 12"
-                                                StrokeThickness="0"
-                                                Margin="0,0,0,8"
-                                                BackgroundColor="#FAFAFA">
-                                            <Image 
-                                                Source="{Binding Thumbnail}"
-                                                Aspect="AspectFill"
-                                                HorizontalOptions="Fill"
-                                                VerticalOptions="Fill" />
-                                        </Border>
+                            <!-- Ảnh -->
+                            <Border Grid.Row="0"
+                                    StrokeShape="RoundRectangle 12"
+                                    StrokeThickness="0"
+                                    Margin="0,0,0,8"
+                                    BackgroundColor="#FAFAFA">
+                                <Image Source="{Binding Thumbnail}"
+                                       Aspect="AspectFill"
+                                       HorizontalOptions="Fill"
+                                       VerticalOptions="Fill" />
+                            </Border>
 
-                                        <!-- Nút + góc phải -->
-                                        <Grid Grid.Row="0">
-                                            <Border
-                                                BackgroundColor="#FFFFFF"
-                                                StrokeShape="RoundRectangle 12"
-                                                Padding="4"
-                                                HeightRequest="26"
-                                                WidthRequest="26"
-                                                HorizontalOptions="End"
-                                                VerticalOptions="Start"
-                                                Margin="0,6,6,0">
-                                                <Border.Shadow>
-                                                    <Shadow Brush="#000000"
-                                                            Opacity="0.15"
-                                                            Radius="5"
-                                                            Offset="0,2"/>
-                                                </Border.Shadow>
-                                                <mi:MauiIcon
-                                                    Icon="{mi:Material Icon=Add, IconColor=#F4A30B, IconSize=14}"
-                                                    VerticalOptions="Center"
-                                                    HorizontalOptions="Center"/>
-                                            </Border>
-                                        </Grid>
-
-                                        <!-- Tên -->
-                                        <Label Grid.Row="1"
-                                               Text="{Binding Name}"
-                                               FontSize="14"
-                                               FontAttributes="Bold"
-                                               TextColor="#222"
-                                               HorizontalOptions="Center"
-                                               LineBreakMode="TailTruncation"
-                                               MaxLines="1"
-                                               Margin="0,2,0,0"/>
-
-                                        <!-- Giá -->
-                                        <Label Grid.Row="2"
-                                               Text="{Binding Price, StringFormat='{0:N0} đ'}"
-                                               FontSize="14"
-                                               FontAttributes="Bold"
-                                               TextColor="#E53935"
-                                               HorizontalOptions="Center"
-                                               Margin="0,0,0,2"/>
-                                    </Grid>
+                            <!-- Nút + góc phải -->
+                            <Grid Grid.Row="0">
+                                <Border BackgroundColor="#FFFFFF"
+                                        StrokeShape="RoundRectangle 12"
+                                        Padding="4"
+                                        HeightRequest="26"
+                                        WidthRequest="26"
+                                        HorizontalOptions="End"
+                                        VerticalOptions="Start"
+                                        Margin="0,6,6,0">
+                                    <Border.Shadow>
+                                        <Shadow Brush="#000000"
+                                                Opacity="0.15"
+                                                Radius="5"
+                                                Offset="0,2" />
+                                    </Border.Shadow>
+                                    <mi:MauiIcon Icon="{mi:Material Icon=Add, IconColor=#F4A30B, IconSize=14}"
+                                                 VerticalOptions="Center"
+                                                 HorizontalOptions="Center" />
                                 </Border>
-                            </DataTemplate>
-                        </CollectionView.ItemTemplate>
-                    
-          
-        <CollectionView.Footer>
-            <StackLayout Padding="10" HorizontalOptions="Center">
-                <ActivityIndicator IsRunning="{Binding IsBusy}" IsVisible="{Binding IsBusy}" />
-            </StackLayout>
-        </CollectionView.Footer>
+                            </Grid>
+
+                            <!-- Tên -->
+                            <Label Grid.Row="1"
+                                   Text="{Binding Name}"
+                                   FontSize="14"
+                                   FontAttributes="Bold"
+                                   TextColor="#222"
+                                   HorizontalOptions="Center"
+                                   LineBreakMode="TailTruncation"
+                                   MaxLines="1"
+                                   Margin="0,2,0,0" />
+
+                            <!-- Giá -->
+                            <Label Grid.Row="2"
+                                   Text="{Binding Price, StringFormat='{0:N0} đ'}"
+                                   FontSize="14"
+                                   FontAttributes="Bold"
+                                   TextColor="#E53935"
+                                   HorizontalOptions="Center"
+                                   Margin="0,0,0,2" />
+                        </Grid>
+                    </Border>
+                </DataTemplate>
+            </CollectionView.ItemTemplate>
+
+
+            <CollectionView.Footer>
+                <StackLayout Padding="10"
+                             HorizontalOptions="Center">
+                    <ActivityIndicator IsRunning="{Binding IsBusy}"
+                                       IsVisible="{Binding IsBusy}" />
+                </StackLayout>
+            </CollectionView.Footer>
         </CollectionView>
 
         <!-- LỚP 2: GỢI Ý TÌM KIẾM (OVERLAY) -->
-        <AbsoluteLayout
-        VerticalOptions="Start"
-        HorizontalOptions="Fill"
-        InputTransparent="False"
-        IsVisible="{Binding IsSuggestionsVisible}">
+        <AbsoluteLayout VerticalOptions="Start"
+                        HorizontalOptions="Fill"
+                        InputTransparent="False"
+                        IsVisible="{Binding IsSuggestionsVisible}">
 
-            <BoxView
-                AbsoluteLayout.LayoutBounds="0,0,1,1"
-                AbsoluteLayout.LayoutFlags="All"
-                BackgroundColor="Transparent">  
+            <BoxView AbsoluteLayout.LayoutBounds="0,0,1,1"
+                     AbsoluteLayout.LayoutFlags="All"
+                     BackgroundColor="Transparent">
                 <BoxView.GestureRecognizers>
                     <TapGestureRecognizer Command="{Binding HideSuggestionsCommand}" />
                 </BoxView.GestureRecognizers>
             </BoxView>
 
-            <CollectionView
-                AbsoluteLayout.LayoutBounds="0,170,1,300"
-                AbsoluteLayout.LayoutFlags="WidthProportional"
-                ItemsSource="{Binding SearchSuggestions}"
-                BackgroundColor="White"
-                SelectionMode="None"
-                Margin="14,0,14,0"
-                ZIndex="10"
-        >
+            <CollectionView AbsoluteLayout.LayoutBounds="0,170,1,300"
+                            AbsoluteLayout.LayoutFlags="WidthProportional"
+                            ItemsSource="{Binding SearchSuggestions}"
+                            BackgroundColor="White"
+                            SelectionMode="None"
+                            Margin="14,0,14,0"
+                            ZIndex="10">
                 <CollectionView.ItemTemplate>
                     <DataTemplate>
-                        <Border
-                    Padding="8"
-                    Margin="0,4"
-                    StrokeShape="RoundRectangle 10"
-                    StrokeThickness="0"
-                    BackgroundColor="#FFFFFF">
+                        <Border Padding="8"
+                                Margin="0,4"
+                                StrokeShape="RoundRectangle 10"
+                                StrokeThickness="0"
+                                BackgroundColor="#FFFFFF">
 
-                            <Grid ColumnDefinitions="Auto,*" ColumnSpacing="10">
-                                <Image Source="{Binding Thumbnail}" WidthRequest="48" HeightRequest="48" Aspect="AspectFill"/>
-                                <VerticalStackLayout Grid.Column="1" VerticalOptions="Center" Spacing="2">
-                                    <Label Text="{Binding Name}" FontSize="14" TextColor="#111" MaxLines="2"/>
-                                    <Label Text="{Binding Price, StringFormat='{0:N0} đ'}" FontSize="12" TextColor="#E53935"/>
+                            <Grid ColumnDefinitions="Auto,*"
+                                  ColumnSpacing="10">
+                                <Image Source="{Binding Thumbnail}"
+                                       WidthRequest="48"
+                                       HeightRequest="48"
+                                       Aspect="AspectFill" />
+                                <VerticalStackLayout Grid.Column="1"
+                                                     VerticalOptions="Center"
+                                                     Spacing="2">
+                                    <Label Text="{Binding Name}"
+                                           FontSize="14"
+                                           TextColor="#111"
+                                           MaxLines="2" />
+                                    <Label Text="{Binding Price, StringFormat='{0:N0} đ'}"
+                                           FontSize="12"
+                                           TextColor="#E53935" />
                                 </VerticalStackLayout>
                             </Grid>
 
                             <Border.GestureRecognizers>
-                                <TapGestureRecognizer
-                            Command="{Binding Source={RelativeSource AncestorType={x:Type vm:HomePageViewModel}}, Path=SuggestionTappedCommand}"
-                            CommandParameter="{Binding .}" />
+                                <TapGestureRecognizer Command="{Binding Source={RelativeSource AncestorType={x:Type vm:HomePageViewModel}}, Path=SuggestionTappedCommand}"
+                                                      CommandParameter="{Binding .}" />
                             </Border.GestureRecognizers>
                         </Border>
                     </DataTemplate>
                 </CollectionView.ItemTemplate>
             </CollectionView>
         </AbsoluteLayout>
-    </Grid>     
+    </Grid>
 </ContentPage>

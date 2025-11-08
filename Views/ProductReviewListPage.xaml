@@ -1,0 +1,388 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:mi="http://www.aathifmahir.com/dotnet/2022/maui/icons"
+             xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
+             xmlns:vm="clr-namespace:MauiFrontend.ViewModels"
+             xmlns:converters="clr-namespace:MauiFrontend.Converters"
+             x:Class="MauiFrontend.ViewModels.ProductReviewListPage"
+             Title="Đánh giá"
+             Shell.NavBarIsVisible="True"
+             Shell.TabBarIsVisible="False">
+
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <converters:AvatarSourceConverter x:Key="AvatarConverter" />
+            <converters:StarFilterColorConverter x:Key="StarFilterColorConverter" />
+            <converters:SortOrderColorConverter x:Key="SortOrderColorConverter" />
+            <converters:DateTimeFormatConverter x:Key="DateTimeFormatConverter" />
+        </ResourceDictionary>
+    </ContentPage.Resources>
+
+    <Grid>
+        <CollectionView Grid.Row="1"
+                        ItemsSource="{Binding Reviews}"
+                        SelectionMode="None"
+                        RemainingItemsThreshold="2"
+                        RemainingItemsThresholdReachedCommand="{Binding LoadMoreReviewCommand}">
+            <CollectionView.Header>
+                <VerticalStackLayout Padding="15"
+                                     Spacing="15">
+
+                    <!-- Summary Section -->
+                    <Border Stroke="#DDD"
+                            StrokeThickness="1"
+                            Padding="15"
+                            StrokeShape="RoundRectangle 12"
+                            BackgroundColor="#FAFAFA">
+                        <Grid ColumnSpacing="20"
+                              RowSpacing="0">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*" />
+                                <ColumnDefinition Width="*" />
+                            </Grid.ColumnDefinitions>
+
+                            <!-- Cột trái: Rating trung bình -->
+                            <VerticalStackLayout Grid.Column="0"
+                                                 Spacing="4"
+                                                 HorizontalOptions="Center"
+                                                 VerticalOptions="Center"
+                                                 Padding="0,0,15,0">
+                                <Label Text="{Binding SummaryReview.AvgRating, StringFormat='{0:F2}'}"
+                                       FontSize="36"
+                                       FontAttributes="Bold"
+                                       TextColor="#FF9800"
+                                       HorizontalOptions="Center" />
+                                <Label Text="{Binding StarsDisplay}"
+                                       FontSize="18"
+                                       TextColor="#FF9800"
+                                       HorizontalOptions="Center" />
+                                <Label Text="{Binding SummaryReview.TotalComments, StringFormat='{0} đánh giá'}"
+                                       FontSize="12"
+                                       TextColor="#666"
+                                       HorizontalOptions="Center" />
+                            </VerticalStackLayout>
+
+                            <!-- Cột phải: Phân bố rating theo số sao -->
+                            <VerticalStackLayout Grid.Column="1"
+                                                 Spacing="8"
+                                                 VerticalOptions="Center">
+
+                                <!-- 5 sao -->
+                                <HorizontalStackLayout Spacing="10">
+                                    <Label Text="5 ★"
+                                           WidthRequest="40"
+                                           FontSize="12"
+                                           TextColor="#666" />
+                                    <ProgressBar Progress="{Binding StarCount5Progress}"
+                                                 ProgressColor="#4CAF50"
+                                                 HeightRequest="8"
+                                                 VerticalOptions="Center"
+                                                 HorizontalOptions="FillAndExpand" />
+                                    <Label Text="{Binding SummaryReview.StarCount[5]}"
+                                           WidthRequest="30"
+                                           FontSize="12"
+                                           TextColor="#666"
+                                           HorizontalTextAlignment="End" />
+                                </HorizontalStackLayout>
+
+                                <!-- 4 sao -->
+                                <HorizontalStackLayout Spacing="10">
+                                    <Label Text="4 ★"
+                                           WidthRequest="40"
+                                           FontSize="12"
+                                           TextColor="#666" />
+                                    <ProgressBar Progress="{Binding StarCount4Progress}"
+                                                 ProgressColor="#8BC34A"
+                                                 HeightRequest="8"
+                                                 VerticalOptions="Center"
+                                                 HorizontalOptions="FillAndExpand" />
+                                    <Label Text="{Binding SummaryReview.StarCount[4]}"
+                                           WidthRequest="30"
+                                           FontSize="12"
+                                           TextColor="#666"
+                                           HorizontalTextAlignment="End" />
+                                </HorizontalStackLayout>
+
+                                <!-- 3 sao -->
+                                <HorizontalStackLayout Spacing="10">
+                                    <Label Text="3 ★"
+                                           WidthRequest="40"
+                                           FontSize="12"
+                                           TextColor="#666" />
+                                    <ProgressBar Progress="{Binding StarCount3Progress}"
+                                                 ProgressColor="#FFC107"
+                                                 HeightRequest="8"
+                                                 VerticalOptions="Center"
+                                                 HorizontalOptions="FillAndExpand" />
+                                    <Label Text="{Binding SummaryReview.StarCount[3]}"
+                                           WidthRequest="30"
+                                           FontSize="12"
+                                           TextColor="#666"
+                                           HorizontalTextAlignment="End" />
+                                </HorizontalStackLayout>
+
+                                <!-- 2 sao -->
+                                <HorizontalStackLayout Spacing="10">
+                                    <Label Text="2 ★"
+                                           WidthRequest="40"
+                                           FontSize="12"
+                                           TextColor="#666" />
+                                    <ProgressBar Progress="{Binding StarCount2Progress}"
+                                                 ProgressColor="#FF9800"
+                                                 HeightRequest="8"
+                                                 VerticalOptions="Center"
+                                                 HorizontalOptions="FillAndExpand" />
+                                    <Label Text="{Binding SummaryReview.StarCount[2]}"
+                                           WidthRequest="30"
+                                           FontSize="12"
+                                           TextColor="#666"
+                                           HorizontalTextAlignment="End" />
+                                </HorizontalStackLayout>
+
+                                <!-- 1 sao -->
+                                <HorizontalStackLayout Spacing="10">
+                                    <Label Text="1 ★"
+                                           WidthRequest="40"
+                                           FontSize="12"
+                                           TextColor="#666" />
+                                    <ProgressBar Progress="{Binding StarCount1Progress}"
+                                                 ProgressColor="#F44336"
+                                                 HeightRequest="8"
+                                                 VerticalOptions="Center"
+                                                 HorizontalOptions="FillAndExpand" />
+                                    <Label Text="{Binding SummaryReview.StarCount[1]}"
+                                           WidthRequest="30"
+                                           FontSize="12"
+                                           TextColor="#666"
+                                           HorizontalTextAlignment="End" />
+                                </HorizontalStackLayout>
+                            </VerticalStackLayout>
+                        </Grid>
+                    </Border>
+
+                    <!-- Filter and Sort Controls -->
+                    <VerticalStackLayout Spacing="10">
+                        <!-- Star Filters -->
+                        <Label Text="Đánh giá"
+                               FontSize="14"
+                               FontAttributes="Bold" />
+                        <FlexLayout Wrap="Wrap"
+                                    JustifyContent="Start"
+                                    AlignItems="Center">
+                            <Button Text="Tất cả"
+                                    Command="{Binding FilterByStarCommand}"
+                                    CommandParameter="0"
+                                    BackgroundColor="{Binding SelectedStarFilter, Converter={StaticResource StarFilterColorConverter}, ConverterParameter=0}"
+                                    TextColor="White"
+                                    Margin="0,0,6,6"
+                                    Padding="12,4"
+                                    HeightRequest="32"
+                                    CornerRadius="16"
+                                    FontSize="12" />
+
+                            <Button Text="5★"
+                                    Command="{Binding FilterByStarCommand}"
+                                    CommandParameter="5"
+                                    BackgroundColor="{Binding SelectedStarFilter, Converter={StaticResource StarFilterColorConverter}, ConverterParameter=5}"
+                                    TextColor="White"
+                                    Margin="0,0,6,6"
+                                    Padding="12,4"
+                                    HeightRequest="32"
+                                    CornerRadius="16"
+                                    FontSize="12" />
+
+                            <Button Text="4★"
+                                    Command="{Binding FilterByStarCommand}"
+                                    CommandParameter="4"
+                                    BackgroundColor="{Binding SelectedStarFilter, Converter={StaticResource StarFilterColorConverter}, ConverterParameter=4}"
+                                    TextColor="White"
+                                    Margin="0,0,6,6"
+                                    Padding="12,4"
+                                    HeightRequest="32"
+                                    CornerRadius="16"
+                                    FontSize="12" />
+
+                            <Button Text="3★"
+                                    Command="{Binding FilterByStarCommand}"
+                                    CommandParameter="3"
+                                    BackgroundColor="{Binding SelectedStarFilter, Converter={StaticResource StarFilterColorConverter}, ConverterParameter=3}"
+                                    TextColor="White"
+                                    Margin="0,0,6,6"
+                                    Padding="12,4"
+                                    HeightRequest="32"
+                                    CornerRadius="16"
+                                    FontSize="12" />
+
+                            <Button Text="2★"
+                                    Command="{Binding FilterByStarCommand}"
+                                    CommandParameter="2"
+                                    BackgroundColor="{Binding SelectedStarFilter, Converter={StaticResource StarFilterColorConverter}, ConverterParameter=2}"
+                                    TextColor="White"
+                                    Margin="0,0,6,6"
+                                    Padding="12,4"
+                                    HeightRequest="32"
+                                    CornerRadius="16"
+                                    FontSize="12" />
+
+                            <Button Text="1★"
+                                    Command="{Binding FilterByStarCommand}"
+                                    CommandParameter="1"
+                                    BackgroundColor="{Binding SelectedStarFilter, Converter={StaticResource StarFilterColorConverter}, ConverterParameter=1}"
+                                    TextColor="White"
+                                    Margin="0,0,6,6"
+                                    Padding="12,4"
+                                    HeightRequest="32"
+                                    CornerRadius="16"
+                                    FontSize="12" />
+                        </FlexLayout>
+
+                        <!-- Sort Picker -->
+                        <Label Text="Lọc theo"
+                               FontSize="14"
+                               FontAttributes="Bold" />
+
+                        <FlexLayout Wrap="Wrap"
+                                    JustifyContent="Start"
+                                    AlignItems="Center">
+                            <Button Text="Mới nhất"
+                                    Command="{Binding ChangeSortOrderCommand}"
+                                    CommandParameter="Newest"
+                                    BackgroundColor="{Binding SelectedSortOrder, Converter={StaticResource SortOrderColorConverter}, ConverterParameter=Newest}"
+                                    TextColor="White"
+                                    Margin="0,0,6,6"
+                                    Padding="12,4"
+                                    HeightRequest="32"
+                                    CornerRadius="16"
+                                    FontSize="12" />
+
+                            <Button Text="Cũ nhất"
+                                    Command="{Binding ChangeSortOrderCommand}"
+                                    CommandParameter="Oldest"
+                                    BackgroundColor="{Binding SelectedSortOrder, Converter={StaticResource SortOrderColorConverter}, ConverterParameter=Oldest}"
+                                    TextColor="White"
+                                    Margin="0,0,6,6"
+                                    Padding="12,4"
+                                    HeightRequest="32"
+                                    CornerRadius="16"
+                                    FontSize="12" />
+
+                            <Button Text="Cao nhất"
+                                    Command="{Binding ChangeSortOrderCommand}"
+                                    CommandParameter="Highest"
+                                    BackgroundColor="{Binding SelectedSortOrder, Converter={StaticResource SortOrderColorConverter}, ConverterParameter=Highest}"
+                                    TextColor="White"
+                                    Margin="0,0,6,6"
+                                    Padding="12,4"
+                                    HeightRequest="32"
+                                    CornerRadius="16"
+                                    FontSize="12" />
+
+                            <Button Text="Thấp nhất"
+                                    Command="{Binding ChangeSortOrderCommand}"
+                                    CommandParameter="Lowest"
+                                    BackgroundColor="{Binding SelectedSortOrder, Converter={StaticResource SortOrderColorConverter}, ConverterParameter=Lowest}"
+                                    TextColor="White"
+                                    Margin="0,0,6,6"
+                                    Padding="12,4"
+                                    HeightRequest="32"
+                                    CornerRadius="16"
+                                    FontSize="12" />
+                        </FlexLayout>
+
+                    </VerticalStackLayout>
+
+                </VerticalStackLayout>
+            </CollectionView.Header>
+            <CollectionView.ItemTemplate>
+                <DataTemplate>
+                    <Border Stroke="#EEE"
+                            StrokeThickness="1"
+                            Padding="12"
+                            Margin="0,0,0,8"
+                            StrokeShape="RoundRectangle 10">
+                        <Grid ColumnSpacing="12">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="50" />
+                                <ColumnDefinition Width="*" />
+                            </Grid.ColumnDefinitions>
+
+                            <!-- Avatar -->
+                            <Border Grid.Column="0"
+                                    StrokeShape="RoundRectangle 25"
+                                    Stroke="#DDD"
+                                    StrokeThickness="1"
+                                    HeightRequest="50"
+                                    WidthRequest="50"
+                                    VerticalOptions="Start"
+                                    BackgroundColor="#F5F5F5">
+                                <Image Aspect="AspectFill">
+                                    <Image.Triggers>
+                                        <DataTrigger TargetType="Image"
+                                                     Binding="{Binding Avatar}"
+                                                     Value="{x:Null}">
+                                            <Setter Property="Source"
+                                                    Value="dotnet_bot.png" />
+                                        </DataTrigger>
+                                    </Image.Triggers>
+                                    <Image.Source>
+                                        <Binding Path="Avatar"
+                                                 FallbackValue="user_placeholder.png"
+                                                 TargetNullValue="user_placeholder.png" />
+                                    </Image.Source>
+                                </Image>
+                            </Border>
+
+                            <!-- Content -->
+                            <VerticalStackLayout Grid.Column="1"
+                                                 Spacing="6">
+                                <Grid ColumnSpacing="10">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="*" />
+                                        <ColumnDefinition Width="Auto" />
+                                    </Grid.ColumnDefinitions>
+
+                                    <Label Grid.Column="0"
+                                           Text="{Binding UserName}"
+                                           FontAttributes="Bold"
+                                           FontSize="14"
+                                           TextColor="#222"
+                                           VerticalOptions="Center" />
+
+                                    <Label Grid.Column="1"
+                                           Text="{Binding Rating, StringFormat='★ {0}'}"
+                                           FontSize="13"
+                                           TextColor="#FF9800"
+                                           VerticalOptions="Center" />
+                                </Grid>
+
+                                <Label Text="{Binding Comment}"
+                                       FontSize="13"
+                                       TextColor="#555"
+                                       LineBreakMode="WordWrap" />
+
+                                <Label Text="{Binding CreatedAt, Converter={StaticResource DateTimeFormatConverter}}"
+                                       FontSize="11"
+                                       TextColor="#999"
+                                       HorizontalOptions="End" />
+                            </VerticalStackLayout>
+                        </Grid>
+                    </Border>
+                </DataTemplate>
+            </CollectionView.ItemTemplate>
+
+            <CollectionView.Footer>
+                <VerticalStackLayout Padding="20"
+                                     HorizontalOptions="Center">
+                    <ActivityIndicator IsRunning="{Binding IsLoading}"
+                                       IsVisible="{Binding IsLoading}"
+                                       Color="#FF9800" />
+                    <Label Text="No more reviews"
+                           IsVisible="{Binding HasMoreItems, Converter={StaticResource InvertedBoolConverter}}"
+                           TextColor="#999"
+                           HorizontalOptions="Center" />
+                </VerticalStackLayout>
+            </CollectionView.Footer>
+        </CollectionView>
+    </Grid>
+</ContentPage>

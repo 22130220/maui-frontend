@@ -8,24 +8,29 @@
              Title="Giỏ hàng"
              BackgroundColor="#FAFAFA">
 
-    <Grid RowDefinitions="Auto,*,Auto" Padding="0">
+    <Grid RowDefinitions="Auto,*,Auto"
+          Padding="0">
 
         <!-- Header -->
-        <Border Grid.Row="0" 
-                BackgroundColor="White" 
+        <Border Grid.Row="0"
+                BackgroundColor="White"
                 StrokeThickness="0"
                 Margin="0,0,0,10">
             <Border.Shadow>
-                <Shadow Brush="Black" Opacity="0.05" Radius="8" Offset="0,2" />
+                <Shadow Brush="Black"
+                        Opacity="0.05"
+                        Radius="8"
+                        Offset="0,2" />
             </Border.Shadow>
 
-            <Grid Padding="20,15" ColumnDefinitions="*,Auto">
-                <Label Grid.Column="0" 
+            <Grid Padding="20,15"
+                  ColumnDefinitions="*,Auto">
+                <Label Grid.Column="0"
                        Text="{Binding TotalItems, StringFormat='Giỏ hàng ({0} sản phẩm)'}"
                        FontFamily="RobotoBold"
                        FontSize="18"
                        TextColor="#333"
-                       VerticalOptions="Center"/>
+                       VerticalOptions="Center" />
 
                 <Button Grid.Column="1"
                         Text="Xóa tất cả"
@@ -35,38 +40,39 @@
                         FontSize="14"
                         FontFamily="RobotoMedium"
                         Padding="10,5"
-                        IsVisible="{Binding HasItems}"/>
+                        IsVisible="{Binding HasItems}" />
             </Grid>
         </Border>
 
         <!-- Empty Cart -->
-        <VerticalStackLayout Grid.Row="1" 
-                            IsVisible="{Binding HasItems, Converter={StaticResource InvertedBoolConverter}}"
-                            VerticalOptions="Center"
-                            HorizontalOptions="Center"
-                            Spacing="20"
-                            Padding="40">
-            <Image Source="cart_empty.png" 
+        <VerticalStackLayout Grid.Row="1"
+                             IsVisible="{Binding HasItems, Converter={StaticResource InvertedBoolConverter}}"
+                             VerticalOptions="Center"
+                             HorizontalOptions="Center"
+                             Spacing="20"
+                             Padding="40">
+            <Image Source="cart_empty.png"
                    HeightRequest="200"
                    WidthRequest="200"
-                   Aspect="AspectFit"/>
+                   Aspect="AspectFit" />
             <Label Text="Giỏ hàng trống"
                    FontFamily="RobotoBold"
                    FontSize="20"
                    TextColor="#999"
-                   HorizontalOptions="Center"/>
+                   HorizontalOptions="Center" />
             <Label Text="Hãy thêm sản phẩm vào giỏ hàng nhé!"
                    FontFamily="RobotoRegular"
                    FontSize="14"
                    TextColor="#BBB"
-                   HorizontalOptions="Center"/>
+                   HorizontalOptions="Center" />
         </VerticalStackLayout>
 
         <!-- Cart Items List -->
-        <ScrollView Grid.Row="1" IsVisible="{Binding HasItems}">
-            <CollectionView ItemsSource="{Binding CartItems}" 
-                           Margin="10,0"
-                           SelectionMode="None">
+        <ScrollView Grid.Row="1"
+                    IsVisible="{Binding HasItems}">
+            <CollectionView ItemsSource="{Binding CartItems}"
+                            Margin="10,0"
+                            SelectionMode="None">
                 <CollectionView.ItemTemplate>
                     <DataTemplate x:DataType="model:CartItem">
                         <Border Margin="5,5"
@@ -74,144 +80,157 @@
                                 StrokeThickness="0"
                                 Padding="0">
                             <Border.StrokeShape>
-                                <RoundRectangle CornerRadius="12"/>
+                                <RoundRectangle CornerRadius="12" />
                             </Border.StrokeShape>
                             <Border.Shadow>
-                                <Shadow Brush="Black" Opacity="0.08" Radius="10" Offset="0,2" />
+                                <Shadow Brush="Black"
+                                        Opacity="0.08"
+                                        Radius="10"
+                                        Offset="0,2" />
                             </Border.Shadow>
 
-                            <Grid Padding="12" ColumnDefinitions="90,*,Auto" RowDefinitions="Auto,Auto,Auto">
+                            <Grid Padding="12"
+                                  ColumnDefinitions="90,*,Auto"
+                                  RowDefinitions="Auto,Auto,Auto">
 
                                 <!-- Product Image -->
-                                <Border Grid.Column="0" Grid.RowSpan="3"
-                                       StrokeThickness="1"
-                                       Stroke="#EEE"
-                                       HeightRequest="90"
-                                       WidthRequest="90"
-                                       Margin="0,0,12,0">
+                                <Border Grid.Column="0"
+                                        Grid.RowSpan="3"
+                                        StrokeThickness="1"
+                                        Stroke="#EEE"
+                                        HeightRequest="90"
+                                        WidthRequest="90"
+                                        Margin="0,0,12,0">
                                     <Border.StrokeShape>
-                                        <RoundRectangle CornerRadius="8"/>
+                                        <RoundRectangle CornerRadius="8" />
                                     </Border.StrokeShape>
                                     <Border.GestureRecognizers>
                                         <TapGestureRecognizer Command="{Binding Source={RelativeSource AncestorType={x:Type vm:CartPageViewModel}}, Path=GoToProductDetailCommand}"
-                                                             CommandParameter="{Binding ProductID}"/>
+                                                              CommandParameter="{Binding ProductID}" />
                                     </Border.GestureRecognizers>
-                                    <Image Source="{Binding Thumbnail}" 
-                                          Aspect="AspectFill"/>
+                                    <Image Source="{Binding Thumbnail}"
+                                           Aspect="AspectFill" />
                                 </Border>
 
                                 <!-- Product Info -->
-                                <VerticalStackLayout Grid.Column="1" Grid.Row="0" Spacing="4">
+                                <VerticalStackLayout Grid.Column="1"
+                                                     Grid.Row="0"
+                                                     Spacing="4">
                                     <Label Text="{Binding Name}"
-                                          FontFamily="RobotoMedium"
-                                          FontSize="15"
-                                          TextColor="#333"
-                                          LineBreakMode="TailTruncation"
-                                          MaxLines="2">
+                                           FontFamily="RobotoMedium"
+                                           FontSize="15"
+                                           TextColor="#333"
+                                           LineBreakMode="TailTruncation"
+                                           MaxLines="2">
                                         <Label.GestureRecognizers>
                                             <TapGestureRecognizer Command="{Binding Source={RelativeSource AncestorType={x:Type vm:CartPageViewModel}}, Path=GoToProductDetailCommand}"
-                                                                 CommandParameter="{Binding ProductID}"/>
+                                                                  CommandParameter="{Binding ProductID}" />
                                         </Label.GestureRecognizers>
                                     </Label>
 
                                     <HorizontalStackLayout Spacing="8">
                                         <Label Text="{Binding FormattedFinalPrice}"
-                                              FontFamily="RobotoBold"
-                                              FontSize="16"
-                                              TextColor="#F9A825"
-                                              VerticalOptions="Center"/>
+                                               FontFamily="RobotoBold"
+                                               FontSize="16"
+                                               TextColor="#F9A825"
+                                               VerticalOptions="Center" />
 
                                         <Label Text="{Binding FormattedPrice}"
-                                              FontFamily="RobotoRegular"
-                                              FontSize="13"
-                                              TextColor="#999"
-                                              TextDecorations="Strikethrough"
-                                              IsVisible="{Binding HasDiscount}"
-                                              VerticalOptions="Center"/>
+                                               FontFamily="RobotoRegular"
+                                               FontSize="13"
+                                               TextColor="#999"
+                                               TextDecorations="Strikethrough"
+                                               IsVisible="{Binding HasDiscount}"
+                                               VerticalOptions="Center" />
 
                                         <Border BackgroundColor="#FFEBEE"
-                                               Padding="6,2"
-                                               IsVisible="{Binding HasDiscount}">
+                                                Padding="6,2"
+                                                IsVisible="{Binding HasDiscount}">
                                             <Border.StrokeShape>
-                                                <RoundRectangle CornerRadius="4"/>
+                                                <RoundRectangle CornerRadius="4" />
                                             </Border.StrokeShape>
                                             <Label Text="{Binding DiscountText}"
-                                                  FontFamily="RobotoBold"
-                                                  FontSize="11"
-                                                  TextColor="#FF5252"/>
+                                                   FontFamily="RobotoBold"
+                                                   FontSize="11"
+                                                   TextColor="#FF5252" />
                                         </Border>
                                     </HorizontalStackLayout>
                                 </VerticalStackLayout>
 
                                 <!-- Remove Button -->
-                                <Button Grid.Column="2" Grid.Row="0"
-                                    Text="Xóa"
-                                    FontFamily="RobotoMedium"
-                                    FontSize="14"
-                                    TextColor="#FF5252"
-                                    BackgroundColor="Transparent"
-                                    Padding="0"
-                                    VerticalOptions="Start"
+                                <Button Grid.Column="2"
+                                        Grid.Row="0"
+                                        Text="Xóa"
+                                        FontFamily="RobotoMedium"
+                                        FontSize="14"
+                                        TextColor="#FF5252"
+                                        BackgroundColor="Transparent"
+                                        Padding="0"
+                                        VerticalOptions="Start"
                                         Margin="0,-15,0,0"
-                                    Command="{Binding Source={RelativeSource AncestorType={x:Type vm:CartPageViewModel}}, Path=RemoveItemCommand}"
-                                    CommandParameter="{Binding ProductID}" />   
+                                        Command="{Binding Source={RelativeSource AncestorType={x:Type vm:CartPageViewModel}}, Path=RemoveItemCommand}"
+                                        CommandParameter="{Binding ProductID}" />
+
 
                                 <!-- Quantity Controls -->
-                                <Border Grid.Column="1" Grid.Row="2" Grid.ColumnSpan="2"
-                                       StrokeThickness="1"
-                                       Stroke="#DDD"
-                                       HeightRequest="36"
-                                       WidthRequest="120"
-                                       HorizontalOptions="Start"
-                                       Margin="0,8,0,0">
+                                <Border Grid.Column="1"
+                                        Grid.Row="2"
+                                        Grid.ColumnSpan="2"
+                                        StrokeThickness="1"
+                                        Stroke="#DDD"
+                                        HeightRequest="36"
+                                        WidthRequest="120"
+                                        HorizontalOptions="Start"
+                                        Margin="0,8,0,0">
                                     <Border.StrokeShape>
-                                        <RoundRectangle CornerRadius="18"/>
+                                        <RoundRectangle CornerRadius="18" />
                                     </Border.StrokeShape>
 
                                     <Grid ColumnDefinitions="*,*,*">
                                         <!-- Decrease Button -->
                                         <Button Grid.Column="0"
-                                               Text="-"
-                                               FontSize="18"
-                                               FontFamily="RobotoBold"
-                                               TextColor="#666"
-                                               BackgroundColor="Transparent"
-                                               Padding="0"
-                                               Command="{Binding Source={RelativeSource AncestorType={x:Type vm:CartPageViewModel}}, Path=DecreaseQuantityCommand}"
-                                               CommandParameter="{Binding ProductID}"/>
+                                                Text="-"
+                                                FontSize="18"
+                                                FontFamily="RobotoBold"
+                                                TextColor="#666"
+                                                BackgroundColor="Transparent"
+                                                Padding="0"
+                                                Command="{Binding Source={RelativeSource AncestorType={x:Type vm:CartPageViewModel}}, Path=DecreaseQuantityCommand}"
+                                                CommandParameter="{Binding ProductID}" />
 
                                         <!-- Quantity Display -->
                                         <Label Grid.Column="1"
-                                              Text="{Binding Quantity}"
-                                              FontFamily="RobotoMedium"
-                                              FontSize="15"
-                                              TextColor="#333"
-                                              HorizontalOptions="Center"
-                                              VerticalOptions="Center"/>
+                                               Text="{Binding Quantity}"
+                                               FontFamily="RobotoMedium"
+                                               FontSize="15"
+                                               TextColor="#333"
+                                               HorizontalOptions="Center"
+                                               VerticalOptions="Center" />
 
                                         <!-- Increase Button -->
                                         <Button Grid.Column="2"
-                                               Text="+"
-                                               FontSize="18"
-                                               FontFamily="RobotoBold"
-                                               TextColor="#F9A825"
-                                               BackgroundColor="Transparent"
-                                               Padding="0"
-                                               Command="{Binding Source={RelativeSource AncestorType={x:Type vm:CartPageViewModel}}, Path=IncreaseQuantityCommand}"
-                                               CommandParameter="{Binding ProductID}"
-                                               IsEnabled="{Binding CanIncrease}"/>
+                                                Text="+"
+                                                FontSize="18"
+                                                FontFamily="RobotoBold"
+                                                TextColor="#F9A825"
+                                                BackgroundColor="Transparent"
+                                                Padding="0"
+                                                Command="{Binding Source={RelativeSource AncestorType={x:Type vm:CartPageViewModel}}, Path=IncreaseQuantityCommand}"
+                                                CommandParameter="{Binding ProductID}"
+                                                IsEnabled="{Binding CanIncrease}" />
                                     </Grid>
                                 </Border>
 
                                 <!-- Total Price -->
-                                <Label Grid.Column="2" Grid.Row="2"
-                                      Text="{Binding FormattedTotalPrice}"
-                                      FontFamily="RobotoBold"
-                                      FontSize="16"
-                                      TextColor="#333"
-                                      HorizontalOptions="End"
-                                      VerticalOptions="End"
-                                      Margin="0,8,0,0"/>
+                                <Label Grid.Column="2"
+                                       Grid.Row="2"
+                                       Text="{Binding FormattedTotalPrice}"
+                                       FontFamily="RobotoBold"
+                                       FontSize="16"
+                                       TextColor="#333"
+                                       HorizontalOptions="End"
+                                       VerticalOptions="End"
+                                       Margin="0,8,0,0" />
                             </Grid>
                         </Border>
                     </DataTemplate>
@@ -220,44 +239,55 @@
         </ScrollView>
 
         <!-- Bottom Checkout -->
-        <Border Grid.Row="2" 
+        <Border Grid.Row="2"
                 BackgroundColor="White"
                 StrokeThickness="0"
                 Padding="20,15"
                 IsVisible="{Binding HasItems}">
             <Border.Shadow>
-                <Shadow Brush="Black" Opacity="0.1" Radius="10" Offset="0,-2" />
+                <Shadow Brush="Black"
+                        Opacity="0.1"
+                        Radius="10"
+                        Offset="0,-2" />
             </Border.Shadow>
 
-            <Grid RowDefinitions="Auto,Auto" ColumnDefinitions="*,Auto" RowSpacing="12">
+            <Grid RowDefinitions="Auto,Auto"
+                  ColumnDefinitions="*,Auto"
+                  RowSpacing="12">
 
                 <!-- Total Amount -->
-                <Label Grid.Row="0" Grid.Column="0"
+                <Label Grid.Row="0"
+                       Grid.Column="0"
                        Text="Tổng cộng:"
                        FontFamily="RobotoMedium"
                        FontSize="16"
                        TextColor="#666"
-                       VerticalOptions="Center"/>
+                       VerticalOptions="Center" />
 
-                <Label Grid.Row="0" Grid.Column="1"
+                <Label Grid.Row="0"
+                       Grid.Column="1"
                        Text="{Binding FormattedTotalAmount}"
                        FontFamily="RobotoBold"
                        FontSize="20"
                        TextColor="#F9A825"
-                       VerticalOptions="Center"/>
+                       VerticalOptions="Center" />
 
                 <!-- Checkout Button -->
-                <Button Grid.Row="1" Grid.ColumnSpan="2"
-                       Text="Thanh toán"
-                       BackgroundColor="#F9A825"
-                       TextColor="White"
-                       FontFamily="RobotoBold"
-                       FontSize="16"
-                       HeightRequest="50"
-                       CornerRadius="25"
-                       Command="{Binding CheckoutCommand}">
+                <Button Grid.Row="1"
+                        Grid.ColumnSpan="2"
+                        Text="Thanh toán"
+                        BackgroundColor="#F9A825"
+                        TextColor="White"
+                        FontFamily="RobotoBold"
+                        FontSize="16"
+                        HeightRequest="50"
+                        CornerRadius="25"
+                        Command="{Binding CheckoutCommand}">
                     <Button.Shadow>
-                        <Shadow Brush="#F9A825" Opacity="0.3" Radius="10" Offset="0,4" />
+                        <Shadow Brush="#F9A825"
+                                Opacity="0.3"
+                                Radius="10"
+                                Offset="0,4" />
                     </Button.Shadow>
                 </Button>
             </Grid>
