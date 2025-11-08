@@ -66,6 +66,7 @@ namespace MauiFrontend
             builder.Services.AddTransient<UserService>();
             builder.Services.AddTransient<ProductService>();
             builder.Services.AddSingleton<CartService>();
+            builder.Services.AddSingleton<ProductReviewService>();
 
             // ViewModels
             builder.Services.AddTransient<LoginViewModel>();
@@ -74,6 +75,7 @@ namespace MauiFrontend
             builder.Services.AddTransient<ProductDetailViewModel>();
             builder.Services.AddTransient<SearchResultsViewModel>();
             builder.Services.AddTransient<CartPageViewModel>();
+            builder.Services.AddTransient<ProductReviewListViewModel>();
 
             // Page
             builder.Services.AddTransient<LoginPage>();
@@ -82,6 +84,7 @@ namespace MauiFrontend
             builder.Services.AddTransient<ProductDetailPage>();
             builder.Services.AddTransient<SearchResultsPage>();
             builder.Services.AddTransient<CartPage>();
+            builder.Services.AddTransient<ProductReviewListPage>();
 
 
 

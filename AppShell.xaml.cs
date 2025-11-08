@@ -1,4 +1,5 @@
-﻿using MauiFrontend.Views;
+﻿using MauiFrontend.ViewModels;
+using MauiFrontend.Views;
 
 namespace MauiFrontend
 {
@@ -9,6 +10,7 @@ namespace MauiFrontend
             InitializeComponent();
             Routing.RegisterRoute(nameof(ProductDetailPage), typeof(ProductDetailPage));
             Routing.RegisterRoute(nameof(SearchResultsPage), typeof(SearchResultsPage));
+            Routing.RegisterRoute(nameof(ProductReviewListPage), typeof(ProductReviewListPage));
         }
     }
 }

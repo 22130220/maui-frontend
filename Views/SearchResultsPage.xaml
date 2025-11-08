@@ -10,13 +10,13 @@
     <Grid>
         <!-- ========== LỚP 1: NỘI DUNG CHÍNH ========== -->
         <ScrollView>
-            <VerticalStackLayout Padding="16" Spacing="18">
+            <VerticalStackLayout Padding="16"
+                                 Spacing="18">
 
                 <!-- NAVIGATION HEADER -->
                 <Grid ColumnDefinitions="Auto,*,Auto">
-                    <mi:MauiIcon
-                        Icon="{mi:Material Icon=ArrowBack, IconColor=#111, IconSize=26}"
-                        VerticalOptions="Center">
+                    <mi:MauiIcon Icon="{mi:Material Icon=ArrowBack, IconColor=#111, IconSize=26}"
+                                 VerticalOptions="Center">
                         <mi:MauiIcon.GestureRecognizers>
                             <TapGestureRecognizer Command="{Binding GoBackCommand}" />
                         </mi:MauiIcon.GestureRecognizers>
@@ -44,63 +44,59 @@
 
                 <!-- PRODUCT LIST -->
                 <!-- PRODUCT LIST -->
-                <CollectionView
-    ItemsSource="{Binding SearchResults}"
-    SelectionMode="None">
+                <CollectionView ItemsSource="{Binding SearchResults}"
+                                SelectionMode="None">
 
                     <CollectionView.ItemsLayout>
-                        <GridItemsLayout
-            Orientation="Vertical"
-            Span="2"
-            VerticalItemSpacing="10"
-            HorizontalItemSpacing="10" />
+                        <GridItemsLayout Orientation="Vertical"
+                                         Span="2"
+                                         VerticalItemSpacing="10"
+                                         HorizontalItemSpacing="10" />
                     </CollectionView.ItemsLayout>
 
                     <CollectionView.ItemTemplate>
                         <DataTemplate>
-                            <Border
-                BackgroundColor="#FFFDF9"
-                StrokeShape="RoundRectangle 15"
-                StrokeThickness="1"
-                Stroke="#F3F3F3"
-                Margin="4"
-                Padding="5">
+                            <Border BackgroundColor="#FFFDF9"
+                                    StrokeShape="RoundRectangle 15"
+                                    StrokeThickness="1"
+                                    Stroke="#F3F3F3"
+                                    Margin="4"
+                                    Padding="5">
                                 <Border.GestureRecognizers>
-                                    <TapGestureRecognizer
-                        Command="{Binding Source={RelativeSource AncestorType={x:Type vm:SearchResultsViewModel}}, Path=GoToDetailCommand}"
-                        CommandParameter="{Binding ProductID}" />
+                                    <TapGestureRecognizer Command="{Binding Source={RelativeSource AncestorType={x:Type vm:SearchResultsViewModel}}, Path=GoToDetailCommand}"
+                                                          CommandParameter="{Binding ProductID}" />
                                 </Border.GestureRecognizers>
 
                                 <Grid RowDefinitions="Auto,Auto,Auto">
                                     <Border Grid.Row="0"
-                            StrokeShape="RoundRectangle 12"
-                            StrokeThickness="0"
-                            Margin="0,0,0,8"
-                            BackgroundColor="#FAFAFA">
+                                            StrokeShape="RoundRectangle 12"
+                                            StrokeThickness="0"
+                                            Margin="0,0,0,8"
+                                            BackgroundColor="#FAFAFA">
                                         <Image Source="{Binding Thumbnail}"
-                               Aspect="AspectFill"
-                               HeightRequest="160"
-                               HorizontalOptions="Fill"
-                               VerticalOptions="Fill" />
+                                               Aspect="AspectFill"
+                                               HeightRequest="160"
+                                               HorizontalOptions="Fill"
+                                               VerticalOptions="Fill" />
                                     </Border>
 
                                     <Label Grid.Row="1"
-                           Text="{Binding Name}"
-                           FontSize="14"
-                           FontAttributes="Bold"
-                           TextColor="#222"
-                           HorizontalOptions="Center"
-                           LineBreakMode="TailTruncation"
-                           MaxLines="1"
-                           Margin="0,2,0,0" />
+                                           Text="{Binding Name}"
+                                           FontSize="14"
+                                           FontAttributes="Bold"
+                                           TextColor="#222"
+                                           HorizontalOptions="Center"
+                                           LineBreakMode="TailTruncation"
+                                           MaxLines="1"
+                                           Margin="0,2,0,0" />
 
                                     <Label Grid.Row="2"
-                           Text="{Binding Price, StringFormat='{0:N0} đ'}"
-                           FontSize="14"
-                           FontAttributes="Bold"
-                           TextColor="#E53935"
-                           HorizontalOptions="Center"
-                           Margin="0,0,0,2" />
+                                           Text="{Binding Price, StringFormat='{0:N0} đ'}"
+                                           FontSize="14"
+                                           FontAttributes="Bold"
+                                           TextColor="#E53935"
+                                           HorizontalOptions="Center"
+                                           Margin="0,0,0,2" />
                                 </Grid>
                             </Border>
                         </DataTemplate>

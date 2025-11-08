@@ -3,8 +3,15 @@
              xmlns:mi="http://www.aathifmahir.com/dotnet/2022/maui/icons"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="MauiFrontend.Views.ProductDetailPage"
+             xmlns:converters="clr-namespace:MauiFrontend.Converters"
              Title="Chi tiết sản phẩm"
              BackgroundColor="White">
+
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <converters:DateTimeFormatConverter x:Key="DateTimeFormatConverter" />
+        </ResourceDictionary>
+    </ContentPage.Resources>
 
     <Grid RowDefinitions="Auto,*,Auto">
 
@@ -12,214 +19,418 @@
         <ScrollView Grid.Row="1">
             <VerticalStackLayout Spacing="14">
                 <Image Source="{Binding Product.Thumbnail}"
-                   Aspect="AspectFill"
-                   HeightRequest="280"
-                   Margin="-20,-20,-20,0"
-                   HorizontalOptions="Fill"
-                   VerticalOptions="Fill" />
+                       Aspect="AspectFill"
+                       HeightRequest="280"
+                       Margin="-20,-20,-20,0"
+                       HorizontalOptions="Fill"
+                       VerticalOptions="Fill" />
 
                 <!-- Khối thông tin sản phẩm bo tròn -->
-                <Border 
-                    BackgroundColor="White"
-                    Margin="0,-36,0,0"
-                    Padding="20,16,20,20"
-                    >
+                <Border BackgroundColor="White"
+                        Margin="0,-36,0,0"
+                        Padding="20,16,20,20">
 
                     <Border.StrokeShape>
-                        <RoundRectangle CornerRadius="24,24,0,0"/>
+                        <RoundRectangle CornerRadius="24,24,0,0" />
                     </Border.StrokeShape>
 
                     <VerticalStackLayout Spacing="8">
 
                         <!-- Tên sản phẩm -->
                         <Label Text="{Binding Product.Name}"
-               FontSize="20"
-               FontAttributes="Bold"
-               TextColor="#222" />
+                               FontSize="20"
+                               FontAttributes="Bold"
+                               TextColor="#222" />
 
                         <!-- Giá + cụm số lượng -->
-                        <Grid ColumnDefinitions="Auto,*,Auto,Auto,Auto" Margin="0,4,0,0">
+                        <Grid ColumnDefinitions="Auto,*,Auto,Auto,Auto"
+                              Margin="0,4,0,0">
 
                             <!-- Giá -->
                             <Label Text="{Binding Product.Price, StringFormat='${0:N0}'}"
-                   FontSize="18"
-                   FontAttributes="Bold"
-                   TextColor="#e67e22"
-                   Grid.Column="0"
-                   VerticalOptions="Center"/>
+                                   FontSize="18"
+                                   FontAttributes="Bold"
+                                   TextColor="#e67e22"
+                                   Grid.Column="0"
+                                   VerticalOptions="Center" />
 
                             <!-- Nút giảm -->
                             <Border Grid.Column="2"
-                    BackgroundColor="#fff7f0"
-                    Stroke="#e67e22"
-                    StrokeThickness="1"
-                    WidthRequest="36"
-                    HeightRequest="36"
-                    HorizontalOptions="End"
-                    VerticalOptions="Center">
+                                    BackgroundColor="#fff7f0"
+                                    Stroke="#e67e22"
+                                    StrokeThickness="1"
+                                    WidthRequest="36"
+                                    HeightRequest="36"
+                                    HorizontalOptions="End"
+                                    VerticalOptions="Center">
                                 <Border.StrokeShape>
-                                    <RoundRectangle CornerRadius="10"/>
+                                    <RoundRectangle CornerRadius="10" />
                                 </Border.StrokeShape>
                                 <Label Text="−"
-                       FontSize="18"
-                       FontAttributes="Bold"
-                       TextColor="#e67e22"
-                       HorizontalOptions="Center"
-                       VerticalOptions="Center"/>
+                                       FontSize="18"
+                                       FontAttributes="Bold"
+                                       TextColor="#e67e22"
+                                       HorizontalOptions="Center"
+                                       VerticalOptions="Center" />
                             </Border>
 
                             <!-- Số lượng -->
                             <Label Text="1"
-                   Grid.Column="3"
-                   FontSize="16"
-                   TextColor="#222"
-                   HorizontalOptions="Center"
-                   VerticalOptions="Center"
-                   Margin="8,0"/>
+                                   Grid.Column="3"
+                                   FontSize="16"
+                                   TextColor="#222"
+                                   HorizontalOptions="Center"
+                                   VerticalOptions="Center"
+                                   Margin="8,0" />
 
                             <!-- Nút tăng -->
                             <Border Grid.Column="4"
-                    BackgroundColor="#fff7f0"
-                    Stroke="#e67e22"
-                    StrokeThickness="1"
-                    WidthRequest="36"
-                    HeightRequest="36"
-                    HorizontalOptions="End"
-                    VerticalOptions="Center">
+                                    BackgroundColor="#fff7f0"
+                                    Stroke="#e67e22"
+                                    StrokeThickness="1"
+                                    WidthRequest="36"
+                                    HeightRequest="36"
+                                    HorizontalOptions="End"
+                                    VerticalOptions="Center">
                                 <Border.StrokeShape>
-                                    <RoundRectangle CornerRadius="10"/>
+                                    <RoundRectangle CornerRadius="10" />
                                 </Border.StrokeShape>
                                 <Label Text="+"
-                       FontSize="18"
-                       FontAttributes="Bold"
-                       TextColor="#e67e22"
-                       HorizontalOptions="Center"
-                       VerticalOptions="Center"/>
+                                       FontSize="18"
+                                       FontAttributes="Bold"
+                                       TextColor="#e67e22"
+                                       HorizontalOptions="Center"
+                                       VerticalOptions="Center" />
                             </Border>
                         </Grid>
 
 
                         <!-- CỤM ĐÁNH GIÁ -->
                         <Border BackgroundColor="#FAFAFA"
-                Padding="12,8"
-                Margin="0,16,0,0"
-                StrokeThickness="0"
-                StrokeShape="RoundRectangle 16">
+                                Padding="12,8"
+                                Margin="0,16,0,0"
+                                StrokeThickness="0"
+                                StrokeShape="RoundRectangle 16">
+
+                            <Border.GestureRecognizers>
+                                <TapGestureRecognizer Command="{Binding NavigateToProductReviewListCommand}" />
+                            </Border.GestureRecognizers>
 
                             <Grid ColumnDefinitions="Auto,Auto,*,Auto"
-              ColumnSpacing="10"
-              VerticalOptions="Center">
+                                  ColumnSpacing="10"
+                                  VerticalOptions="Center">
 
 
                                 <!-- Điểm đánh giá -->
                                 <Label Grid.Column="1"
-               Text="4.6"
-               FontSize="14"
-               FontAttributes="Bold"
-               TextColor="#222"
-               VerticalOptions="Center" />
+                                       Text="{Binding SummaryReview.AvgRating, StringFormat='{0:F2}'}"
+                                       FontSize="14"
+                                       FontAttributes="Bold"
+                                       TextColor="#222"
+                                       VerticalOptions="Center" />
 
                                 <!-- Số lượng review -->
                                 <Label Grid.Column="2"
-               Text="98 Reviews >"
-               FontSize="13"
-               TextColor="#999"
-               VerticalOptions="Center" />
+                                       Text="{Binding SummaryReview.TotalComments, StringFormat='{0} đánh giá >'}"
+                                       FontSize="13"
+                                       TextColor="#999"
+                                       VerticalOptions="Center" />
                             </Grid>
                         </Border>
 
 
                         <!-- TABVIEW -->
-                        <VerticalStackLayout Spacing="12" Padding="0,10">
+                        <VerticalStackLayout Spacing="12"
+                                             Padding="0,10">
 
                             <!-- Header: 3 nút tab -->
-                            <HorizontalStackLayout Spacing="10" HorizontalOptions="Center">
+                            <HorizontalStackLayout Spacing="10"
+                                                   HorizontalOptions="Center">
 
                                 <Button Text="Description"
-                x:Name="DescriptionBtn"
-                Clicked="OnDescriptionClicked"
-                CornerRadius="8"
-                WidthRequest="110"
-                FontSize="13"
-                TextColor="White"
-                BackgroundColor="#F9A825"
-                />
+                                        x:Name="DescriptionBtn"
+                                        Clicked="OnDescriptionClicked"
+                                        CornerRadius="8"
+                                        WidthRequest="110"
+                                        FontSize="13"
+                                        TextColor="White"
+                                        BackgroundColor="#F9A825" />
 
                                 <Button Text="Materials"
-                x:Name="MaterialsBtn"
-                Clicked="OnMaterialsClicked"
-                CornerRadius="8"
-                WidthRequest="110"
-                FontSize="13"
-                TextColor="#555"
-                BackgroundColor="#FFF2D1"
-                BorderColor="#F9A825"
-                BorderWidth="1"
-                />
+                                        x:Name="MaterialsBtn"
+                                        Clicked="OnMaterialsClicked"
+                                        CornerRadius="8"
+                                        WidthRequest="110"
+                                        FontSize="13"
+                                        TextColor="#555"
+                                        BackgroundColor="#FFF2D1"
+                                        BorderColor="#F9A825"
+                                        BorderWidth="1" />
 
                                 <Button Text="Reviews"
-                x:Name="ReviewsBtn"
-                Clicked="OnReviewsClicked"
-                CornerRadius="8"
-                WidthRequest="110"
-                FontSize="13"
-                TextColor="#555"
-                BackgroundColor="#FFF2D1"
-                BorderColor="#F9A825"
-                BorderWidth="1"
-                />
+                                        x:Name="ReviewsBtn"
+                                        Clicked="OnReviewsClicked"
+                                        CornerRadius="8"
+                                        WidthRequest="110"
+                                        FontSize="13"
+                                        TextColor="#555"
+                                        BackgroundColor="#FFF2D1"
+                                        BorderColor="#F9A825"
+                                        BorderWidth="1" />
                             </HorizontalStackLayout>
 
                             <!-- Nội dung Description -->
-                            <ContentView x:Name="DescriptionContent" IsVisible="True">
+                            <ContentView x:Name="DescriptionContent"
+                                         IsVisible="True">
                                 <ScrollView Padding="10,10,10,0">
                                     <Label Text="{Binding Product.Description}"
-                   FontSize="14"
-                   TextColor="#444"
-                   LineHeight="1.4"
-                   LineBreakMode="WordWrap" />
+                                           FontSize="14"
+                                           TextColor="#444"
+                                           LineHeight="1.4"
+                                           LineBreakMode="WordWrap" />
                                 </ScrollView>
                             </ContentView>
 
                             <!-- Nội dung Materials -->
-                            <ContentView x:Name="MaterialsContent" IsVisible="False">
+                            <ContentView x:Name="MaterialsContent"
+                                         IsVisible="False">
                                 <ScrollView Padding="10,10,10,0">
                                     <Label Text="{Binding Product.SpecificationsText}"
-                   FontSize="14"
-                   TextColor="#444"
-                   LineHeight="1.4"
-                   LineBreakMode="WordWrap" />
+                                           FontSize="14"
+                                           TextColor="#444"
+                                           LineHeight="1.4"
+                                           LineBreakMode="WordWrap" />
                                 </ScrollView>
                             </ContentView>
 
                             <!-- Nội dung Reviews -->
-                            <ContentView x:Name="ReviewsContent" IsVisible="False">
+                            <ContentView x:Name="ReviewsContent"
+                                         IsVisible="False">
                                 <ScrollView Padding="10,10,10,0">
-                                    <VerticalStackLayout Spacing="10">
-                                        <Label Text="{Binding ReviewsCount, StringFormat='{0} reviews'}"
-                       FontSize="14"
-                       FontAttributes="Bold"
-                       TextColor="#333" />
+                                    <VerticalStackLayout Spacing="15">
 
-                                        <CollectionView ItemsSource="{Binding Reviews}"
-                                SelectionMode="None">
+                                        <!-- Grid: Rating trung bình bên trái, Phân bố sao bên phải -->
+                                        <Border Stroke="#DDD"
+                                                StrokeThickness="1"
+                                                Padding="15"
+                                                StrokeShape="RoundRectangle 12"
+                                                BackgroundColor="#FAFAFA">
+                                            <Grid ColumnSpacing="20"
+                                                  RowSpacing="0">
+                                                <Grid.ColumnDefinitions>
+                                                    <ColumnDefinition Width="*" />
+                                                    <ColumnDefinition Width="*" />
+                                                </Grid.ColumnDefinitions>
+
+                                                <!-- Cột trái: Rating trung bình -->
+                                                <VerticalStackLayout Grid.Column="0"
+                                                                     Spacing="4"
+                                                                     HorizontalOptions="Center"
+                                                                     VerticalOptions="Center"
+                                                                     Padding="0,0,15,0">
+                                                    <Label Text="{Binding SummaryReview.AvgRating, StringFormat='{0:F2}'}"
+                                                           FontSize="36"
+                                                           FontAttributes="Bold"
+                                                           TextColor="#FF9800"
+                                                           HorizontalOptions="Center" />
+                                                    <Label Text="{Binding StarsDisplay}"
+                                                           FontSize="18"
+                                                           TextColor="#FF9800"
+                                                           HorizontalOptions="Center" />
+                                                    <Label Text="{Binding SummaryReview.TotalComments, StringFormat='{0} đánh giá'}"
+                                                           FontSize="12"
+                                                           TextColor="#666"
+                                                           HorizontalOptions="Center" />
+                                                </VerticalStackLayout>
+
+                                                <!-- Cột phải: Phân bố rating theo số sao -->
+                                                <VerticalStackLayout Grid.Column="1"
+                                                                     Spacing="8"
+                                                                     VerticalOptions="Center">
+
+                                                    <!-- 5 sao -->
+                                                    <HorizontalStackLayout Spacing="10">
+                                                        <Label Text="5 ★"
+                                                               WidthRequest="40"
+                                                               FontSize="12"
+                                                               TextColor="#666" />
+                                                        <ProgressBar Progress="{Binding StarCount5Progress}"
+                                                                     ProgressColor="#4CAF50"
+                                                                     HeightRequest="8"
+                                                                     VerticalOptions="Center"
+                                                                     HorizontalOptions="FillAndExpand" />
+                                                        <Label Text="{Binding SummaryReview.StarCount[5]}"
+                                                               WidthRequest="30"
+                                                               FontSize="12"
+                                                               TextColor="#666"
+                                                               HorizontalTextAlignment="End" />
+                                                    </HorizontalStackLayout>
+
+                                                    <!-- 4 sao -->
+                                                    <HorizontalStackLayout Spacing="10">
+                                                        <Label Text="4 ★"
+                                                               WidthRequest="40"
+                                                               FontSize="12"
+                                                               TextColor="#666" />
+                                                        <ProgressBar Progress="{Binding StarCount4Progress}"
+                                                                     ProgressColor="#8BC34A"
+                                                                     HeightRequest="8"
+                                                                     VerticalOptions="Center"
+                                                                     HorizontalOptions="FillAndExpand" />
+                                                        <Label Text="{Binding SummaryReview.StarCount[4]}"
+                                                               WidthRequest="30"
+                                                               FontSize="12"
+                                                               TextColor="#666"
+                                                               HorizontalTextAlignment="End" />
+                                                    </HorizontalStackLayout>
+
+                                                    <!-- 3 sao -->
+                                                    <HorizontalStackLayout Spacing="10">
+                                                        <Label Text="3 ★"
+                                                               WidthRequest="40"
+                                                               FontSize="12"
+                                                               TextColor="#666" />
+                                                        <ProgressBar Progress="{Binding StarCount3Progress}"
+                                                                     ProgressColor="#FFC107"
+                                                                     HeightRequest="8"
+                                                                     VerticalOptions="Center"
+                                                                     HorizontalOptions="FillAndExpand" />
+                                                        <Label Text="{Binding SummaryReview.StarCount[3]}"
+                                                               WidthRequest="30"
+                                                               FontSize="12"
+                                                               TextColor="#666"
+                                                               HorizontalTextAlignment="End" />
+                                                    </HorizontalStackLayout>
+
+                                                    <!-- 2 sao -->
+                                                    <HorizontalStackLayout Spacing="10">
+                                                        <Label Text="2 ★"
+                                                               WidthRequest="40"
+                                                               FontSize="12"
+                                                               TextColor="#666" />
+                                                        <ProgressBar Progress="{Binding StarCount2Progress}"
+                                                                     ProgressColor="#FF9800"
+                                                                     HeightRequest="8"
+                                                                     VerticalOptions="Center"
+                                                                     HorizontalOptions="FillAndExpand" />
+                                                        <Label Text="{Binding SummaryReview.StarCount[2]}"
+                                                               WidthRequest="30"
+                                                               FontSize="12"
+                                                               TextColor="#666"
+                                                               HorizontalTextAlignment="End" />
+                                                    </HorizontalStackLayout>
+
+                                                    <!-- 1 sao -->
+                                                    <HorizontalStackLayout Spacing="10">
+                                                        <Label Text="1 ★"
+                                                               WidthRequest="40"
+                                                               FontSize="12"
+                                                               TextColor="#666" />
+                                                        <ProgressBar Progress="{Binding StarCount1Progress}"
+                                                                     ProgressColor="#F44336"
+                                                                     HeightRequest="8"
+                                                                     VerticalOptions="Center"
+                                                                     HorizontalOptions="FillAndExpand" />
+                                                        <Label Text="{Binding SummaryReview.StarCount[1]}"
+                                                               WidthRequest="30"
+                                                               FontSize="12"
+                                                               TextColor="#666"
+                                                               HorizontalTextAlignment="End" />
+                                                    </HorizontalStackLayout>
+                                                </VerticalStackLayout>
+                                            </Grid>
+                                        </Border>
+
+                                        <!-- Danh sách comment mới nhất -->
+                                        <Label Text="Đánh giá tích cực"
+                                               FontSize="14"
+                                               FontAttributes="Bold"
+                                               TextColor="#333"
+                                               Margin="0,5,0,0" />
+
+                                        <CollectionView ItemsSource="{Binding TopFiveComment}"
+                                                        SelectionMode="None">
                                             <CollectionView.ItemTemplate>
                                                 <DataTemplate>
-                                                    <Border Stroke="#EEE" StrokeThickness="1" Padding="10" Margin="0,4" StrokeShape="RoundRectangle 10">
-                                                        <VerticalStackLayout Spacing="4">
-                                                            <Label Text="{Binding Author}"
-                                           FontAttributes="Bold"
-                                           FontSize="14"
-                                           TextColor="#222"/>
-                                                            <Label Text="{Binding Text}"
-                                           FontSize="13"
-                                           TextColor="#555"
-                                           LineBreakMode="WordWrap"/>
-                                                        </VerticalStackLayout>
+                                                    <Border Stroke="#EEE"
+                                                            StrokeThickness="1"
+                                                            Padding="12"
+                                                            Margin="0,4"
+                                                            StrokeShape="RoundRectangle 10">
+                                                        <Grid ColumnSpacing="12">
+                                                            <Grid.ColumnDefinitions>
+                                                                <ColumnDefinition Width="50" />
+                                                                <ColumnDefinition Width="*" />
+                                                            </Grid.ColumnDefinitions>
+
+                                                            <!-- Avatar với hình ảnh placeholder -->
+                                                            <Border Grid.Column="0"
+                                                                    StrokeShape="RoundRectangle 25"
+                                                                    Stroke="#DDD"
+                                                                    StrokeThickness="1"
+                                                                    HeightRequest="50"
+                                                                    WidthRequest="50"
+                                                                    VerticalOptions="Start"
+                                                                    BackgroundColor="#F0F0F0">
+                                                                <Image Aspect="AspectFill">
+                                                                    <Image.Triggers>
+                                                                        <DataTrigger TargetType="Image"
+                                                                                     Binding="{Binding Avatar}"
+                                                                                     Value="{x:Null}">
+                                                                            <Setter Property="Source"
+                                                                                    Value="dotnet_bot.png" />
+                                                                        </DataTrigger>
+                                                                    </Image.Triggers>
+                                                                    <Image.Source>
+                                                                        <Binding Path="Avatar"
+                                                                                 FallbackValue="user_placeholder.png"
+                                                                                 TargetNullValue="user_placeholder.png" />
+                                                                    </Image.Source>
+                                                                </Image>
+                                                            </Border>
+
+                                                            <!-- Nội dung comment -->
+                                                            <VerticalStackLayout Grid.Column="1"
+                                                                                 Spacing="6">
+                                                                <!-- Header: Tên user và rating -->
+                                                                <Grid ColumnSpacing="10">
+                                                                    <Grid.ColumnDefinitions>
+                                                                        <ColumnDefinition Width="*" />
+                                                                        <ColumnDefinition Width="Auto" />
+                                                                    </Grid.ColumnDefinitions>
+
+                                                                    <Label Grid.Column="0"
+                                                                           Text="{Binding UserName}"
+                                                                           FontAttributes="Bold"
+                                                                           FontSize="14"
+                                                                           TextColor="#222"
+                                                                           VerticalOptions="Center" />
+
+                                                                    <Label Grid.Column="1"
+                                                                           Text="{Binding Rating, StringFormat='★ {0}'}"
+                                                                           FontSize="13"
+                                                                           TextColor="#FF9800"
+                                                                           VerticalOptions="Center" />
+                                                                </Grid>
+
+                                                                <!-- Nội dung comment -->
+                                                                <Label Text="{Binding Comment}"
+                                                                       FontSize="13"
+                                                                       TextColor="#555"
+                                                                       LineBreakMode="WordWrap" />
+
+                                                                <!-- Ngày tạo -->
+                                                                <Label Text="{Binding CreatedAt, Converter={StaticResource DateTimeFormatConverter}}"
+                                                                       FontSize="11"
+                                                                       TextColor="#999"
+                                                                       HorizontalOptions="End" />
+                                                            </VerticalStackLayout>
+                                                        </Grid>
                                                     </Border>
                                                 </DataTemplate>
                                             </CollectionView.ItemTemplate>
                                         </CollectionView>
+
                                     </VerticalStackLayout>
                                 </ScrollView>
                             </ContentView>
@@ -230,72 +441,79 @@
             </VerticalStackLayout>
         </ScrollView>
 
-        <Border Grid.Row="2" 
-        BackgroundColor="White"
-        StrokeThickness="0"
-        Padding="20,15">
+        <Border Grid.Row="2"
+                BackgroundColor="White"
+                StrokeThickness="0"
+                Padding="20,15">
             <Border.Shadow>
-                <Shadow Brush="Black" Opacity="0.1" Radius="10" Offset="0,-2" />
+                <Shadow Brush="Black"
+                        Opacity="0.1"
+                        Radius="10"
+                        Offset="0,-2" />
             </Border.Shadow>
 
-            <Grid ColumnDefinitions="Auto,*" ColumnSpacing="15">
+            <Grid ColumnDefinitions="Auto,*"
+                  ColumnSpacing="15">
 
                 <!-- Quantity Controls -->
                 <Border Grid.Column="0"
-               StrokeThickness="1"
-               Stroke="#DDD"
-               HeightRequest="45"
-               WidthRequest="140"
-               VerticalOptions="Center">
+                        StrokeThickness="1"
+                        Stroke="#DDD"
+                        HeightRequest="45"
+                        WidthRequest="140"
+                        VerticalOptions="Center">
                     <Border.StrokeShape>
-                        <RoundRectangle CornerRadius="22"/>
+                        <RoundRectangle CornerRadius="22" />
                     </Border.StrokeShape>
 
                     <Grid ColumnDefinitions="*,*,*">
                         <!-- Decrease Button -->
                         <Button Grid.Column="0"
-                       Text="-"
-                       FontSize="20"
-                       FontFamily="RobotoBold"
-                       TextColor="#666"
-                       BackgroundColor="Transparent"
-                       Padding="0"
-                       Command="{Binding DecreaseQuantityCommand}"/>
+                                Text="-"
+                                FontSize="20"
+                                FontFamily="RobotoBold"
+                                TextColor="#666"
+                                BackgroundColor="Transparent"
+                                Padding="0"
+                                Command="{Binding DecreaseQuantityCommand}" />
 
                         <!-- Quantity Display -->
                         <Label Grid.Column="1"
-                      Text="{Binding Quantity}"
-                      FontFamily="RobotoMedium"
-                      FontSize="16"
-                      TextColor="#333"
-                      HorizontalOptions="Center"
-                      VerticalOptions="Center"/>
+                               Text="{Binding Quantity}"
+                               FontFamily="RobotoMedium"
+                               FontSize="16"
+                               TextColor="#333"
+                               HorizontalOptions="Center"
+                               VerticalOptions="Center" />
 
                         <!-- Increase Button -->
                         <Button Grid.Column="2"
-                       Text="+"
-                       FontSize="20"
-                       FontFamily="RobotoBold"
-                       TextColor="#F9A825"
-                       BackgroundColor="Transparent"
-                       Padding="0"
-                       Command="{Binding IncreaseQuantityCommand}"/>
+                                Text="+"
+                                FontSize="20"
+                                FontFamily="RobotoBold"
+                                TextColor="#F9A825"
+                                BackgroundColor="Transparent"
+                                Padding="0"
+                                Command="{Binding IncreaseQuantityCommand}" />
                     </Grid>
                 </Border>
 
                 <!-- Add to Cart Button -->
                 <Button Grid.Column="1"
-               Text="Thêm vào giỏ"
-               BackgroundColor="#F9A825"
-               TextColor="White"
-               FontFamily="RobotoBold"
-               FontSize="16"
-               HeightRequest="45"
-               CornerRadius="22"
-               Command="{Binding AddToCartCommand}"
-               VerticalOptions="Center">
+                        Text="Thêm vào giỏ"
+                        BackgroundColor="#F9A825"
+                        TextColor="White"
+                        FontFamily="RobotoBold"
+                        FontSize="16"
+                        HeightRequest="45"
+                        CornerRadius="22"
+                        Command="{Binding AddToCartCommand}"
+                        VerticalOptions="Center">
                     <Button.Shadow>
-                        <Shadow Brush="#F9A825" Opacity="0.3" Radius="10" Offset="0,4" />
+                        <Shadow Brush="#F9A825"
+                                Opacity="0.3"
+                                Radius="10"
+                                Offset="0,4" />
                     </Button.Shadow>
                 </Button>
             </Grid>
