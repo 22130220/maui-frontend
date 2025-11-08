@@ -63,4 +63,14 @@ public partial class ProductDetailPage : ContentPage
         button.BackgroundColor = Color.FromArgb("#F9A825");
         button.TextColor = Colors.White;
     }
+
+    protected override async void OnAppearing()
+    {
+        base.OnAppearing();
+
+        if (BindingContext is ProductDetailViewModel vm)
+        {
+            await vm.LoadSummaryReviewCommand.ExecuteAsync(null);
+        }
+    }
 }

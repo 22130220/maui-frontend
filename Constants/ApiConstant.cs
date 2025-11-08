@@ -15,5 +15,11 @@ namespace MauiFrontend.Constants
             public const string DETAIL = "products/detail/";
             public const string SEARCH = "products/search";
         }
+
+        public static class PRODUCT_REVIEW
+        {
+            public const string GET_LIST = "product-reviews/get-list";
+            public const string SUMMARY_REVIEW = "product-reviews/summary-review";
+        }
     }
 }

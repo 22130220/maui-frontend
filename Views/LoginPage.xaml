@@ -9,101 +9,90 @@
     <ScrollView>
         <Grid x:Name="MainGrid">
             <!-- Layout cho chế độ dọc (Portrait) -->
-            <VerticalStackLayout 
-                x:Name="PortraitLayout"
-                Padding="30"
-                Spacing="20"
-                VerticalOptions="Center"
-                IsVisible="{Binding IsDisableLandScape}">
+            <VerticalStackLayout x:Name="PortraitLayout"
+                                 Padding="30"
+                                 Spacing="20"
+                                 VerticalOptions="Center"
+                                 IsVisible="{Binding IsDisableLandScape}">
 
                 <!-- Logo -->
-                <Image 
-                    Source="dotnet_bot.png"
-                    HeightRequest="120"
-                    WidthRequest="120"
-                    Aspect="AspectFit"
-                    Margin="0,0,0,10"/>
+                <Image Source="dotnet_bot.png"
+                       HeightRequest="120"
+                       WidthRequest="120"
+                       Aspect="AspectFit"
+                       Margin="0,0,0,10" />
 
                 <!-- Slogan -->
-                <Label 
-                    Text="Chào mừng bạn trở lại!"
-                    FontSize="24"
-                    FontAttributes="Bold"
-                    HorizontalOptions="Center"
-                    TextColor="#2C3E50"/>
+                <Label Text="Chào mừng bạn trở lại!"
+                       FontSize="24"
+                       FontAttributes="Bold"
+                       HorizontalOptions="Center"
+                       TextColor="#2C3E50" />
 
-                <Label 
-                    Text="Đăng nhập để tiếp tục"
-                    FontSize="14"
-                    HorizontalOptions="Center"
-                    TextColor="#7F8C8D"
-                    Margin="0,0,0,20"/>
+                <Label Text="Đăng nhập để tiếp tục"
+                       FontSize="14"
+                       HorizontalOptions="Center"
+                       TextColor="#7F8C8D"
+                       Margin="0,0,0,20" />
 
                 <!-- Form đăng nhập -->
-                <Border 
-                    BackgroundColor="White"
-                    StrokeThickness="0"
-                    Padding="20"
-                    Shadow="{Shadow Brush=#40000000, Offset='0,2', Radius=8, Opacity=0.3}">
+                <Border BackgroundColor="White"
+                        StrokeThickness="0"
+                        Padding="20"
+                        Shadow="{Shadow Brush=#40000000, Offset='0,2', Radius=8, Opacity=0.3}">
                     <Border.StrokeShape>
-                        <RoundRectangle CornerRadius="15"/>
+                        <RoundRectangle CornerRadius="15" />
                     </Border.StrokeShape>
 
                     <VerticalStackLayout Spacing="15">
                         <!-- Email/Username -->
-                        <Label 
-                            Text="Email hoặc Tên đăng nhập"
-                            FontSize="14"
-                            TextColor="#2C3E50"/>
+                        <Label Text="Email hoặc Tên đăng nhập"
+                               FontSize="14"
+                               TextColor="#2C3E50" />
 
-                        <Border 
-                            Stroke="#E0E0E0"
-                            StrokeThickness="1"
-                            Padding="12,8"
-                            BackgroundColor="White">
+                        <Border Stroke="#E0E0E0"
+                                StrokeThickness="1"
+                                Padding="12,8"
+                                BackgroundColor="White">
                             <Border.StrokeShape>
-                                <RoundRectangle CornerRadius="10"/>
+                                <RoundRectangle CornerRadius="10" />
                             </Border.StrokeShape>
-                            <Entry 
-                                Placeholder="Nhập email hoặc tên đăng nhập"
-                                PlaceholderColor="#BDC3C7"
-                                TextColor="#2C3E50"
-                                Keyboard="Email"
-                                BackgroundColor="Transparent"
-                                Text="{Binding Email, Mode=TwoWay}"/>
+                            <Entry Placeholder="Nhập email hoặc tên đăng nhập"
+                                   PlaceholderColor="#BDC3C7"
+                                   TextColor="#2C3E50"
+                                   Keyboard="Email"
+                                   BackgroundColor="Transparent"
+                                   Text="{Binding Email, Mode=TwoWay}" />
                         </Border>
 
                         <!-- Password -->
-                        <Label 
-                            Text="Mật khẩu"
-                            FontSize="14"
-                            TextColor="#2C3E50"
-                            Margin="0,10,0,0"/>
+                        <Label Text="Mật khẩu"
+                               FontSize="14"
+                               TextColor="#2C3E50"
+                               Margin="0,10,0,0" />
 
-                        <Border 
-                            Stroke="#E0E0E0"
-                            StrokeThickness="1"
-                            Padding="12,8"
-                            BackgroundColor="White">
+                        <Border Stroke="#E0E0E0"
+                                StrokeThickness="1"
+                                Padding="12,8"
+                                BackgroundColor="White">
                             <Border.StrokeShape>
-                                <RoundRectangle CornerRadius="10"/>
+                                <RoundRectangle CornerRadius="10" />
                             </Border.StrokeShape>
-                            <Entry 
-                                Placeholder="Nhập mật khẩu"
-                                PlaceholderColor="#BDC3C7"
-                                TextColor="#2C3E50"
-                                IsPassword="True"
-                                BackgroundColor="Transparent"
-                                Text="{Binding Password, Mode=TwoWay}"/>
+                            <Entry Placeholder="Nhập mật khẩu"
+                                   PlaceholderColor="#BDC3C7"
+                                   TextColor="#2C3E50"
+                                   IsPassword="True"
+                                   BackgroundColor="Transparent"
+                                   Text="{Binding Password, Mode=TwoWay}" />
                         </Border>
 
                         <!-- Quên mật khẩu -->
-                        <Label
-                                 Text="Quên mật khẩu?"
-                                 FontSize="12"
-                                 TextColor="#3498DB"
-                                 HorizontalOptions="End"
-                                 Margin="0,5,0,0">  
+                        <Label 
+                            Text="Quên mật khẩu?"
+                            FontSize="12"
+                            TextColor="#3498DB"
+                            HorizontalOptions="End"
+                            Margin="0,5,0,0">
                             <Label.GestureRecognizers>
                                 <TapGestureRecognizer Command="{Binding ForgotPasswordCommand}" />
                             </Label.GestureRecognizers>
@@ -113,152 +102,134 @@
                 </Border>
 
                 <!-- Nút Đăng nhập -->
-                <Button 
-                    Text="Đăng nhập"
-                    BackgroundColor="#3498DB"
-                    TextColor="White"
-                    FontSize="16"
-                    FontAttributes="Bold"
-                    CornerRadius="10"
-                    HeightRequest="50"
-                    Margin="0,10,0,0"
-                    Command="{Binding LoginCommand}"/>
+                <Button Text="Đăng nhập"
+                        BackgroundColor="#3498DB"
+                        TextColor="White"
+                        FontSize="16"
+                        FontAttributes="Bold"
+                        CornerRadius="10"
+                        HeightRequest="50"
+                        Margin="0,10,0,0"
+                        Command="{Binding LoginCommand}" />
 
                 <!-- Hoặc -->
-                <Label 
-                    Text="Hoặc"
-                    FontSize="14"
-                    TextColor="#7F8C8D"
-                    HorizontalOptions="Center"
-                    Margin="0,10,0,10"/>
+                <Label Text="Hoặc"
+                       FontSize="14"
+                       TextColor="#7F8C8D"
+                       HorizontalOptions="Center"
+                       Margin="0,10,0,10" />
 
                 <!-- Nút Đăng ký -->
-                <Button 
-                    Text="Tạo tài khoản mới"
-                    BackgroundColor="Transparent"
-                    TextColor="#3498DB"
-                    BorderColor="#3498DB"
-                    BorderWidth="2"
-                    FontSize="16"
-                    FontAttributes="Bold"
-                    CornerRadius="10"
-                    HeightRequest="50"/>
+                <Button Text="Tạo tài khoản mới"
+                        BackgroundColor="Transparent"
+                        TextColor="#3498DB"
+                        BorderColor="#3498DB"
+                        BorderWidth="2"
+                        FontSize="16"
+                        FontAttributes="Bold"
+                        CornerRadius="10"
+                        HeightRequest="50" />
 
             </VerticalStackLayout>
 
             <!-- Layout cho chế độ ngang (Landscape) -->
-            <Grid 
-                x:Name="LandscapeLayout"
-                Padding="30"
-                ColumnSpacing="30"
-                IsVisible="{Binding IsLandscape}"
-                VerticalOptions="Center">
+            <Grid x:Name="LandscapeLayout"
+                  Padding="30"
+                  ColumnSpacing="30"
+                  IsVisible="{Binding IsLandscape}"
+                  VerticalOptions="Center">
 
                 <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="*"/>
-                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="*" />
                 </Grid.ColumnDefinitions>
 
                 <!-- Phần trái: Logo và Slogan -->
-                <VerticalStackLayout 
-                    Grid.Column="0"
-                    VerticalOptions="Center"
-                    Spacing="20">
+                <VerticalStackLayout Grid.Column="0"
+                                     VerticalOptions="Center"
+                                     Spacing="20">
 
-                    <Image 
-                        Source="dotnet_bot.png"
-                        HeightRequest="150"
-                        WidthRequest="150"
-                        Aspect="AspectFit"
-                        HorizontalOptions="Center"/>
+                    <Image Source="dotnet_bot.png"
+                           HeightRequest="150"
+                           WidthRequest="150"
+                           Aspect="AspectFit"
+                           HorizontalOptions="Center" />
 
-                    <Label 
-                        Text="Chào mừng bạn trở lại!"
-                        FontSize="28"
-                        FontAttributes="Bold"
-                        HorizontalOptions="Center"
-                        TextColor="#2C3E50"/>
+                    <Label Text="Chào mừng bạn trở lại!"
+                           FontSize="28"
+                           FontAttributes="Bold"
+                           HorizontalOptions="Center"
+                           TextColor="#2C3E50" />
 
-                    <Label 
-                        Text="Đăng nhập để tiếp tục trải nghiệm"
-                        FontSize="16"
-                        HorizontalOptions="Center"
-                        TextColor="#7F8C8D"
-                        HorizontalTextAlignment="Center"/>
+                    <Label Text="Đăng nhập để tiếp tục trải nghiệm"
+                           FontSize="16"
+                           HorizontalOptions="Center"
+                           TextColor="#7F8C8D"
+                           HorizontalTextAlignment="Center" />
                 </VerticalStackLayout>
 
                 <!-- Phần phải: Form đăng nhập -->
-                <VerticalStackLayout 
-                    Grid.Column="1"
-                    Spacing="15"
-                    VerticalOptions="Center">
+                <VerticalStackLayout Grid.Column="1"
+                                     Spacing="15"
+                                     VerticalOptions="Center">
 
-                    <Border 
-                        BackgroundColor="White"
-                        StrokeThickness="0"
-                        Padding="25"
-                        Shadow="{Shadow Brush=#40000000, Offset='0,2', Radius=8, Opacity=0.3}">
+                    <Border BackgroundColor="White"
+                            StrokeThickness="0"
+                            Padding="25"
+                            Shadow="{Shadow Brush=#40000000, Offset='0,2', Radius=8, Opacity=0.3}">
                         <Border.StrokeShape>
-                            <RoundRectangle CornerRadius="15"/>
+                            <RoundRectangle CornerRadius="15" />
                         </Border.StrokeShape>
 
                         <VerticalStackLayout Spacing="15">
                             <!-- Email/Username -->
-                            <Label 
-                                Text="Email hoặc Tên đăng nhập"
-                                FontSize="14"
-                                TextColor="#2C3E50"/>
+                            <Label Text="Email hoặc Tên đăng nhập"
+                                   FontSize="14"
+                                   TextColor="#2C3E50" />
 
-                            <Border 
-                                Stroke="#E0E0E0"
-                                StrokeThickness="1"
-                                Padding="12,8"
-                                BackgroundColor="White">
+                            <Border Stroke="#E0E0E0"
+                                    StrokeThickness="1"
+                                    Padding="12,8"
+                                    BackgroundColor="White">
                                 <Border.StrokeShape>
-                                    <RoundRectangle CornerRadius="10"/>
+                                    <RoundRectangle CornerRadius="10" />
                                 </Border.StrokeShape>
-                                <Entry 
-                                    Placeholder="Nhập email hoặc tên đăng nhập"
-                                    PlaceholderColor="#BDC3C7"
-                                    TextColor="#2C3E50"
-                                    Keyboard="Email"
-                                    BackgroundColor="Transparent"
-                                    Text="{Binding Email}"/>
+                                <Entry Placeholder="Nhập email hoặc tên đăng nhập"
+                                       PlaceholderColor="#BDC3C7"
+                                       TextColor="#2C3E50"
+                                       Keyboard="Email"
+                                       BackgroundColor="Transparent"
+                                       Text="{Binding Email}" />
                             </Border>
 
                             <!-- Password -->
-                            <Label 
-                                Text="Mật khẩu"
-                                FontSize="14"
-                                TextColor="#2C3E50"
-                                Margin="0,10,0,0"
-                            />
+                            <Label Text="Mật khẩu"
+                                   FontSize="14"
+                                   TextColor="#2C3E50"
+                                   Margin="0,10,0,0" />
 
-                            <Border 
-                                Stroke="#E0E0E0"
-                                StrokeThickness="1"
-                                Padding="12,8"
-                                BackgroundColor="White">
+                            <Border Stroke="#E0E0E0"
+                                    StrokeThickness="1"
+                                    Padding="12,8"
+                                    BackgroundColor="White">
                                 <Border.StrokeShape>
-                                    <RoundRectangle CornerRadius="10"/>
+                                    <RoundRectangle CornerRadius="10" />
                                 </Border.StrokeShape>
-                                <Entry 
-                                    Placeholder="Nhập mật khẩu"
-                                    PlaceholderColor="#BDC3C7"
-                                    TextColor="#2C3E50"
-                                    IsPassword="True"
-                                    BackgroundColor="Transparent"
-                                    Text="{Binding Password}"
-                                    />
+                                <Entry Placeholder="Nhập mật khẩu"
+                                       PlaceholderColor="#BDC3C7"
+                                       TextColor="#2C3E50"
+                                       IsPassword="True"
+                                       BackgroundColor="Transparent"
+                                       Text="{Binding Password}" />
                             </Border>
 
                             <!-- Quên mật khẩu -->
-                            <Label
-                                     Text="Quên mật khẩu?"
-                                     FontSize="12"
-                                     TextColor="#3498DB"
-                                     HorizontalOptions="End"
-                                     Margin="0,5,0,0">      
+                            <Label 
+                                Text="Quên mật khẩu?"
+                                FontSize="12"
+                                TextColor="#3498DB"
+                                HorizontalOptions="End"
+                                Margin="0,5,0,0">
                                 <Label.GestureRecognizers>
                                     <TapGestureRecognizer Command="{Binding ForgotPasswordCommand}" />
                                 </Label.GestureRecognizers>
@@ -268,37 +239,33 @@
                     </Border>
 
                     <!-- Nút Đăng nhập -->
-                    <Button 
-                        Text="Đăng nhập"
-                        BackgroundColor="#3498DB"
-                        TextColor="White"
-                        FontSize="16"
-                        FontAttributes="Bold"
-                        CornerRadius="10"
-                        HeightRequest="50"
-                        Margin="0,10,0,0"
-                        Command="{Binding LoginCommand}"
-                        />
+                    <Button Text="Đăng nhập"
+                            BackgroundColor="#3498DB"
+                            TextColor="White"
+                            FontSize="16"
+                            FontAttributes="Bold"
+                            CornerRadius="10"
+                            HeightRequest="50"
+                            Margin="0,10,0,0"
+                            Command="{Binding LoginCommand}" />
 
                     <!-- Hoặc -->
-                    <Label 
-                        Text="Hoặc"
-                        FontSize="14"
-                        TextColor="#7F8C8D"
-                        HorizontalOptions="Center"
-                        Margin="0,5,0,5"/>
+                    <Label Text="Hoặc"
+                           FontSize="14"
+                           TextColor="#7F8C8D"
+                           HorizontalOptions="Center"
+                           Margin="0,5,0,5" />
 
                     <!-- Nút Đăng ký -->
-                    <Button 
-                        Text="Tạo tài khoản mới"
-                        BackgroundColor="Transparent"
-                        TextColor="#3498DB"
-                        BorderColor="#3498DB"
-                        BorderWidth="2"
-                        FontSize="16"
-                        FontAttributes="Bold"
-                        CornerRadius="10"
-                        HeightRequest="50"/>
+                    <Button Text="Tạo tài khoản mới"
+                            BackgroundColor="Transparent"
+                            TextColor="#3498DB"
+                            BorderColor="#3498DB"
+                            BorderWidth="2"
+                            FontSize="16"
+                            FontAttributes="Bold"
+                            CornerRadius="10"
+                            HeightRequest="50" />
 
                 </VerticalStackLayout>
             </Grid>
@@ -306,12 +273,12 @@
                 <VisualStateGroup x:Name="OrientationStates">
                     <VisualState x:Name="Portrait">
                         <VisualState.StateTriggers>
-                            <AdaptiveTrigger MinWindowWidth="0"/>
+                            <AdaptiveTrigger MinWindowWidth="0" />
                         </VisualState.StateTriggers>
                     </VisualState>
                     <VisualState x:Name="Landscape">
                         <VisualState.StateTriggers>
-                            <AdaptiveTrigger MinWindowWidth="600"/>
+                            <AdaptiveTrigger MinWindowWidth="600" />
                         </VisualState.StateTriggers>
                     </VisualState>
                 </VisualStateGroup>
