@@ -31,10 +31,12 @@
                       ContentTemplate="{DataTemplate views:CartPage}" />
 
         <!-- Tài khoản -->
-        <ShellContent Title="Tài khoản"
-                      Icon="{mi:Material Icon=AccountCircle, IconColor=Black}"
-                      Route="AccountPage"
-                      ContentTemplate="{DataTemplate views:AccountPage}" />
+        <ShellContent 
+    Title="{Binding AccountTitle}"
+    Icon="{mi:Material Icon=AccountCircle, IconColor=Black}"
+    Route="AccountPage"
+    ContentTemplate="{DataTemplate views:AccountPage}" />
+
     </TabBar>
 
     <!-- =============== -->

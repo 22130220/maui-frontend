@@ -6,6 +6,9 @@
              x:Class="MauiFrontend.App"
              UserAppTheme="Light">
     <Application.Resources>
+     
+      
+
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
                 <ResourceDictionary Source="Resources/Styles/Colors.xaml" />

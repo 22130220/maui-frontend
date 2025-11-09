@@ -1,4 +1,6 @@
-﻿using MauiFrontend.Http;
+﻿using MauiFrontend.Constants;
+using MauiFrontend.Http;
+using MauiFrontend.Models;
 using System;
 using System.Net;
 using System.Net.Http;
@@ -9,8 +11,80 @@ namespace MauiFrontend.Services
     public class UserService : BaseService
     {
         public UserService(Https https) : base(https) { }
+      
+        public async Task<LoginResponse?> LoginAsync(string email, string password)
+        {
+            try
+            {
+                var request = new LoginRequest
+                {
+                    email = email,
+                    password = password
+                };
+              
+                var response = await _https.PostAsync<LoginRequest, LoginResponse>(
+                    APICONSTANT.USER.LOGIN,
+                    request
+                );
+                 
+                if (response != null )
+                {
+                    if(response.Code == 200)
+                    {
+                        if (!string.IsNullOrEmpty(response.Data?.Token))
+                        {
+                        
+                            Preferences.Set("auth_token", response.Data.Token);
+                            Preferences.Set("user_name", response.Data.UserName);
+                            Preferences.Set("user_email", response.Data.Email);
+                            Preferences.Set("user_roles", string.Join(",", response.Data.Roles));
+                            if (Application.Current.MainPage is AppShell shell)
+                            {
+                                shell.UpdateAccountTitle(); 
+                            }
+                        }
+                        return response;
+                    }
+                    else
+                    {
+                        return null;
+                    }
+                }
 
-        // 📩 Gửi mã OTP đến email
+                System.Diagnostics.Debug.WriteLine($" Login failed: {response?.Message}");
+                return null;
+            }
+            catch (Exception ex)
+            {
+               
+               System.Diagnostics.Debug.WriteLine($" LoginAsync Exception: {ex.Message}");
+                return null;
+            }
+        }
+        // 🚪 Đăng xuất
+        public void Logout()
+        {
+            Preferences.Remove("auth_token");
+            Preferences.Remove("user_email");
+            Preferences.Remove("user_roles");
+        }
+        //Kiểm tra đã đăng nhập chưa
+        public bool IsLoggedIn()
+        {
+            return !string.IsNullOrEmpty(Preferences.Get("auth_token", null));
+        }
+        //Lấy token hiện tại
+        public string GetToken()
+        {
+            return Preferences.Get("auth_token", null);
+        }
+
+        //  Lấy email người dùng
+        public string GetUserEmail()
+        {
+            return Preferences.Get("user_email", null);
+        }
+
         public async Task<bool> SendOtpAsync(string email)
         {
             try
@@ -45,7 +119,6 @@ namespace MauiFrontend.Services
 
 
 
-        // ✅ Xác thực mã OTP
         public async Task<bool> VerifyOtpAsync(string email, string otp)
         {
             try
@@ -77,7 +150,7 @@ namespace MauiFrontend.Services
             }
         }
 
-        // 🔑 Đặt lại mật khẩu mới
+        
         public async Task<bool> ResetPasswordAsync(string email, string newPassword)
         {
             try
@@ -108,5 +181,8 @@ namespace MauiFrontend.Services
                 return false;
             }
         }
+
     }
+
+
 }
