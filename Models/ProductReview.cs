@@ -24,4 +24,5 @@ namespace MauiFrontend.Models
         [JsonPropertyName("createdAt")]
         public string CreatedAt { get; set; }
     }
+
 }
