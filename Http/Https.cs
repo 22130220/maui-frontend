@@ -29,9 +29,18 @@ namespace MauiFrontend.Http
             var content = new StringContent(json, Encoding.UTF8, "application/json");
 
             var response = await _httpClient.PostAsync(url, content);
+            System.Diagnostics.Debug.WriteLine($"response nhận: {response}");
+
             response.EnsureSuccessStatusCode();
 
+           
+            // ✅ Log status code
+            System.Diagnostics.Debug.WriteLine($"Status: {response.StatusCode}");
+
             var responseJson = await response.Content.ReadAsStringAsync();
+
+            // ✅ Log raw JSON
+            System.Diagnostics.Debug.WriteLine($"Raw JSON: {responseJson}");
             return JsonSerializer.Deserialize<TResponse>(responseJson);
         }
 
@@ -54,6 +63,7 @@ namespace MauiFrontend.Http
             var response = await _httpClient.DeleteAsync(url);
             return response.IsSuccessStatusCode;
         }
+
     }
 
 

@@ -36,6 +36,8 @@ namespace MauiFrontend.Services
 
             return default;
         }
+
+
     
 
         public async Task<List<T>> GetListAsync<T>(string url, string param = "")

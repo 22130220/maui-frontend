@@ -16,10 +16,17 @@ namespace MauiFrontend.Constants
             public const string SEARCH = "products/search";
         }
 
+        public static class USER
+        {
+            public const string LOGIN = "users/login";
+            public const string LOGOUT = "users/logout";
+        }
+
         public static class PRODUCT_REVIEW
         {
             public const string GET_LIST = "product-reviews/get-list";
             public const string SUMMARY_REVIEW = "product-reviews/summary-review";
         }
+
     }
 }
