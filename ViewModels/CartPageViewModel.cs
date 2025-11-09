@@ -30,8 +30,8 @@ namespace MauiFrontend.ViewModels
         public IAsyncRelayCommand<string> DecreaseQuantityCommand { get; }
         public IAsyncRelayCommand<string> RemoveItemCommand { get; }
         public IAsyncRelayCommand ClearCartCommand { get; }
-        public IAsyncRelayCommand CheckoutCommand { get; }
         public IAsyncRelayCommand<string> GoToProductDetailCommand { get; }
+        public IAsyncRelayCommand GoToCheckoutCommand { get; }
 
         public CartPageViewModel(CartService cartService)
         {
@@ -48,18 +48,16 @@ namespace MauiFrontend.ViewModels
             DecreaseQuantityCommand = new AsyncRelayCommand<string>(DecreaseQuantityAsync);
             RemoveItemCommand = new AsyncRelayCommand<string>(RemoveItemAsync);
             ClearCartCommand = new AsyncRelayCommand(ClearCartAsync);
-            CheckoutCommand = new AsyncRelayCommand(CheckoutAsync);
             GoToProductDetailCommand = new AsyncRelayCommand<string>(GoToProductDetailAsync);
+            GoToCheckoutCommand = new AsyncRelayCommand(GoToCheckoutAsync, () => HasItems);
 
             UpdateTotals();
         }
 
         private void OnCartItemsCollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
         {
-            // Khi collection thay đổi (thêm/xóa item), cập nhật totals
             UpdateTotals();
 
-            // Subscribe vào PropertyChanged của các item mới
             if (e.NewItems != null)
             {
                 foreach (CartItem item in e.NewItems)
@@ -68,7 +66,6 @@ namespace MauiFrontend.ViewModels
                 }
             }
 
-            // Unsubscribe khỏi các item bị xóa
             if (e.OldItems != null)
             {
                 foreach (CartItem item in e.OldItems)
@@ -80,7 +77,6 @@ namespace MauiFrontend.ViewModels
 
         private void OnCartItemPropertyChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e)
         {
-            // Khi quantity của item thay đổi, cập nhật totals
             if (e.PropertyName == nameof(CartItem.Quantity) ||
                 e.PropertyName == nameof(CartItem.TotalPrice))
             {
@@ -99,6 +95,8 @@ namespace MauiFrontend.ViewModels
             TotalAmount = _cartService.GetTotalAmount();
             FormattedTotalAmount = $"{TotalAmount:N0} ₫";
             HasItems = CartItems.Any();
+
+            GoToCheckoutCommand.NotifyCanExecuteChanged();
 
             System.Diagnostics.Debug.WriteLine($"[CartPageViewModel] Updated - Items: {TotalItems}, Amount: {TotalAmount}");
         }
@@ -153,20 +151,6 @@ namespace MauiFrontend.ViewModels
             }
         }
 
-        private async Task CheckoutAsync()
-        {
-            if (!HasItems)
-            {
-                await Shell.Current.DisplayAlert("Thông báo", "Giỏ hàng trống!", "OK");
-                return;
-            }
-
-            await Shell.Current.DisplayAlert(
-                "Thông báo",
-                $"Chức năng thanh toán đang phát triển.\nTổng tiền: {FormattedTotalAmount}",
-                "OK");
-        }
-
         private async Task GoToProductDetailAsync(string productId)
         {
             if (string.IsNullOrEmpty(productId)) return;
@@ -175,6 +159,28 @@ namespace MauiFrontend.ViewModels
             {
                 { "ProductID", productId }
             });
+        }
+
+        private async Task GoToCheckoutAsync()
+        {
+            try
+            {
+                if (!HasItems)
+                {
+                    await Shell.Current.DisplayAlert("Thông báo", "Giỏ hàng trống", "OK");
+                    return;
+                }
+
+                System.Diagnostics.Debug.WriteLine($"[CartPageViewModel] Navigating to checkout");
+
+                // Không truyền parameter, CheckoutPageViewModel sẽ tự lấy từ CartService
+                await Shell.Current.GoToAsync(nameof(CheckoutPage));
+            }
+            catch (Exception ex)
+            {
+                System.Diagnostics.Debug.WriteLine($"[CartPageViewModel] Navigation error: {ex.Message}");
+                await Shell.Current.DisplayAlert("Lỗi", "Không thể chuyển trang thanh toán", "OK");
+            }
         }
     }
 }

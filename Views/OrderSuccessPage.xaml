@@ -1,0 +1,170 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:vm="clr-namespace:MauiFrontend.ViewModels"
+             x:Class="MauiFrontend.Views.OrderSuccessPage"
+             x:DataType="vm:OrderSuccessPageViewModel"
+             Title="Đặt Hàng Thành Công"
+             BackgroundColor="#FFFFFF"
+             Shell.NavBarIsVisible="False">
+
+    <Grid RowDefinitions="*,Auto" Padding="0">
+
+        <!-- Nội dung chính -->
+        <ScrollView Grid.Row="0">
+            <VerticalStackLayout Padding="20" Spacing="30" VerticalOptions="Center">
+
+                <!-- Icon thành công -->
+                <Border WidthRequest="120"
+                        HeightRequest="120"
+                        HorizontalOptions="Center"
+                        BackgroundColor="#E8F5E9"
+                        StrokeThickness="0">
+                    <Border.StrokeShape>
+                        <RoundRectangle CornerRadius="60"/>
+                    </Border.StrokeShape>
+                    <Label Text="✓"
+                           FontSize="60"
+                           FontAttributes="Bold"
+                           TextColor="#4CAF50"
+                           HorizontalOptions="Center"
+                           VerticalOptions="Center"/>
+                </Border>
+
+                <!-- Tiêu đề -->
+                <VerticalStackLayout Spacing="8" HorizontalOptions="Center">
+                    <Label Text="Đặt Hàng Thành Công!"
+                           FontFamily="RobotoBold"
+                           FontSize="24"
+                           TextColor="#333333"
+                           HorizontalOptions="Center"/>
+                    <Label Text="Cảm ơn bạn đã tin tưởng và đặt hàng"
+                           FontFamily="RobotoRegular"
+                           FontSize="14"
+                           TextColor="#666666"
+                           HorizontalOptions="Center"/>
+                </VerticalStackLayout>
+
+                <!-- Thông tin đơn hàng -->
+                <Frame BorderColor="#EEEEEE" 
+                       CornerRadius="12" 
+                       HasShadow="False" 
+                       Padding="20"
+                       BackgroundColor="#F5F5F5">
+                    <VerticalStackLayout Spacing="16">
+
+                        <Label Text="Thông Tin Đơn Hàng"
+                               FontFamily="RobotoBold"
+                               FontSize="16"
+                               TextColor="#333333"/>
+
+                        <!-- Mã đơn hàng -->
+                        <Grid ColumnDefinitions="Auto,*" ColumnSpacing="12">
+                            <Label Grid.Column="0" 
+                                   Text="Mã đơn hàng:"
+                                   FontFamily="RobotoRegular"
+                                   FontSize="14"
+                                   TextColor="#666666"
+                                   VerticalOptions="Center"/>
+                            <Label Grid.Column="1" 
+                                   Text="{Binding OrderID, StringFormat='#{0}'}"
+                                   FontFamily="RobotoBold"
+                                   FontSize="14"
+                                   TextColor="#F9A825"
+                                   VerticalOptions="Center"/>
+                        </Grid>
+
+                        <!-- Ngày đặt -->
+                        <Grid ColumnDefinitions="Auto,*" ColumnSpacing="12">
+                            <Label Grid.Column="0" 
+                                   Text="Ngày đặt:"
+                                   FontFamily="RobotoRegular"
+                                   FontSize="14"
+                                   TextColor="#666666"
+                                   VerticalOptions="Center"/>
+                            <Label Grid.Column="1" 
+                                   Text="{Binding OrderDate}"
+                                   FontFamily="RobotoMedium"
+                                   FontSize="14"
+                                   TextColor="#333333"
+                                   VerticalOptions="Center"/>
+                        </Grid>
+
+                        <BoxView HeightRequest="1" Color="#DDDDDD" Margin="0,4"/>
+
+                        <!-- Tổng tiền -->
+                        <Grid ColumnDefinitions="Auto,*" ColumnSpacing="12">
+                            <Label Grid.Column="0" 
+                                   Text="Tổng tiền:"
+                                   FontFamily="RobotoBold"
+                                   FontSize="16"
+                                   TextColor="#333333"
+                                   VerticalOptions="Center"/>
+                            <Label Grid.Column="1" 
+                                   Text="{Binding FormattedTotalAmount}"
+                                   FontFamily="RobotoBold"
+                                   FontSize="18"
+                                   TextColor="#F9A825"
+                                   HorizontalOptions="End"
+                                   VerticalOptions="Center"/>
+                        </Grid>
+                    </VerticalStackLayout>
+                </Frame>
+
+                <!-- Thông báo -->
+                <Frame BorderColor="#E3F2FD" 
+                       CornerRadius="8" 
+                       HasShadow="False" 
+                       Padding="16"
+                       BackgroundColor="#E3F2FD">
+                    <VerticalStackLayout Spacing="8">
+                        <Label Text="📦 Đơn hàng của bạn đang được xử lý"
+                               FontFamily="RobotoMedium"
+                               FontSize="13"
+                               TextColor="#1976D2"/>
+                        <Label Text="Chúng tôi sẽ liên hệ với bạn sớm nhất để xác nhận đơn hàng"
+                               FontFamily="RobotoRegular"
+                               FontSize="12"
+                               TextColor="#666666"
+                               LineBreakMode="WordWrap"/>
+                    </VerticalStackLayout>
+                </Frame>
+
+            </VerticalStackLayout>
+        </ScrollView>
+
+        <!-- Footer với các nút -->
+        <Border Grid.Row="1"
+                BackgroundColor="White"
+                StrokeThickness="0"
+                Padding="20,15">
+            <Border.Shadow>
+                <Shadow Brush="Black"
+                        Opacity="0.1"
+                        Radius="10"
+                        Offset="0,-2" />
+            </Border.Shadow>
+
+            <VerticalStackLayout Spacing="12">
+
+                <!-- Nút về trang chủ -->
+                <Button Text="Về Trang Chủ"
+                        Command="{Binding GoToHomeCommand}"
+                        BackgroundColor="#F9A825"
+                        TextColor="White"
+                        FontFamily="RobotoBold"
+                        FontSize="16"
+                        HeightRequest="50"
+                        CornerRadius="25">
+                    <Button.Shadow>
+                        <Shadow Brush="#F9A825"
+                                Opacity="0.3"
+                                Radius="10"
+                                Offset="0,4" />
+                    </Button.Shadow>
+                </Button>
+            </VerticalStackLayout>
+        </Border>
+    </Grid>
+
+</ContentPage>

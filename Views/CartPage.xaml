@@ -282,7 +282,7 @@
                         FontSize="16"
                         HeightRequest="50"
                         CornerRadius="25"
-                        Command="{Binding CheckoutCommand}">
+                        Command="{Binding GoToCheckoutCommand}">
                     <Button.Shadow>
                         <Shadow Brush="#F9A825"
                                 Opacity="0.3"

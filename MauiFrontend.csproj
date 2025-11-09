@@ -88,9 +88,18 @@
 	  <Compile Update="Views\CartPage.xaml.cs">
 	    <DependentUpon>CartPage.xaml</DependentUpon>
 	  </Compile>
+	  <Compile Update="Views\CheckoutPage.xaml.cs">
+	    <DependentUpon>CheckoutPage.xaml</DependentUpon>
+	  </Compile>
 	</ItemGroup>
 
 	<ItemGroup>
+	  <MauiXaml Update="Views\CheckoutPage.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
+	  <MauiXaml Update="Views\OrderSuccessPage.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
 	  <MauiXaml Update="Views\ProductReviewListPage.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>

@@ -12,6 +12,9 @@ namespace MauiFrontend
             Routing.RegisterRoute(nameof(SearchResultsPage), typeof(SearchResultsPage));
             Routing.RegisterRoute(nameof(ForgotPasswordPage), typeof(ForgotPasswordPage));
             Routing.RegisterRoute(nameof(ProductReviewListPage), typeof(ProductReviewListPage));
+            Routing.RegisterRoute(nameof(CheckoutPage), typeof(CheckoutPage));
+            Routing.RegisterRoute(nameof(OrderSuccessPage), typeof(OrderSuccessPage));  // THÊM DÒNG NÀY
+
         }
     }
 }
