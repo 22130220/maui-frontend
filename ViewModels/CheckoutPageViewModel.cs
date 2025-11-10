@@ -33,7 +33,7 @@ namespace MauiFrontend.ViewModels
         private string note = "";
 
         [ObservableProperty]
-        private int fee = 30000;  // GÁN CỨNG 30,000đ
+        private int fee = 30000;  
 
         [ObservableProperty]
         private int discount = 0;
@@ -55,7 +55,6 @@ namespace MauiFrontend.ViewModels
         [ObservableProperty]
         private bool isFormValid = false;
 
-        // ĐỔI THÀNH OBSERVABLEPROPERTY ĐỂ TỰ ĐỘNG TẠO PROPERTY PASCALCASE
         [ObservableProperty]
         private ObservableCollection<CartItem> cartItems;
 
@@ -73,10 +72,7 @@ namespace MauiFrontend.ViewModels
             // Tính tổng tiền từ cart service
             totalAmount = _cartService.GetTotalAmount();
 
-            System.Diagnostics.Debug.WriteLine($"[CheckoutPageViewModel] Cart items count: {cartItems?.Count ?? 0}");
-            System.Diagnostics.Debug.WriteLine($"[CheckoutPageViewModel] Total amount from cart: {totalAmount}");
-
-            SubmitCheckoutCommand = new AsyncRelayCommand(SubmitCheckoutAsync, () => isFormValid && !isProcessing);
+            SubmitCheckoutCommand = new AsyncRelayCommand(SubmitCheckoutAsync);
             GoBackCommand = new AsyncRelayCommand(GoBackAsync);
 
             // Subscribe để validate form khi thay đổi
@@ -116,8 +112,6 @@ namespace MauiFrontend.ViewModels
             decimal finalTotal = totalAmount + fee - discount;
             formattedTotalAmount = $"{totalAmount:N0} ₫";
             formattedFinalTotal = $"{finalTotal:N0} ₫";
-
-            System.Diagnostics.Debug.WriteLine($"[CheckoutPageViewModel] UpdateTotals - Total: {totalAmount}, Fee: {fee}, Discount: {discount}, Final: {finalTotal}");
         }
 
         private void ValidateForm()
@@ -130,9 +124,7 @@ namespace MauiFrontend.ViewModels
                            IsValidPhoneNumber(phoneNumber);
 
             isFormValid = isValid;
-            SubmitCheckoutCommand.NotifyCanExecuteChanged();
-
-            System.Diagnostics.Debug.WriteLine($"[CheckoutPageViewModel] Form validation: {isValid}");
+            SubmitCheckoutCommand.NotifyCanExecuteChanged();        
         }
 
         private bool IsValidEmail(string email)
@@ -161,7 +153,6 @@ namespace MauiFrontend.ViewModels
         {
             if (isProcessing || !isFormValid)
             {
-                System.Diagnostics.Debug.WriteLine($"[CheckoutPageViewModel] Cannot submit - Processing: {isProcessing}, Valid: {isFormValid}");
                 return;
             }
 
@@ -198,37 +189,17 @@ namespace MauiFrontend.ViewModels
                     }).ToList()
                 };
 
-                System.Diagnostics.Debug.WriteLine($"[CheckoutPageViewModel] ===== REQUEST INFO =====");
-                System.Diagnostics.Debug.WriteLine($"Fullname: {checkoutRequest.fullname}");
-                System.Diagnostics.Debug.WriteLine($"Email: {checkoutRequest.email}");
-                System.Diagnostics.Debug.WriteLine($"Phone: {checkoutRequest.phoneNumber}");
-                System.Diagnostics.Debug.WriteLine($"Address: {checkoutRequest.address}");
-                System.Diagnostics.Debug.WriteLine($"Items count: {checkoutRequest.items.Count}");
-                System.Diagnostics.Debug.WriteLine($"Fee: {checkoutRequest.fee}");
-                System.Diagnostics.Debug.WriteLine($"Discount: {checkoutRequest.discount}");
-                System.Diagnostics.Debug.WriteLine($"Final Total: {finalTotal}");
 
                 // Gọi API
                 var response = await _checkoutService.CheckoutAsync(checkoutRequest);
-
-                System.Diagnostics.Debug.WriteLine($"[CheckoutPageViewModel] ===== RESPONSE INFO =====");
-                System.Diagnostics.Debug.WriteLine($"Response is null: {response == null}");
+               
                 if (response != null)
                 {
-                    System.Diagnostics.Debug.WriteLine($"Response Code: {response.Code}");
-                    System.Diagnostics.Debug.WriteLine($"Response Message: {response.Message}");
-                    System.Diagnostics.Debug.WriteLine($"Response Data is null: {response.Data == null}");
-                    if (response.Data != null)
-                    {
-                        System.Diagnostics.Debug.WriteLine($"Order ID: {response.Data.orderID}");
-                        System.Diagnostics.Debug.WriteLine($"Total Amount: {response.Data.totalAmount}");
-                    }
+                    if (response.Data != null){}
                 }
 
                 if (response?.Data != null && response.Code == 201)
-                {
-                    System.Diagnostics.Debug.WriteLine($"[CheckoutPageViewModel] ✅ Checkout successful");
-
+                {                   
                     // Clear giỏ hàng
                     _cartService.ClearCart();
 
@@ -241,8 +212,7 @@ namespace MauiFrontend.ViewModels
             });
                 }
                 else
-                {
-                    System.Diagnostics.Debug.WriteLine($"[CheckoutPageViewModel] ❌ Checkout failed");
+                {                  
                     await Shell.Current.DisplayAlert(
                         "Lỗi",
                         response?.Message ?? "Thanh toán thất bại",
@@ -250,19 +220,15 @@ namespace MauiFrontend.ViewModels
                 }
             }
             catch (ArgumentException ex)
-            {
-                System.Diagnostics.Debug.WriteLine($"[CheckoutPageViewModel] ❌ Validation error: {ex.Message}");
+            {               
                 await Shell.Current.DisplayAlert("Lỗi", $"Dữ liệu không hợp lệ: {ex.Message}", "OK");
             }
             catch (HttpRequestException ex)
-            {
-                System.Diagnostics.Debug.WriteLine($"[CheckoutPageViewModel] ❌ HTTP error: {ex.Message}");
+            {                
                 await Shell.Current.DisplayAlert("Lỗi", "Không thể kết nối đến server. Vui lòng kiểm tra kết nối mạng", "OK");
             }
             catch (Exception ex)
-            {
-                System.Diagnostics.Debug.WriteLine($"[CheckoutPageViewModel] ❌ Error: {ex.Message}");
-                System.Diagnostics.Debug.WriteLine($"[CheckoutPageViewModel] StackTrace: {ex.StackTrace}");
+            {               
                 await Shell.Current.DisplayAlert("Lỗi", $"Thanh toán thất bại: {ex.Message}", "OK");
             }
             finally

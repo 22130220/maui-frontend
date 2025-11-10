@@ -35,7 +35,7 @@ namespace MauiFrontend.ViewModels
 
         partial void OnTotalAmountChanged(long value)
         {
-            formattedTotalAmount = $"{value:N0} ₫";
+            FormattedTotalAmount = $"{value:N0} ₫";
         }
 
         private async Task GoToHomeAsync()

@@ -2,6 +2,7 @@
 using MauiFrontend.Models;
 using MauiFrontend.Models.Request;
 using MauiFrontend.Models.Response;
+using System.Net.Http.Headers;
 using System.Text.Json;
 
 namespace MauiFrontend.Services
