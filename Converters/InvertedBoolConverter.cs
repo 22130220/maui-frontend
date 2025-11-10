@@ -86,7 +86,8 @@ namespace MauiFrontend.Converters
     {
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            return value is bool b && !b;
+            bool revert = value is bool b && !b;
+            return revert;
         }
 
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)

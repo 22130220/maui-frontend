@@ -1,4 +1,6 @@
-﻿using System.Text;
+﻿using System.Net.Http;
+using System.Net.Http.Headers;
+using System.Text;
 using System.Text.Json;
 
 
@@ -15,6 +17,14 @@ namespace MauiFrontend.Http
         // GET generic
         public async Task<T?> GetAsync<T>(string url)
         {
+            string? token = Preferences.Get("auth_token", null);
+            if (token == null)
+            {
+                _httpClient.DefaultRequestHeaders.Remove("Authorization");
+            } else
+            {
+                _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
+            }
             var response = await _httpClient.GetAsync(url);
             response.EnsureSuccessStatusCode();
 
@@ -26,6 +36,16 @@ namespace MauiFrontend.Http
         public async Task<TResponse?> PostAsync<TRequest, TResponse>(string url, TRequest data)
         {
             var json = JsonSerializer.Serialize(data);
+            string? token = Preferences.Get("auth_token", null);
+            if (token == null)
+            {
+                _httpClient.DefaultRequestHeaders.Remove("Authorization");
+            }
+            else
+            {
+                _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
+            }
+
             var content = new StringContent(json, Encoding.UTF8, "application/json");
 
             var response = await _httpClient.PostAsync(url, content);
