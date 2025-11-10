@@ -51,5 +51,31 @@ namespace MauiFrontend
 
             System.Diagnostics.Debug.WriteLine($"AccountTitle updated: {AccountTitle}");
         }
+        protected override async void OnNavigating(ShellNavigatingEventArgs args)
+        {
+            base.OnNavigating(args);
+
+            // Nếu đang chuyển qua 1 tab khác
+            if (args.Source == ShellNavigationSource.ShellSectionChanged)
+            {
+                // Lấy đường dẫn hiện tại (trước khi chuyển tab)
+                var current = Shell.Current.CurrentState.Location.OriginalString;
+                var target = args.Target.Location.OriginalString;
+
+                // 🔍 Nếu đang ở SuccessPage và chuyển qua tab khác -> reset về CartPage
+                if (current.Contains("successpage", StringComparison.OrdinalIgnoreCase))
+                {
+                    await Shell.Current.GoToAsync("//CartPage");
+                    return;
+                }
+
+                // Ngược lại, vẫn giữ behavior cũ (reset khi đổi tab)
+                //if (!string.IsNullOrEmpty(target))
+                //{
+                //    await Shell.Current.GoToAsync("//" + target.Split('/')[1]);
+                //}
+            }
+        }
+
     }
 }

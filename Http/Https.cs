@@ -1,5 +1,7 @@
-﻿using System.Text;
+﻿using System.Net.Http.Headers;
+using System.Text;
 using System.Text.Json;
+using static System.Net.WebRequestMethods;
 
 
 namespace MauiFrontend.Http
@@ -27,6 +29,12 @@ namespace MauiFrontend.Http
         {
             var json = JsonSerializer.Serialize(data);
             var content = new StringContent(json, Encoding.UTF8, "application/json");
+
+
+            string? token = Preferences.Get("auth_token", string.Empty);
+
+            _httpClient.DefaultRequestHeaders.Authorization =
+                       new AuthenticationHeaderValue("Bearer", token);
 
             var response = await _httpClient.PostAsync(url, content);
             System.Diagnostics.Debug.WriteLine($"response nhận: {response}");
