@@ -23,11 +23,11 @@
                     <!-- HEADER -->
                     <Grid ColumnDefinitions="*,Auto">
                         <VerticalStackLayout>
-                            <Label Text="Explore What"
+                            <Label Text="Khám phá"
                                    FontSize="26"
                                    FontAttributes="Bold"
                                    TextColor="#111" />
-                            <Label Text="Your Home Needs"
+                            <Label Text="Cho nội thất của bạn"
                                    FontSize="26"
                                    FontAttributes="Bold"
                                    TextColor="#111" />
@@ -68,60 +68,6 @@
                         </Grid>
                     </Border>
 
-
-                    <!-- CATEGORIES -->
-                    <Grid RowDefinitions="Auto,Auto">
-                        <Grid Grid.Row="0"
-                              ColumnDefinitions="*,Auto"
-                              Margin="0,5,0,10">
-                            <Label Text="Categories"
-                                   FontSize="18"
-                                   FontAttributes="Bold"
-                                   TextColor="#111" />
-                            <HorizontalStackLayout Grid.Column="1"
-                                                   Spacing="4"
-                                                   HorizontalOptions="End"
-                                                   VerticalOptions="Center">
-                                <Label Text="See all"
-                                       FontSize="14"
-                                       TextColor="#F4A30B"
-                                       VerticalOptions="Center" />
-                                <mi:MauiIcon Icon="{mi:Material Icon=ArrowRightAlt, IconColor=#F4A30B, IconSize=20}"
-                                             VerticalOptions="Center" />
-                                <HorizontalStackLayout.GestureRecognizers>
-                                    <TapGestureRecognizer Command="{Binding GoToCategoryPageCommand}" />
-                                </HorizontalStackLayout.GestureRecognizers>
-                            </HorizontalStackLayout>
-                        </Grid>
-
-                        <CollectionView Grid.Row="1"
-                                        ItemsLayout="HorizontalList"
-                                        HeightRequest="100"
-                                        ItemsSource="{Binding CategoryList}">
-                            <CollectionView.ItemTemplate>
-                                <DataTemplate>
-                                    <VerticalStackLayout WidthRequest="100"
-                                                         HorizontalOptions="Center"
-                                                         Spacing="5">
-                                        <Frame CornerRadius="20"
-                                               HeightRequest="60"
-                                               WidthRequest="60"
-                                               BackgroundColor="#FAFAFA"
-                                               HorizontalOptions="Center"
-                                               HasShadow="False">
-                                            <Image Source="{Binding Icon}"
-                                                   Aspect="AspectFit" />
-                                        </Frame>
-                                        <Label Text="{Binding Name}"
-                                               FontSize="14"
-                                               HorizontalOptions="Center"
-                                               TextColor="#111" />
-                                    </VerticalStackLayout>
-                                </DataTemplate>
-                            </CollectionView.ItemTemplate>
-                        </CollectionView>
-                    </Grid>
-
                     <!-- PROMO BANNER -->
                     <Frame BackgroundColor="#EAF1FF"
                            CornerRadius="16"
@@ -130,19 +76,19 @@
                         <Grid ColumnDefinitions="*,Auto"
                               VerticalOptions="Center">
                             <VerticalStackLayout VerticalOptions="Center">
-                                <Label Text="High quality sofa"
+                                <Label Text="Sofa chất lượng cao"
                                        FontSize="16"
                                        TextColor="#111"
                                        FontAttributes="Bold" />
-                                <Label Text="started"
+                                <Label Text="Giảm tới"
                                        FontSize="16"
                                        TextColor="#111"
                                        FontAttributes="Bold" />
-                                <Label Text="70% off"
+                                <Label Text="70%"
                                        FontSize="26"
                                        TextColor="#1E88E5"
                                        FontAttributes="Bold" />
-                                <Label Text="See all items →"
+                                <Label Text="Xem chi tiết →"
                                        FontSize="14"
                                        TextColor="#F4A30B" />
                             </VerticalStackLayout>
@@ -158,7 +104,7 @@
                         <Grid Grid.Row="0"
                               ColumnDefinitions="*,Auto"
                               Margin="0,5,0,10">
-                            <Label Text="Popular"
+                            <Label Text="Phổ biến"
                                    FontSize="18"
                                    FontAttributes="Bold"
                                    TextColor="#111" />
@@ -166,10 +112,7 @@
                                                    Spacing="4"
                                                    HorizontalOptions="End"
                                                    VerticalOptions="Center">
-                                <Label Text="See all"
-                                       FontSize="14"
-                                       TextColor="#F4A30B"
-                                       VerticalOptions="Center" />
+                               
                                 <mi:MauiIcon Icon="{mi:Material Icon=ArrowRightAlt, IconColor=#F4A30B, IconSize=16}"
                                              VerticalOptions="Center" />
                             </HorizontalStackLayout>

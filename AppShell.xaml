@@ -18,12 +18,6 @@
                       Route="HomePage"
                       ContentTemplate="{DataTemplate views:HomePage}" />
 
-        <!-- Danh mục -->
-        <ShellContent Title="Danh mục"
-                      Icon="{mi:Material Icon=Category, IconColor=Black}"
-                      Route="CategoryPage"
-                      ContentTemplate="{DataTemplate views:CategoryPage}" />
-
         <!-- Giỏ hàng -->
         <ShellContent Title="Giỏ hàng"
                       Icon="{mi:Material Icon=ShoppingCart, IconColor=Black}"

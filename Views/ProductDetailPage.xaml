@@ -38,7 +38,7 @@
 
                         <!-- Tên sản phẩm -->
                         <Label Text="{Binding Product.Name}"
-                               FontSize="20"
+                               FontSize="25"
                                FontAttributes="Bold"
                                TextColor="#222" />
 
@@ -47,61 +47,14 @@
                               Margin="0,4,0,0">
 
                             <!-- Giá -->
-                            <Label Text="{Binding Product.Price, StringFormat='${0:N0}'}"
+                            <Label Text="{Binding Product.Price, StringFormat='{0:N0} đ'}"
                                    FontSize="18"
                                    FontAttributes="Bold"
                                    TextColor="#e67e22"
                                    Grid.Column="0"
                                    VerticalOptions="Center" />
 
-                            <!-- Nút giảm -->
-                            <Border Grid.Column="2"
-                                    BackgroundColor="#fff7f0"
-                                    Stroke="#e67e22"
-                                    StrokeThickness="1"
-                                    WidthRequest="36"
-                                    HeightRequest="36"
-                                    HorizontalOptions="End"
-                                    VerticalOptions="Center">
-                                <Border.StrokeShape>
-                                    <RoundRectangle CornerRadius="10" />
-                                </Border.StrokeShape>
-                                <Label Text="−"
-                                       FontSize="18"
-                                       FontAttributes="Bold"
-                                       TextColor="#e67e22"
-                                       HorizontalOptions="Center"
-                                       VerticalOptions="Center" />
-                            </Border>
-
-                            <!-- Số lượng -->
-                            <Label Text="1"
-                                   Grid.Column="3"
-                                   FontSize="16"
-                                   TextColor="#222"
-                                   HorizontalOptions="Center"
-                                   VerticalOptions="Center"
-                                   Margin="8,0" />
-
-                            <!-- Nút tăng -->
-                            <Border Grid.Column="4"
-                                    BackgroundColor="#fff7f0"
-                                    Stroke="#e67e22"
-                                    StrokeThickness="1"
-                                    WidthRequest="36"
-                                    HeightRequest="36"
-                                    HorizontalOptions="End"
-                                    VerticalOptions="Center">
-                                <Border.StrokeShape>
-                                    <RoundRectangle CornerRadius="10" />
-                                </Border.StrokeShape>
-                                <Label Text="+"
-                                       FontSize="18"
-                                       FontAttributes="Bold"
-                                       TextColor="#e67e22"
-                                       HorizontalOptions="Center"
-                                       VerticalOptions="Center" />
-                            </Border>
+                            
                         </Grid>
 
 
@@ -147,7 +100,7 @@
                             <HorizontalStackLayout Spacing="10"
                                                    HorizontalOptions="Center">
 
-                                <Button Text="Description"
+                                <Button Text="Mô tả"
                                         x:Name="DescriptionBtn"
                                         Clicked="OnDescriptionClicked"
                                         CornerRadius="8"
@@ -156,7 +109,7 @@
                                         TextColor="White"
                                         BackgroundColor="#F9A825" />
 
-                                <Button Text="Materials"
+                                <Button Text="Thông số"
                                         x:Name="MaterialsBtn"
                                         Clicked="OnMaterialsClicked"
                                         CornerRadius="8"
@@ -167,7 +120,7 @@
                                         BorderColor="#F9A825"
                                         BorderWidth="1" />
 
-                                <Button Text="Reviews"
+                                <Button Text="Đánh giá"
                                         x:Name="ReviewsBtn"
                                         Clicked="OnReviewsClicked"
                                         CornerRadius="8"
