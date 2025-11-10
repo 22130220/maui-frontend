@@ -19,6 +19,8 @@ namespace MauiFrontend.Models
             public Dictionary<string, int> StarCount { get; set; }
             [JsonPropertyName("topFiveComment")]
             public List<ProductReview> TopFiveComment { get; set; }
+            [JsonPropertyName("hasComment")]
+            public bool HasComment { get; set; } = true;
     }
     
 }

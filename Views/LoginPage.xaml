@@ -125,31 +125,10 @@
 
                     <!-- Loading Indicator -->
                     <ActivityIndicator IsRunning="{Binding IsLoading}"
-                                      IsVisible="{Binding IsLoading}"
-                                      Color="#3498DB"
-                                      HeightRequest="50"
-                                      Margin="0,10,0,0" />
-
-                    <!-- Hoặc -->
-                    <Label Text="Hoặc"
-                           FontSize="14"
-                           TextColor="#7F8C8D"
-                           HorizontalOptions="Center"
-                           Margin="0,10,0,10"
-                           IsVisible="{Binding IsLoading, Converter={StaticResource InvertedBoolConverter}}" />
-
-                    <!-- Nút Đăng ký -->
-                    <Button Text="Tạo tài khoản mới"
-                            BackgroundColor="Transparent"
-                            TextColor="#3498DB"
-                            BorderColor="#3498DB"
-                            BorderWidth="2"
-                            FontSize="16"
-                            FontAttributes="Bold"
-                            CornerRadius="10"
-                            HeightRequest="50"
-                            IsEnabled="{Binding IsLoading, Converter={StaticResource InvertedBoolConverter}}"
-                            IsVisible="{Binding IsLoading, Converter={StaticResource InvertedBoolConverter}}" />
+                                       IsVisible="{Binding IsLoading}"
+                                       Color="#3498DB"
+                                       HeightRequest="50"
+                                       Margin="0,10,0,0" />
 
                 </VerticalStackLayout>
             </Grid>

@@ -1,13 +1,10 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using MauiFrontend.Models;
+using MauiFrontend.Models.Request;
 using MauiFrontend.Services;
-using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
 
 namespace MauiFrontend.ViewModels
 {
@@ -41,7 +38,23 @@ namespace MauiFrontend.ViewModels
         [ObservableProperty]
         private string selectedSortOrder = "Newest";
 
-        // Computed properties for star distribution
+        [ObservableProperty]
+        private int newReviewRating = 0;
+
+        [ObservableProperty]
+        private string newReviewComment = "";
+
+        [ObservableProperty]
+        private bool isPostingReview = false;
+
+        [ObservableProperty]
+        private string postReviewError = "";
+
+        [ObservableProperty]
+        private bool hasPostError = false;
+
+        public bool CanPostReview => NewReviewRating > 0 && !string.IsNullOrWhiteSpace(NewReviewComment);
+
         public double StarCount5Progress => CalculateProgress(5);
         public double StarCount4Progress => CalculateProgress(4);
         public double StarCount3Progress => CalculateProgress(3);
@@ -54,7 +67,6 @@ namespace MauiFrontend.ViewModels
         public int StarCount2 => GetStarCount(2);
         public int StarCount1 => GetStarCount(1);
 
-        // Computed property cho stars display
         public string StarsDisplay
         {
             get
@@ -132,7 +144,7 @@ namespace MauiFrontend.ViewModels
         {
             var summary = await this.productReviewService.GetSummaryReviewAsync($"?sortByName=rating&sortOrder=desc&productId={ProductID}");
             SummaryReview = summary.Data;
-
+            ResetPagination();
             await LoadMoreReviewCommand.ExecuteAsync(null);
         }
 
@@ -174,6 +186,69 @@ namespace MauiFrontend.ViewModels
             }
 
             IsLoading = false;
+        }
+
+        [RelayCommand]
+        public void SelectRating(string rating)
+        {
+            int star = int.Parse(rating);
+            NewReviewRating = star;
+            OnPropertyChanged(nameof(CanPostReview));
+        }
+
+        [RelayCommand]
+        public async Task PostReviewAsync()
+        {
+            if (!CanPostReview) return;
+
+            IsPostingReview = true;
+            HasPostError = false;
+
+            try
+            {
+                var request = new ProductReviewCreateRequest
+                {
+                    ProductId = ProductID,
+                    Rating = NewReviewRating,
+                    Comment = NewReviewComment
+                };
+
+                ApiResponse<Object> success = await this.productReviewService.PostReviewAsync(request);
+
+                if (success != null && success.Code == 201)
+                {
+                    NewReviewRating = 0;
+                    NewReviewComment = "";
+
+                    await LoadReviewsAsync();
+
+                    await Shell.Current.DisplayAlert("Thành công", "Đánh giá của bạn đã được gửi!", "OK");
+                }
+                else
+                {
+                    PostReviewError = "Không thể gửi đánh giá. Vui lòng thử lại!";
+                    HasPostError = true;
+                }
+            }
+            catch (Exception ex)
+            {
+                PostReviewError = $"Lỗi: {ex.Message}";
+                HasPostError = true;
+            }
+            finally
+            {
+                IsPostingReview = false;
+            }
+        }
+
+        partial void OnNewReviewRatingChanged(int value)
+        {
+            OnPropertyChanged(nameof(CanPostReview));
+        }
+
+        partial void OnNewReviewCommentChanged(string value)
+        {
+            OnPropertyChanged(nameof(CanPostReview));
         }
 
         private void ResetPagination()
@@ -230,5 +305,7 @@ namespace MauiFrontend.ViewModels
             return result;
 
         }
+
+
     }
 }

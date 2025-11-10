@@ -16,11 +16,12 @@
             <converters:StarFilterColorConverter x:Key="StarFilterColorConverter" />
             <converters:SortOrderColorConverter x:Key="SortOrderColorConverter" />
             <converters:DateTimeFormatConverter x:Key="DateTimeFormatConverter" />
+            <converters:InvertedConverter x:Key="InvertedConverter" />
         </ResourceDictionary>
     </ContentPage.Resources>
 
-    <Grid>
-        <CollectionView Grid.Row="1"
+    <Grid RowDefinitions="*,Auto">
+        <CollectionView Grid.Row="0"
                         ItemsSource="{Binding Reviews}"
                         SelectionMode="None"
                         RemainingItemsThreshold="2"
@@ -384,5 +385,92 @@
                 </VerticalStackLayout>
             </CollectionView.Footer>
         </CollectionView>
+
+        <Border Grid.Row="1"
+                IsVisible="{Binding SummaryReview.HasComment, Converter={StaticResource InvertedConverter}}"
+                BackgroundColor="White"
+                Padding="15"
+                StrokeThickness="1"
+                Stroke="#DDD">
+            <VerticalStackLayout Spacing="12">
+
+                <!-- Header -->
+                <Label Text="Viết đánh giá của bạn"
+                       FontSize="16"
+                       FontAttributes="Bold"
+                       TextColor="#333" />
+
+                <!-- Chọn số sao -->
+                <HorizontalStackLayout Spacing="8">
+                    <Label Text="Đánh giá:"
+                           FontSize="14"
+                           VerticalOptions="Center"
+                           TextColor="#666" />
+
+                    <Button Text="★"
+                            Command="{Binding SelectRatingCommand}"
+                            CommandParameter="1"
+                            BackgroundColor="Transparent"
+                            TextColor="{Binding NewReviewRating, Converter={StaticResource StarFilterColorConverter}, ConverterParameter=1}"
+                            FontSize="24"
+                            Padding="4" />
+                    <Button Text="★"
+                            Command="{Binding SelectRatingCommand}"
+                            CommandParameter="2"
+                            BackgroundColor="Transparent"
+                            TextColor="{Binding NewReviewRating, Converter={StaticResource StarFilterColorConverter}, ConverterParameter=2}"
+                            FontSize="24"
+                            Padding="4" />
+                    <Button Text="★"
+                            Command="{Binding SelectRatingCommand}"
+                            CommandParameter="3"
+                            BackgroundColor="Transparent"
+                            TextColor="{Binding NewReviewRating, Converter={StaticResource StarFilterColorConverter}, ConverterParameter=3}"
+                            FontSize="24"
+                            Padding="4" />
+                    <Button Text="★"
+                            Command="{Binding SelectRatingCommand}"
+                            CommandParameter="4"
+                            BackgroundColor="Transparent"
+                            TextColor="{Binding NewReviewRating, Converter={StaticResource StarFilterColorConverter}, ConverterParameter=4}"
+                            FontSize="24"
+                            Padding="4" />
+                    <Button Text="★"
+                            Command="{Binding SelectRatingCommand}"
+                            CommandParameter="5"
+                            BackgroundColor="Transparent"
+                            TextColor="{Binding NewReviewRating, Converter={StaticResource StarFilterColorConverter}, ConverterParameter=5}"
+                            FontSize="24"
+                            Padding="4" />
+                </HorizontalStackLayout>
+
+                <!-- Nhập bình luận -->
+                <Editor Placeholder="Nhập bình luận của bạn..."
+                        Text="{Binding NewReviewComment}"
+                        HeightRequest="100"
+                        BackgroundColor="#F9F9F9" />
+
+                <!-- Error message -->
+                <Label Text="{Binding PostReviewError}"
+                       TextColor="Red"
+                       FontSize="12"
+                       IsVisible="{Binding HasPostError}" />
+
+                <!-- Button gửi -->
+                <Button Text="Gửi đánh giá"
+                        Command="{Binding PostReviewCommand}"
+                        BackgroundColor="#FF9800"
+                        TextColor="White"
+                        HeightRequest="44"
+                        CornerRadius="8"
+                        IsEnabled="{Binding CanPostReview}" />
+
+                <!-- Loading indicator -->
+                <ActivityIndicator IsRunning="{Binding IsPostingReview}"
+                                   IsVisible="{Binding IsPostingReview}"
+                                   Color="#FF9800"
+                                   HorizontalOptions="Center" />
+            </VerticalStackLayout>
+        </Border>
     </Grid>
 </ContentPage>

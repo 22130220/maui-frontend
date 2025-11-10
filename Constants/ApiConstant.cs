@@ -26,6 +26,7 @@ namespace MauiFrontend.Constants
         {
             public const string GET_LIST = "product-reviews/get-list";
             public const string SUMMARY_REVIEW = "product-reviews/summary-review";
+            public const string POST_COMMENT = "product-reviews/";
         }
 
     }
